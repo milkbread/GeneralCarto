@@ -1,0 +1,293 @@
+from generalcarto import pycURL_version_one_polygon as pycURL
+import StringIO
+import pycurl
+import ogr
+import os
+import osr
+import xml.etree.ElementTree as xml
+
+import numpy
+import time
+from multiprocessing import Pool
+import pprocess
+
+def takeuptime(ntrials):
+    print 'huhui'
+    for ii in xrange(ntrials[0]):
+        junk = numpy.std(numpy.random.randn(1e5))
+    return junk
+def test_multiprocessing():
+	start_time = time.time()       
+        #map(takeuptime, [(500,2), (500,2), (500,2), (500,2)])  #or in form of: [takeuptime(args) for args in [500,500]]
+
+        print 'single Processing: ', time.time() - start_time
+
+        start_time = time.time()
+        #Source-multiprocessing: http://pastebin.com/iGPs699r and http://www.astrobetter.com/parallel-processing-in-python/
+        pool = Pool(processes=4)
+	args = []
+	for i in xrange(4):
+		arg = (500,2)
+		args.append(arg)
+	print args
+	pool.map(takeuptime, args)
+            
+        print 'parallel Processing: ', time.time() - start_time
+
+	start_time = time.time()
+	nproc = 4  	# maximum number of simultaneous processes desired
+	results = pprocess.Map(limit=nproc, reuse=1)
+	parallel_function = results.manage(pprocess.MakeReusable(takeuptime))	
+	[parallel_function(args2) for args2 in args];  # Start computing things
+	parallel_results = results[2:10]
+	print parallel_results
+	print '2nd parallel Processing: ', time.time() - start_time
+
+
+def getLayer(style):
+	with open(style,'rt') as f:
+		tree = xml.parse(f)
+	
+	layer = []
+	type = ''
+	for elem in tree.iter(tag = 'Layer'):
+		#print elem.attrib['name']
+		for part in elem.iter(tag='Parameter'):
+			if part.attrib['name'] == 'type':
+				type = part.text
+			if type == 'shape':
+				if part.attrib['name'] == 'file':
+					layer.append(part.text)
+			elif type == 'postgis':
+				print 'Postgis is not implemented yet'
+			else:
+				print 'Please implement that ('+ type +') special case!!!'
+	return layer
+
+
+#Function to get all informations of a mapnik stylefile
+#these are the main map defintion, all styles and all layers
+def getContents(style):
+	robj = open(style, 'r')
+	found_style = False
+	styles = []
+	one_style = []	
+	found_layer = False
+	layer = []
+	one_layer = []
+	map_definition = []
+	for line in robj:
+		
+		if line.find('<Style name') != -1:
+			found_style = True
+			for i in xrange(len(one_style)):
+				one_style.pop()
+		elif line.find('</Style') != -1:
+			found_style = False
+			one_style.append(line)
+			styles.append(one_style)
+		elif line.find('<Layer name') != -1:
+			found_layer = True
+			#print line
+			for i in xrange(len(one_layer)):
+				one_layer.pop()
+		elif line.find('Map') != -1:
+			map_definition.append(line)
+			
+		elif line.find('</Layer') != -1:
+			found_layer = False
+			one_layer.append(line)
+			layer.append(one_layer)
+		if found_style == True:
+			one_style.append(line)
+		elif found_layer == True:
+			one_layer.append(line)	
+		
+	robj.close()
+	#print layer
+	return styles, layer, map_definition
+
+#Function to extract the shapefile of a mapnik stylefile
+#!!!does only work if style file only contains one stylefile!!!
+def getShapefile(filename):
+	robj = open(filename, "r")
+	shape = []
+	for line in robj: 
+		if line.find('.shp') != -1:
+			if line.find('<![CDATA[') != -1:
+				shape.append(line.split('<![CDATA[')[1].split(']]>')[0])
+			else:
+				shape.append(line.split('name="file">')[1].split('</Parameter>')[0])
+			#print shape
+	robj.close()
+	return shape
+
+#Function for getting the zentral value of a list of values
+#In this case it is related to find the zentral tile of a set of tiles
+def getZentralTile(x, y):
+		zentral_tile = []
+		#X	
+		if len(x) % 2 == 0:
+                    zentral_tile.append(x[(len(x)/2)])
+                else:
+                    zentral_tile.append(x[int(len(x)/2)])
+		#Y
+                if len(y) % 2 == 0:
+                    zentral_tile.append(y[(len(y)/2)])
+                else:
+                    zentral_tile.append(y[int(len(y)/2)])
+                return zentral_tile
+
+def readResultedFile(transformedFile):
+	#read the  resulted xml
+	response = open(transformedFile).read()
+
+	#extract the points from xml (still in xml format)
+	found = pycURL.find(response,'<ica:Feature>','</ica:Feature>')
+	features = found
+	#print features
+	count = features.count('<gml:X>')
+	#print count, " points where found"
+
+	cache = features
+	i = 0
+	xml_coords = []
+	while i < count:
+		g = cache.partition('<gml:coord>')
+		h = g[2].partition('</gml:coord>')
+		xml_coords.append(h[0])
+		cache = h[2]
+		#print xml_coords[i]
+		#print h[2]
+		i = i+1
+
+	#extract the pure geometric points and save to array
+	i = 0
+	coords = []
+	while i < len(xml_coords):
+		coord = []
+		found = pycURL.find(xml_coords[i],'<gml:X>','</gml:X>')
+		coord.append(float(found))	#Problem: bei Umwandlung werden auf 16Bit gerundet
+		found = pycURL.find(xml_coords[i],'<gml:Y>','</gml:Y>')
+		coord.append(float(found))
+		coords.append( coord )
+		#print coords[i]
+		i = i+1
+
+	#print "extracted Polygon-geometry: ", coords
+
+	#built an OGC polygon geometry
+	#python shapely has to be installed
+	#from shapely.geometry import Polygon
+
+	#polygon = Polygon(coords)
+	#print polygon
+	#print list(polygon.exterior.coords)
+
+
+def read():
+	
+
+	robj = open('./data/media/data.xml', "r")
+	for line in robj: 
+		data = line		    
+	robj.close()
+
+	url = "http://kartographie.geo.tu-dresden.de/webgen_wps/wps";
+	wps()
+	
+
+def wps():	
+	filename = "data.xml"
+	location = "/home/klammer/Software/Quickly/generalcarto/data/media/"
+	server = "http://kartographie.geo.tu-dresden.de/webgen_wps/wps"
+
+	#open the datafile
+	data = open(location+filename).read()
+
+	#set pycURL
+	c = pycurl.Curl()
+	c.setopt(pycurl.URL, server)
+	c.setopt(pycurl.HTTPHEADER, ["Content-Type: text/xml"])
+	c.setopt(pycurl.POSTFIELDS, data)
+	
+	import StringIO
+	b = StringIO.StringIO()
+	c.setopt(pycurl.WRITEFUNCTION, b.write)
+	c.setopt(pycurl.FOLLOWLOCATION, 1)
+	c.setopt(pycurl.MAXREDIRS, 5)
+	c.perform()
+	print b.getvalue()
+	response = b.getvalue()
+
+	return response
+
+def test(uno, dos='Default'):
+	print uno
+	print dos
+
+class TestClass:
+	global t
+	t = ''
+	global t2
+	t2 = ''
+	def __init__(self, iterable, default='Hahhaa'):
+		global t 
+		t = iterable
+		global t2
+		t2 = default
+
+	def get(self):
+		print t
+		return t2
+
+
+
+
+
+
+
+
+
+class shape:
+	destination = './data/media/result.shp'
+	if os.system('find ' + destination) == 0:
+		cache = destination.split('shp')[0]+'*'	
+		os.system('rm ' + cache )
+		print "Had to delete" + destination	
+	spatialReference = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'
+	driverName = "ESRI Shapefile"
+	dataDriver = ogr.GetDriverByName(driverName)
+	if not dataDriver:
+		raise GeometryError('Could not load driver: {}'.format(driverName))
+	dataSource = dataDriver.CreateDataSource(destination)
+	
+	fieldDefinitions=None
+	if not fieldDefinitions:
+        	fieldDefinitions = []
+
+	def setLayer(self):
+		layerName = os.path.splitext(os.path.basename(self.destination))[0]
+		spatialReference = self.get_spatialReference(self.spatialReference)
+		geometryType = ogr.wkbPolygon
+		layer = self.dataSource.CreateLayer(layerName, spatialReference, geometryType)
+
+		# Make fieldDefinitions in featureDefinition
+		for fieldName, fieldType in self.fieldDefinitions:
+			layer.CreateField(ogr.FieldDefn(fieldName, fieldType))
+		#featureDefinition = layer.GetLayerDefn()
+
+		f = ogr.Feature(feature_def=layer.GetLayerDefn())
+
+
+	def get_spatialReference(self, proj4):
+	    	'Return a SpatialReference from proj4'
+		spatialReference = osr.SpatialReference()
+		if spatialReference.ImportFromProj4(proj4):
+			raise GeometryError('Could not import proj4: {}'.format(proj4))
+		return spatialReference
+
+	
+
+
+	  

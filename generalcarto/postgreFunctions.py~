@@ -1,0 +1,91 @@
+import xml.etree.ElementTree as xml
+import psycopg2
+import sys
+
+def writeToPostgres(file, table_name = 'generalized_line_cache'):
+	con = None
+
+	con = psycopg2.connect(database='meingis', user='klammer') 
+	cur = con.cursor()
+	
+	#Test if geometry_columns has already an entry for that table
+	cur.execute("Select count(*) from geometry_columns where f_table_name = '"+ table_name +"'")
+	ex = cur.fetchone()
+	if ex[0] == 0:
+		cur.execute("INSERT INTO geometry_columns VALUES('','public','generalized_line_cache','geom',2,900913,'GEOMETRY')")
+
+	cur.execute("DROP TABLE IF EXISTS generalized_line_cache")
+    	cur.execute("CREATE TABLE "+ table_name +"(id INT PRIMARY KEY, geom GEOMETRY)")
+	#Inhas to be implemented in a later version
+	#!!!does not work in this form!!!
+	#cur.execute("INSERT INTO geometry_columns VALUES(8,'','public','"+ table_name +"','geom',2,900913,'GEOMETRY')")
+
+#192499;"''";"public";"vgtl_roads";"way";2;-1;"GEOMETRY"
+
+	with open(file,'rt') as g:
+		in_tree = xml.parse(g)
+	counter = 0
+	bbox = []
+	round_val = 2
+	for node in in_tree.iter('{http://www.opengis.net/gml}Box'):
+		#get the bbox
+		for part in node.iter():
+			if part.tag == '{http://www.opengis.net/gml}coord':
+				for subpart in part.iter():						
+					if subpart.tag  == '{http://www.opengis.net/gml}X':
+						bbox.append(round(float(subpart.text),round_val))
+					elif subpart.tag  == '{http://www.opengis.net/gml}Y':
+						bbox.append(round(float(subpart.text),round_val))
+			
+			
+	for node in in_tree.iter(tag = '{www.icaci.org/genmr/wps}Value'):
+		#do this for linestrings
+		if node.attrib['wpstype'] == 'AttributeTypeGeometryLineString':
+			x = []
+			y = []
+			for part in node.iter(tag = '{http://www.opengis.net/gml}X'):
+				x.append(part.text)
+			for part in node.iter(tag = '{http://www.opengis.net/gml}Y'):
+				y.append(part.text)
+			
+			strin = 'LINESTRING ('
+			for i in xrange(len(x)):
+				if i == 0:
+					strin = strin + str(round(float(x[i]),round_val)) + ' ' + str(round(float(y[i]),round_val))
+				elif i == len(x) - 1:
+					strin = strin + ', ' + str(round(float(x[i]),round_val)) + ' ' + str(round(float(y[i]),round_val)) + ')'
+				else:
+					strin = strin + ', ' + str(round(float(x[i]),round_val)) + ' ' + str(round(float(y[i]),round_val))
+			#print strin
+			cur.execute("INSERT INTO generalized_line_cache VALUES("+str(counter)+",GeometryFromText ( '"+strin+"', 900913 ))")
+			con.commit()
+			
+			counter = counter + 1
+		#the rest hast to be implemented		
+		#elif...
+
+
+def postgresTest():
+	#Source: http://zetcode.com/db/postgresqlpythontutorial/
+	con = None
+
+	try:
+	     
+	    con = psycopg2.connect(database='meingis', user='klammer') 
+		 
+    
+	    cur = con.cursor()    
+	    cur.execute("SELECT ST_astext(geom) FROM generalized_line_cache")
+
+	    rows = cur.fetchall()
+
+	    for row in rows:
+		print row  
+
+	except psycopg2.DatabaseError, e:
+			print 'Error %s' % e    
+			sys.exit(1)
+		    
+	finally:		    
+			if con:
+				con.close()

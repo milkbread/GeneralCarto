@@ -1,0 +1,2549 @@
+Do, 16 Aug 2012 09:37:08 +0000
+That took: 0.643368959427 seconds
+Do, 16 Aug 2012 10:22:45 +0000
+That took: 0.758337974548 seconds
+Processing of all 9 tiledependent datasets took: 73.3532848358 seconds
+Do, 16 Aug 2012 10:29:21 +0000
+That took: 0.632958889008 seconds
+Do, 16 Aug 2012 10:32:16 +0000
+That took: 0.641694784164 seconds
+Do, 16 Aug 2012 10:33:03 +0000
+That took: 0.641581058502 seconds
+Do, 16 Aug 2012 10:42:03 +0000
+That took: 0.620090007782 seconds
+Do, 16 Aug 2012 10:51:13 +0000
+That took: 0.639025211334 seconds
+Do, 16 Aug 2012 10:52:02 +0000
+That took: 0.72132396698 seconds
+Do, 16 Aug 2012 10:53:36 +0000
+That took: 0.623611927032 seconds
+Do, 16 Aug 2012 10:55:51 +0000
+That took: 0.716849803925 seconds
+Do, 16 Aug 2012 10:57:21 +0000
+That took: 0.661801815033 seconds
+That took: 0.545861005783 seconds
+That took: 0.387116909027 seconds
+Do, 16 Aug 2012 10:59:47 +0000
+That took: 0.637264966965 seconds
+That took: 0.529740095139 seconds
+That took: 0.393362045288 seconds
+That took: 0.260783910751 seconds
+That took: 0.241666793823 seconds
+That took: 0.225517034531 seconds
+That took: 0.19578909874 seconds
+That took: 0.265513896942 seconds
+That took: 0.273358106613 seconds
+That took: 0.276916027069 seconds
+Processing of all 9 tiledependent datasets took: 71.467621088 seconds
+That took: 0.282320976257 seconds
+That took: 0.291790962219 seconds
+That took: 0.261964082718 seconds
+That took: 0.286607027054 seconds
+Do, 16 Aug 2012 11:12:39 +0000
+That took: 0.63747382164 seconds
+Do, 16 Aug 2012 11:14:32 +0000
+That took: 0.63011097908 seconds
+Do, 16 Aug 2012 11:15:41 +0000
+That took: 0.770140171051 seconds
+Do, 16 Aug 2012 11:16:57 +0000
+That took: 0.638882875443 seconds
+Do, 16 Aug 2012 11:29:03 +0000
+Do, 16 Aug 2012 11:29:53 +0000
+That took: 1.98078393936 seconds
+Do, 16 Aug 2012 11:30:31 +0000
+That took: 2.04686188698 seconds
+That took: 1.66346001625 seconds
+That took: 1.66610193253 seconds
+That took: 1.08916497231 seconds
+Do, 16 Aug 2012 11:33:09 +0000
+That took: 2.11080408096 seconds
+That took: 1.67070508003 seconds
+That took: 1.65149784088 seconds
+That took: 1.22128009796 seconds
+Do, 16 Aug 2012 11:35:28 +0000
+Do, 16 Aug 2012 11:35:51 +0000
+Do, 16 Aug 2012 11:36:09 +0000
+That took: 2.02103185654 seconds
+That took: 1.60187983513 seconds
+That took: 1.57629990578 seconds
+That took: 1.15399003029 seconds
+That took: 1.18895101547 seconds
+That took: 1.59466099739 seconds
+took: 1.59466791153 seconds
+That took: 1.95401000977 seconds
+Do, 16 Aug 2012 11:38:51 +0000
+That took: 0.655030012131 seconds
+That took: 0.522197008133 seconds
+That took: 0.443099021912 seconds
+That took: 0.353332042694 seconds
+Do, 16 Aug 2012 11:39:15 +0000
+That took: 0.62360906601 seconds
+That took: 0.469226121902 seconds
+That took: 0.342339038849 seconds
+That took: 0.410018920898 seconds
+That took: 0.322139978409 seconds
+That took: 0.301012039185 seconds
+Do, 16 Aug 2012 12:18:11 +0000
+That took: 0.625589132309 seconds
+Do, 16 Aug 2012 12:19:09 +0000
+That took: 0.619574069977 seconds
+Do, 16 Aug 2012 12:22:08 +0000
+That took: 0.627249002457 seconds
+Do, 16 Aug 2012 12:23:44 +0000
+That took: 0.710047006607 seconds
+That took: 0.659167051315 seconds
+That took: 0.411101102829 seconds
+Do, 16 Aug 2012 12:47:04 +0000
+That took: 0.586659908295 seconds
+Do, 16 Aug 2012 12:50:36 +0000
+That took: 0.601983070374 seconds
+Do, 16 Aug 2012 12:53:25 +0000
+That took: 0.629829883575 seconds
+Do, 16 Aug 2012 12:53:50 +0000
+That took: 0.642935991287 seconds
+Do, 16 Aug 2012 12:58:28 +0000
+That took: 0.62494301796 seconds
+Do, 16 Aug 2012 12:59:50 +0000
+That took: 0.629118919373 seconds
+Do, 16 Aug 2012 13:06:05 +0000
+That took: 0.640946149826 seconds
+Do, 16 Aug 2012 13:07:04 +0000
+That took: 0.617609024048 seconds
+Do, 16 Aug 2012 13:07:36 +0000
+That took: 0.622929811478 seconds
+Do, 16 Aug 2012 13:08:31 +0000
+That took: 0.634001970291 seconds
+Do, 16 Aug 2012 13:10:14 +0000
+That took: 0.641249895096 seconds
+Do, 16 Aug 2012 13:11:41 +0000
+That took: 0.757695913315 seconds
+Do, 16 Aug 2012 13:12:43 +0000
+That took: 0.614945888519 seconds
+Do, 16 Aug 2012 13:14:05 +0000
+That took: 0.643509864807 seconds
+Do, 16 Aug 2012 13:16:19 +0000
+That took: 0.650114059448 seconds
+Do, 16 Aug 2012 13:17:06 +0000
+That took: 0.677304983139 seconds
+Do, 16 Aug 2012 13:23:06 +0000
+That took: 0.688682794571 seconds
+Do, 16 Aug 2012 13:23:28 +0000
+That took: 0.63974404335 seconds
+Do, 16 Aug 2012 13:24:07 +0000
+That took: 0.628663063049 seconds
+Do, 16 Aug 2012 13:25:56 +0000
+That took: 0.610987901688 seconds
+Do, 16 Aug 2012 13:29:22 +0000
+That took: 0.674462080002 seconds
+Do, 16 Aug 2012 13:29:53 +0000
+That took: 0.615180015564 seconds
+Do, 16 Aug 2012 13:31:05 +0000
+That took: 0.643923997879 seconds
+Do, 16 Aug 2012 13:45:07 +0000
+That took: 0.718070983887 seconds
+Do, 16 Aug 2012 13:59:06 +0000
+That took: 0.591845989227 seconds
+That took: 0.469666957855 seconds
+That took: 0.359980106354 seconds
+That took: 0.384193181992 seconds
+That took: 0.396084070206 seconds
+That took: 0.225701093674 seconds
+That took: 0.237996101379 seconds
+That took: 0.235313892365 seconds
+Do, 16 Aug 2012 14:17:02 +0000
+That took: 0.678658008575 seconds
+Do, 16 Aug 2012 14:18:18 +0000
+That took: 0.651872158051 seconds
+Do, 16 Aug 2012 14:19:58 +0000
+That took: 0.648168087006 seconds
+Do, 16 Aug 2012 14:20:31 +0000
+That took: 0.712368011475 seconds
+Do, 16 Aug 2012 14:21:04 +0000
+That took: 0.625811815262 seconds
+Do, 16 Aug 2012 14:22:07 +0000
+That took: 0.617212057114 seconds
+Do, 16 Aug 2012 14:25:13 +0000
+That took: 0.663192033768 seconds
+That took: 0.44243478775 seconds
+That took: 0.370389938354 seconds
+That took: 0.230288982391 seconds
+That took: 0.227669000626 seconds
+That took: 0.211266994476 seconds
+That took: 0.191176176071 seconds
+That took: 0.199891805649 seconds
+That took: 0.215837001801 seconds
+That took: 0.237179040909 seconds
+That took: 0.294970989227 seconds
+That took: 0.168626070023 seconds
+That took: 0.255776882172 seconds
+took: 0.255788803101 seconds
+That took: 0.164947986603 seconds
+Fr, 17 Aug 2012 07:16:04 +0000
+That took: 0.926625013351 seconds
+That took: 0.713097810745 seconds
+That took: 0.415928125381 seconds
+That took: 0.236325979233 seconds
+Fr, 17 Aug 2012 07:16:43 +0000
+That took: 0.603664875031 seconds
+That took: 0.419227838516 seconds
+That took: 0.456705093384 seconds
+Fr, 17 Aug 2012 07:20:25 +0000
+That took: 0.618262052536 seconds
+That took: 0.637277126312 seconds
+That took: 0.382985830307 seconds
+That took: 0.217922925949 seconds
+That took: 0.393249034882 seconds
+took: 0.393261909485 seconds
+That took: 0.458209037781 seconds
+That took: 0.458115816116 seconds
+That took: 0.406128883362 seconds
+That took: 0.365082025528 seconds
+That took: 0.412028074265 seconds
+Fr, 17 Aug 2012 07:21:43 +0000
+That took: 0.663371086121 seconds
+That took: 0.476902008057 seconds
+Fr, 17 Aug 2012 07:26:18 +0000
+That took: 2.08371305466 seconds
+That took: 1.62528896332 seconds
+That took: 1.37894010544 seconds
+That took: 1.47094702721 seconds
+Fr, 17 Aug 2012 07:32:12 +0000
+Fr, 17 Aug 2012 08:09:33 +0000
+Fr, 17 Aug 2012 08:10:11 +0000
+That took: 0.106387138367 seconds
+That took: 0.0317809581757 seconds
+Fr, 17 Aug 2012 08:10:19 +0000
+That took: 0.112166881561 seconds
+That took: 0.0354042053223 seconds
+That took: 0.0303890705109 seconds
+Fr, 17 Aug 2012 08:12:28 +0000
+That took: 0.110532999039 seconds
+That took: 0.0200889110565 seconds
+That took: 0.0240459442139 seconds
+That took: 0.0287330150604 seconds
+That took: 0.0287890434265 seconds
+That took: 0.0311357975006 seconds
+That took: 0.0467450618744 seconds
+That took: 0.0417590141296 seconds
+That took: 0.0335099697113 seconds
+That took: 0.0256581306458 seconds
+That took: 0.0524799823761 seconds
+That took: 0.0306940078735 seconds
+That took: 0.0289189815521 seconds
+That took: 0.0246200561523 seconds
+Fr, 17 Aug 2012 08:12:50 +0000
+That took: 0.105379104614 seconds
+Fr, 17 Aug 2012 08:13:17 +0000
+That took: 0.105715990067 seconds
+Fr, 17 Aug 2012 08:14:14 +0000
+That took: 0.110347032547 seconds
+That took: 0.029687166214 seconds
+That took: 0.0297498703003 seconds
+That took: 0.0286619663239 seconds
+That took: 0.0313818454742 seconds
+That took: 0.0186100006104 seconds
+That took: 0.0341608524323 seconds
+That took: 0.0570211410522 seconds
+Fr, 17 Aug 2012 08:15:40 +0000
+That took: 1.13415002823 seconds
+That took: 1.04558300972 seconds
+That took: 1.04121494293 seconds
+Fr, 17 Aug 2012 08:16:03 +0000
+That took: 0.203519105911 seconds
+That took: 0.13238286972 seconds
+Fr, 17 Aug 2012 08:16:22 +0000
+That took: 0.300941944122 seconds
+Fr, 17 Aug 2012 08:16:41 +0000
+That took: 0.619760990143 seconds
+That took: 0.540667057037 seconds
+That took: 0.528007030487 seconds
+Fr, 17 Aug 2012 08:17:18 +0000
+That took: 0.721587181091 seconds
+That took: 0.632277011871 seconds
+That took: 0.637090921402 seconds
+That took: 0.645390033722 seconds
+That took: 0.637701034546 seconds
+That took: 0.641376018524 seconds
+That took: 0.634823083878 seconds
+That took: 0.638477087021 seconds
+That took: 0.643400907516 seconds
+That took: 0.638392210007 seconds
+That took: 0.645955085754 seconds
+That took: 0.642618179321 seconds
+took: 0.642627000809 seconds
+That took: 0.646724939346 seconds
+took: 0.646734952927 seconds
+That took: 0.638284921646 seconds
+took: 0.638293981552 seconds
+That took: 0.648691177368 seconds
+took: 0.648701190948 seconds
+That took: 0.636677980423 seconds
+took: 0.636687994003 seconds
+That took: 0.643288850784 seconds
+took: 0.643298864365 seconds
+That took: 0.640115976334 seconds
+took: 0.640125989914 seconds
+Fr, 17 Aug 2012 08:20:49 +0000
+That took: 0.105015993118 seconds
+That took: 0.0327789783478 seconds
+Fr, 17 Aug 2012 08:31:09 +0000
+That took: 0.660650014877 seconds
+Fr, 17 Aug 2012 08:31:35 +0000
+That took: 0.722890138626 seconds
+Fr, 17 Aug 2012 08:32:18 +0000
+Fr, 17 Aug 2012 08:32:42 +0000
+That took: 0.109494924545 seconds
+Fr, 17 Aug 2012 08:32:50 +0000
+That took: 0.668797016144 seconds
+Fr, 17 Aug 2012 08:32:58 +0000
+That took: 0.712983131409 seconds
+Fr, 17 Aug 2012 08:33:01 +0000
+That took: 0.692767858505 seconds
+Fr, 17 Aug 2012 08:33:20 +0000
+Fr, 17 Aug 2012 08:33:43 +0000
+That took: 0.103852033615 seconds
+That took: 0.187976121902 seconds
+That took: 0.373817920685 seconds
+That took: 0.234616994858 seconds
+That took: 0.240424156189 seconds
+That took: 0.190055131912 seconds
+That took: 0.330800771713 seconds
+That took: 0.2369120121 seconds
+That took: 0.234441041946 seconds
+That took: 0.0440320968628 seconds
+That took: 0.0463209152222 seconds
+That took: 0.0331799983978 seconds
+That took: 0.0482249259949 seconds
+That took: 0.0330431461334 seconds
+That took: 0.0498840808868 seconds
+That took: 0.294316053391 seconds
+That took: 0.336590051651 seconds
+That took: 0.219480991364 seconds
+Fr, 17 Aug 2012 08:34:31 +0000
+That took: 0.652994155884 seconds
+That took: 0.166244983673 seconds
+That took: 0.0337278842926 seconds
+That took: 0.0398979187012 seconds
+That took: 0.0375208854675 seconds
+That took: 0.0393629074097 seconds
+That took: 0.032812833786 seconds
+That took: 0.0627028942108 seconds
+That took: 0.0466558933258 seconds
+That took: 0.0309121608734 seconds
+That took: 0.0382578372955 seconds
+That took: 0.0372400283813 seconds
+That took: 0.0446419715881 seconds
+That took: 0.039568901062 seconds
+That took: 0.0277321338654 seconds
+That took: 0.0391228199005 seconds
+That took: 0.0488839149475 seconds
+That took: 0.0326499938965 seconds
+That took: 0.061585187912 seconds
+took: 0.0615952014923 seconds
+That took: 0.0424709320068 seconds
+took: 0.0424809455872 seconds
+That took: 0.0404498577118 seconds
+took: 0.040463924408 seconds
+That took: 0.0383520126343 seconds
+took: 0.0383670330048 seconds
+That took: 0.0468289852142 seconds
+took: 0.0468389987946 seconds
+That took: 0.0385291576385 seconds
+took: 0.038537979126 seconds
+Fr, 17 Aug 2012 08:35:29 +0000
+That took: 0.74119591713 seconds
+Fr, 17 Aug 2012 08:35:35 +0000
+That took: 0.668202877045 seconds
+Fr, 17 Aug 2012 08:35:40 +0000
+That took: 0.673869132996 seconds
+Fr, 17 Aug 2012 08:35:42 +0000
+That took: 0.736102104187 seconds
+Fr, 17 Aug 2012 08:35:46 +0000
+That took: 0.739727020264 seconds
+Fr, 17 Aug 2012 08:36:00 +0000
+That took: 0.643973112106 seconds
+That took: 0.167269945145 seconds
+That took: 0.0539889335632 seconds
+That took: 0.0334198474884 seconds
+That took: 0.0454168319702 seconds
+Fr, 17 Aug 2012 08:38:38 +0000
+That took: 0.65466094017 seconds
+That took: 0.15963101387 seconds
+That took: 0.0320971012115 seconds
+That took: 0.472323894501 seconds
+Fr, 17 Aug 2012 08:38:54 +0000
+That took: 0.734848022461 seconds
+Fr, 17 Aug 2012 08:40:23 +0000
+That took: 0.829519987106 seconds
+Fr, 17 Aug 2012 08:41:28 +0000
+Fr, 17 Aug 2012 08:41:44 +0000
+That took: 0.108119010925 seconds
+Fr, 17 Aug 2012 08:42:25 +0000
+That took: 0.111752033234 seconds
+That took: 0.0273730754852 seconds
+That took: 0.0315508842468 seconds
+That took: 0.206046104431 seconds
+Fr, 17 Aug 2012 08:43:28 +0000
+That took: 0.648452997208 seconds
+Fr, 17 Aug 2012 08:44:19 +0000
+That took: 0.683109998703 seconds
+That took: 0.165575027466 seconds
+That took: 0.371634960175 seconds
+That took: 0.217392206192 seconds
+That took: 0.294584035873 seconds
+That took: 0.315845966339 seconds
+That took: 0.360127925873 seconds
+That took: 0.030818939209 seconds
+That took: 0.0402660369873 seconds
+That took: 0.0300889015198 seconds
+That took: 0.0337488651276 seconds
+That took: 0.343430042267 seconds
+That took: 0.212457180023 seconds
+That took: 0.131055831909 seconds
+That took: 0.0881190299988 seconds
+That took: 0.0822730064392 seconds
+That took: 0.0279531478882 seconds
+That took: 0.0311861038208 seconds
+That took: 0.0389449596405 seconds
+That took: 0.0319628715515 seconds
+That took: 0.0379509925842 seconds
+That took: 0.0520560741425 seconds
+That took: 0.149307012558 seconds
+That took: 0.163340091705 seconds
+That took: 0.175400018692 seconds
+That took: 0.200926065445 seconds
+That took: 0.02960896492 seconds
+That took: 0.0314350128174 seconds
+That took: 0.0300281047821 seconds
+That took: 0.0347909927368 seconds
+That took: 0.214317083359 seconds
+That took: 0.197318077087 seconds
+That took: 0.153908014297 seconds
+That took: 0.157203912735 seconds
+That took: 0.150310993195 seconds
+That took: 0.132252931595 seconds
+That took: 0.133683919907 seconds
+That took: 0.138576030731 seconds
+That took: 0.133358955383 seconds
+That took: 0.141324043274 seconds
+took: 0.141334056854 seconds
+That took: 0.0410068035126 seconds
+took: 0.0410318374634 seconds
+That took: 0.0362839698792 seconds
+took: 0.0362958908081 seconds
+That took: 0.474747180939 seconds
+took: 0.474760055542 seconds
+That took: 0.0410549640656 seconds
+took: 0.0410778522491 seconds
+That took: 0.0265121459961 seconds
+That took: 0.338486194611 seconds
+That took: 0.0391440391541 seconds
+That took: 0.0553369522095 seconds
+That took: 0.0338859558105 seconds
+That took: 0.0404739379883 seconds
+That took: 0.136878967285 seconds
+That took: 0.128510951996 seconds
+That took: 0.120715141296 seconds
+That took: 0.0384850502014 seconds
+took: 0.0385000705719 seconds
+That took: 0.0637729167938 seconds
+took: 0.0637929439545 seconds
+Fr, 17 Aug 2012 08:45:59 +0000
+That took: 0.700813055038 seconds
+That took: 0.494025945663 seconds
+That took: 0.362453937531 seconds
+That took: 0.250658035278 seconds
+Fr, 17 Aug 2012 08:46:32 +0000
+That took: 0.747932910919 seconds
+That took: 0.530543088913 seconds
+That took: 0.383019924164 seconds
+That took: 0.239012002945 seconds
+That took: 0.138911962509 seconds
+Fr, 17 Aug 2012 08:47:10 +0000
+That took: 0.842381000519 seconds
+Fr, 17 Aug 2012 08:48:16 +0000
+That took: 2.0828640461 seconds
+That took: 1.64006280899 seconds
+Fr, 17 Aug 2012 08:53:15 +0000
+That took: 2.01945590973 seconds
+Fr, 17 Aug 2012 08:58:42 +0000
+That took: 1.94826102257 seconds
+Fr, 17 Aug 2012 08:59:46 +0000
+That took: 1.9791560173 seconds
+That took: 5.05936288834 seconds
+Fr, 17 Aug 2012 09:03:06 +0000
+Fr, 17 Aug 2012 09:03:30 +0000
+That took: 2.37615013123 seconds
+That took: 1.91687989235 seconds
+That took: 7.42004299164 seconds
+Fr, 17 Aug 2012 09:04:37 +0000
+That took: 2.37613391876 seconds
+Fr, 17 Aug 2012 09:05:21 +0000
+That took: 1.95420503616 seconds
+That took: 1.52676296234 seconds
+Fr, 17 Aug 2012 09:07:34 +0000
+That took: 0.716044902802 seconds
+Fr, 17 Aug 2012 09:08:07 +0000
+That took: 0.738471984863 seconds
+That took: 0.121999979019 seconds
+Fr, 17 Aug 2012 09:10:01 +0000
+That took: 0.726139068604 seconds
+That took: 0.250333070755 seconds
+That took: 0.178918838501 seconds
+That took: 0.104470968246 seconds
+That took: 0.0864470005035 seconds
+That took: 0.0287108421326 seconds
+That took: 0.179084062576 seconds
+That took: 0.163316965103 seconds
+That took: 0.168992042542 seconds
+That took: 0.0298829078674 seconds
+That took: 0.0453701019287 seconds
+That took: 0.039128780365 seconds
+That took: 0.0438599586487 seconds
+That took: 0.530478000641 seconds
+Fr, 17 Aug 2012 09:11:14 +0000
+That took: 0.683929920197 seconds
+That took: 4.11352396011 seconds
+That took: 0.248038053513 seconds
+That took: 5.97982811928 seconds
+That took: 1.69093704224 seconds
+That took: 1.04912996292 seconds
+That took: 0.942985057831 seconds
+Fr, 17 Aug 2012 09:12:27 +0000
+That took: 0.671173095703 seconds
+That took: 0.465339183807 seconds
+That took: 0.377748966217 seconds
+That took: 0.227938890457 seconds
+Fr, 17 Aug 2012 09:30:33 +0000
+That took: 0.7248878479 seconds
+That took: 0.451533794403 seconds
+That took: 0.325466156006 seconds
+That took: 0.37057518959 seconds
+That took: 0.15332198143 seconds
+Fr, 17 Aug 2012 09:31:47 +0000
+That took: 0.115788936615 seconds
+Fr, 17 Aug 2012 09:32:21 +0000
+That took: 0.115534067154 seconds
+Fr, 17 Aug 2012 10:26:05 +0000
+That took: 0.112711906433 seconds
+Fr, 17 Aug 2012 10:31:24 +0000
+That took: 0.130384922028 seconds
+Fr, 17 Aug 2012 10:34:29 +0000
+That took: 0.106917858124 seconds
+Fr, 17 Aug 2012 10:35:12 +0000
+That took: 0.658015966415 seconds
+Fr, 17 Aug 2012 10:35:38 +0000
+That took: 0.655054092407 seconds
+Fr, 17 Aug 2012 10:38:29 +0000
+That took: 0.697512865067 seconds
+Fr, 17 Aug 2012 10:38:58 +0000
+That took: 0.711119890213 seconds
+Fr, 17 Aug 2012 10:40:02 +0000
+That took: 0.744269132614 seconds
+Fr, 17 Aug 2012 11:08:47 +0000
+That took: 0.729251861572 seconds
+That took: 0.419353961945 seconds
+That took: 0.358167886734 seconds
+That took: 0.0411531925201 seconds
+took: 0.0411801338196 seconds
+That took: 0.0430450439453 seconds
+took: 0.0430591106415 seconds
+That took: 0.526165962219 seconds
+took: 0.5261759758 seconds
+Fr, 17 Aug 2012 11:14:45 +0000
+That took: 0.657237052917 seconds
+Fr, 17 Aug 2012 11:15:26 +0000
+That took: 0.111643075943 seconds
+That took: 0.50155711174 seconds
+That took: 0.334071874619 seconds
+That took: 0.343816041946 seconds
+Fr, 17 Aug 2012 11:16:06 +0000
+That took: 0.118231058121 seconds
+That took: 0.0380828380585 seconds
+Fr, 17 Aug 2012 11:18:08 +0000
+That took: 0.699238061905 seconds
+Fr, 17 Aug 2012 11:19:10 +0000
+That took: 0.668755054474 seconds
+Fr, 17 Aug 2012 11:21:38 +0000
+That took: 0.615893125534 seconds
+That took: 0.423248052597 seconds
+That took: 0.328704118729 seconds
+That took: 0.216282129288 seconds
+That took: 0.12987780571 seconds
+That took: 0.149655103683 seconds
+That took: 0.142728090286 seconds
+That took: 0.135395050049 seconds
+That took: 0.133944034576 seconds
+That took: 0.125030040741 seconds
+That took: 0.133874893188 seconds
+That took: 0.146160125732 seconds
+That took: 0.148254156113 seconds
+That took: 0.140982151031 seconds
+That took: 0.144723176956 seconds
+That took: 0.133496046066 seconds
+That took: 0.1258020401 seconds
+Fr, 17 Aug 2012 11:24:22 +0000
+That took: 0.112401008606 seconds
+That took: 0.0329790115356 seconds
+That took: 0.044538974762 seconds
+That took: 0.0404829978943 seconds
+That took: 0.0346369743347 seconds
+That took: 0.0504989624023 seconds
+That took: 0.129800081253 seconds
+That took: 0.132340908051 seconds
+That took: 0.119256973267 seconds
+That took: 0.0461540222168 seconds
+That took: 0.0445759296417 seconds
+That took: 0.0412089824677 seconds
+That took: 0.0396931171417 seconds
+That took: 0.0430340766907 seconds
+That took: 0.0516757965088 seconds
+took: 0.0516839027405 seconds
+That took: 0.042543888092 seconds
+took: 0.042552947998 seconds
+That took: 0.0419859886169 seconds
+took: 0.0419950485229 seconds
+That took: 0.0449750423431 seconds
+took: 0.0449850559235 seconds
+That took: 0.0431759357452 seconds
+That took: 0.0441930294037 seconds
+That took: 0.0453062057495 seconds
+That took: 0.0410990715027 seconds
+That took: 0.0428500175476 seconds
+took: 0.0428600311279 seconds
+That took: 0.0470521450043 seconds
+took: 0.0470609664917 seconds
+Fr, 17 Aug 2012 11:26:06 +0000
+That took: 0.723495960236 seconds
+That took: 0.464890003204 seconds
+Fr, 17 Aug 2012 11:27:57 +0000
+That took: 0.718999147415 seconds
+That took: 0.46558713913 seconds
+Fr, 17 Aug 2012 11:29:09 +0000
+That took: 0.643812894821 seconds
+That took: 4.18096280098 seconds
+That took: 0.213799953461 seconds
+That took: 0.0494780540466 seconds
+Fr, 17 Aug 2012 11:29:21 +0000
+That took: 0.67338013649 seconds
+That took: 2.09243798256 seconds
+That took: 11.4884431362 seconds
+Fr, 17 Aug 2012 11:29:35 +0000
+That took: 0.652560949326 seconds
+That took: 1.70741295815 seconds
+That took: 2.59535694122 seconds
+That took: 29.8323168755 seconds
+That took: 31.7913489342 seconds
+Fr, 17 Aug 2012 11:30:09 +0000
+That took: 0.700558900833 seconds
+That took: 8.52344107628 seconds
+That took: 11.8466110229 seconds
+Fr, 17 Aug 2012 11:30:40 +0000
+That took: 0.653722047806 seconds
+That took: 6.05330204964 seconds
+That took: 7.24997901917 seconds
+Fr, 17 Aug 2012 11:36:16 +0000
+That took: 0.626705884933 seconds
+That took: 0.45556306839 seconds
+That took: 0.362673997879 seconds
+That took: 0.338078975677 seconds
+That took: 0.41161108017 seconds
+Fr, 17 Aug 2012 11:37:30 +0000
+That took: 0.665962934494 seconds
+That took: 0.424137830734 seconds
+That took: 0.349381923676 seconds
+Fr, 17 Aug 2012 11:38:04 +0000
+That took: 0.110246181488 seconds
+That took: 0.052060842514 seconds
+That took: 0.0418810844421 seconds
+That took: 0.240645885468 seconds
+Fr, 17 Aug 2012 11:41:03 +0000
+That took: 0.658073186874 seconds
+That took: 0.449867963791 seconds
+That took: 0.363934993744 seconds
+That took: 0.0327451229095 seconds
+That took: 0.153656005859 seconds
+That took: 0.0471270084381 seconds
+That took: 0.0329830646515 seconds
+That took: 0.152798891068 seconds
+That took: 0.16577911377 seconds
+That took: 0.086140871048 seconds
+Fr, 17 Aug 2012 11:56:16 +0000
+That took: 0.719521045685 seconds
+Fr, 17 Aug 2012 11:57:09 +0000
+That took: 0.696728944778 seconds
+That took: 0.189590215683 seconds
+That took: 0.0281591415405 seconds
+Fr, 17 Aug 2012 12:00:34 +0000
+That took: 0.714363098145 seconds
+That took: 0.485449075699 seconds
+That took: 0.337620019913 seconds
+That took: 0.383136987686 seconds
+That took: 0.27839589119 seconds
+That took: 0.151220083237 seconds
+That took: 0.196316003799 seconds
+That took: 0.223090171814 seconds
+That took: 0.231738090515 seconds
+Fr, 17 Aug 2012 12:01:41 +0000
+That took: 0.618001937866 seconds
+That took: 0.468789815903 seconds
+took: 0.468798875809 seconds
+That took: 0.050785779953 seconds
+took: 0.050794839859 seconds
+That took: 0.0405929088593 seconds
+took: 0.0406029224396 seconds
+That took: 0.0447199344635 seconds
+took: 0.0447289943695 seconds
+That took: 0.0501918792725 seconds
+took: 0.0502018928528 seconds
+That took: 0.0424420833588 seconds
+took: 0.0424511432648 seconds
+That took: 0.0428581237793 seconds
+took: 0.0428671836853 seconds
+That took: 0.035572052002 seconds
+took: 0.0355820655823 seconds
+That took: 0.0499801635742 seconds
+took: 0.0499889850616 seconds
+That took: 0.05002784729 seconds
+That took: 0.0482320785522 seconds
+That took: 0.0409190654755 seconds
+That took: 0.04261302948 seconds
+That took: 0.0483210086823 seconds
+That took: 0.0468909740448 seconds
+That took: 0.0452189445496 seconds
+That took: 0.0415081977844 seconds
+That took: 0.0476520061493 seconds
+That took: 0.0454180240631 seconds
+That took: 0.0378580093384 seconds
+Fr, 17 Aug 2012 12:01:59 +0000
+That took: 0.67866897583 seconds
+That took: 0.468852043152 seconds
+That took: 0.0417459011078 seconds
+took: 0.0417969226837 seconds
+That took: 0.553565979004 seconds
+took: 0.55357503891 seconds
+That took: 0.0553240776062 seconds
+That took: 0.0521700382233 seconds
+That took: 0.0349700450897 seconds
+That took: 0.0530560016632 seconds
+That took: 0.0417921543121 seconds
+That took: 0.0301220417023 seconds
+That took: 0.0431370735168 seconds
+That took: 0.0416240692139 seconds
+That took: 0.0362198352814 seconds
+That took: 0.0607841014862 seconds
+That took: 0.0519199371338 seconds
+That took: 0.0491139888763 seconds
+That took: 0.0511190891266 seconds
+That took: 0.0455760955811 seconds
+That took: 0.0490498542786 seconds
+That took: 0.0541369915009 seconds
+That took: 0.0468821525574 seconds
+That took: 0.0625188350677 seconds
+That took: 0.074539899826 seconds
+Fr, 17 Aug 2012 12:03:36 +0000
+That took: 0.127493143082 seconds
+That took: 0.044615983963 seconds
+took: 0.044625043869 seconds
+That took: 0.0518550872803 seconds
+took: 0.0518639087677 seconds
+That took: 0.0439231395721 seconds
+took: 0.0439319610596 seconds
+Fr, 17 Aug 2012 12:05:53 +0000
+That took: 0.641889095306 seconds
+That took: 0.465729951859 seconds
+Fr, 17 Aug 2012 12:10:45 +0000
+That took: 0.114198923111 seconds
+Fr, 17 Aug 2012 12:11:14 +0000
+That took: 0.127081871033 seconds
+That took: 0.48416018486 seconds
+That took: 0.340375900269 seconds
+That took: 0.105491876602 seconds
+That took: 0.0872571468353 seconds
+That took: 0.0915977954865 seconds
+Fr, 17 Aug 2012 12:15:14 +0000
+Fr, 17 Aug 2012 12:15:58 +0000
+That took: 0.660023927689 seconds
+Fr, 17 Aug 2012 12:16:41 +0000
+That took: 0.11328792572 seconds
+That took: 0.489953041077 seconds
+That took: 0.342452049255 seconds
+Fr, 17 Aug 2012 12:23:33 +0000
+That took: 0.129987955093 seconds
+That took: 0.0402200222015 seconds
+That took: 0.35781788826 seconds
+That took: 0.31610584259 seconds
+That took: 0.15691614151 seconds
+Fr, 17 Aug 2012 12:22:13 +0000
+That took: 0.11453294754 seconds
+That took: 0.0612411499023 seconds
+Fr, 17 Aug 2012 12:26:51 +0000
+That took: 0.111791849136 seconds
+That took: 0.0378859043121 seconds
+Fr, 17 Aug 2012 12:27:27 +0000
+That took: 0.792603969574 seconds
+That took: 0.526786088943 seconds
+Fr, 17 Aug 2012 12:32:18 +0000
+That took: 0.132662057877 seconds
+Fr, 17 Aug 2012 12:32:46 +0000
+That took: 0.119494915009 seconds
+That took: 0.0455689430237 seconds
+That took: 0.0494000911713 seconds
+That took: 0.0357909202576 seconds
+took: 0.0357999801636 seconds
+That took: 0.0482409000397 seconds
+took: 0.0482499599457 seconds
+That took: 0.0373480319977 seconds
+That took: 0.0496938228607 seconds
+That took: 0.0496559143066 seconds
+Fr, 17 Aug 2012 12:33:11 +0000
+That took: 0.181773900986 seconds
+That took: 0.0969948768616 seconds
+That took: 0.0725309848785 seconds
+That took: 0.0881609916687 seconds
+That took: 0.0557370185852 seconds
+That took: 0.0789031982422 seconds
+That took: 0.0579061508179 seconds
+took: 0.0579171180725 seconds
+That took: 0.0438530445099 seconds
+took: 0.0438771247864 seconds
+That took: 0.0459051132202 seconds
+That took: 0.0629351139069 seconds
+That took: 0.042464017868 seconds
+That took: 0.0339961051941 seconds
+That took: 0.0377769470215 seconds
+That took: 0.0426030158997 seconds
+That took: 0.0507280826569 seconds
+That took: 0.0504128932953 seconds
+That took: 0.046991109848 seconds
+That took: 0.074718952179 seconds
+That took: 0.059268951416 seconds
+That took: 0.0497188568115 seconds
+That took: 0.0838479995728 seconds
+That took: 0.0334780216217 seconds
+That took: 0.0388851165771 seconds
+That took: 0.0289070606232 seconds
+That took: 0.0686368942261 seconds
+That took: 0.0837440490723 seconds
+took: 0.0837531089783 seconds
+That took: 0.0533800125122 seconds
+took: 0.0533919334412 seconds
+Fr, 17 Aug 2012 12:37:16 +0000
+That took: 0.17153096199 seconds
+Fr, 17 Aug 2012 12:37:07 +0000
+That took: 0.630171060562 seconds
+Fr, 17 Aug 2012 12:37:52 +0000
+That took: 0.110251903534 seconds
+That took: 0.0845391750336 seconds
+That took: 0.0731868743896 seconds
+That took: 0.043557882309 seconds
+took: 0.0435719490051 seconds
+That took: 0.043839931488 seconds
+took: 0.0438520908356 seconds
+That took: 0.0436460971832 seconds
+Fr, 17 Aug 2012 12:39:26 +0000
+That took: 0.109225988388 seconds
+That took: 0.0299260616302 seconds
+Fr, 17 Aug 2012 12:40:19 +0000
+That took: 0.174326896667 seconds
+That took: 0.0745460987091 seconds
+Fr, 17 Aug 2012 12:41:22 +0000
+That took: 0.35634803772 seconds
+Fr, 17 Aug 2012 12:42:15 +0000
+That took: 0.111895084381 seconds
+Fr, 17 Aug 2012 12:42:53 +0000
+That took: 0.115993022919 seconds
+Fr, 17 Aug 2012 12:43:57 +0000
+That took: 0.11346411705 seconds
+Fr, 17 Aug 2012 12:48:59 +0000
+That took: 0.117378950119 seconds
+Fr, 17 Aug 2012 12:51:11 +0000
+That took: 0.124529123306 seconds
+Fr, 17 Aug 2012 12:52:04 +0000
+That took: 0.115118026733 seconds
+That took: 0.0470609664917 seconds
+That took: 0.0484700202942 seconds
+took: 0.0484778881073 seconds
+That took: 0.0494589805603 seconds
+Fr, 17 Aug 2012 12:55:14 +0000
+That took: 0.169762134552 seconds
+That took: 0.0422809123993 seconds
+That took: 0.0480890274048 seconds
+That took: 0.0534391403198 seconds
+took: 0.0534482002258 seconds
+That took: 0.0467119216919 seconds
+took: 0.0467209815979 seconds
+Fr, 17 Aug 2012 12:56:20 +0000
+That took: 0.179520130157 seconds
+That took: 0.0432560443878 seconds
+That took: 0.0412218570709 seconds
+Fr, 17 Aug 2012 13:00:07 +0000
+That took: 0.192105054855 seconds
+Fr, 17 Aug 2012 13:00:50 +0000
+That took: 0.11407995224 seconds
+That took: 0.0805830955505 seconds
+That took: 0.0764770507812 seconds
+Fr, 17 Aug 2012 13:02:11 +0000
+That took: 0.112560033798 seconds
+Fr, 17 Aug 2012 13:02:48 +0000
+That took: 0.167370080948 seconds
+That took: 0.0818810462952 seconds
+That took: 0.0746591091156 seconds
+That took: 0.0823681354523 seconds
+That took: 0.0757968425751 seconds
+That took: 0.0707981586456 seconds
+Fr, 17 Aug 2012 13:05:46 +0000
+That took: 0.40687918663 seconds
+Fr, 17 Aug 2012 13:08:34 +0000
+That took: 0.174376964569 seconds
+Fr, 17 Aug 2012 13:13:20 +0000
+That took: 0.170351982117 seconds
+That took: 0.0838179588318 seconds
+That took: 0.078647851944 seconds
+Fr, 17 Aug 2012 13:15:35 +0000
+That took: 0.178499937057 seconds
+That took: 0.104696989059 seconds
+That took: 0.0539419651031 seconds
+That took: 0.036740064621 seconds
+Fr, 17 Aug 2012 13:16:09 +0000
+That took: 0.124820947647 seconds
+That took: 0.0494439601898 seconds
+That took: 0.056725025177 seconds
+That took: 0.0436029434204 seconds
+That took: 0.038134098053 seconds
+That took: 0.0437531471252 seconds
+That took: 0.0469892024994 seconds
+That took: 0.0516879558563 seconds
+That took: 0.0415029525757 seconds
+Fr, 17 Aug 2012 13:18:50 +0000
+That took: 0.172110795975 seconds
+That took: 0.0548710823059 seconds
+That took: 0.0548799037933 seconds
+That took: 0.0410308837891 seconds
+That took: 0.044086933136 seconds
+Fr, 17 Aug 2012 13:20:51 +0000
+That took: 0.16844201088 seconds
+That took: 0.0940451622009 seconds
+Fr, 17 Aug 2012 13:21:26 +0000
+That took: 0.110285043716 seconds
+That took: 0.0338890552521 seconds
+Fr, 17 Aug 2012 13:24:06 +0000
+That took: 0.110811948776 seconds
+Fr, 17 Aug 2012 13:26:10 +0000
+That took: 0.175993919373 seconds
+Fr, 17 Aug 2012 13:26:30 +0000
+That took: 0.118244171143 seconds
+Fr, 17 Aug 2012 13:26:56 +0000
+That took: 0.113938808441 seconds
+Fr, 17 Aug 2012 13:27:25 +0000
+That took: 0.124314069748 seconds
+Fr, 17 Aug 2012 13:27:48 +0000
+That took: 0.13701915741 seconds
+Fr, 17 Aug 2012 13:30:18 +0000
+That took: 0.118686914444 seconds
+Fr, 17 Aug 2012 13:31:11 +0000
+That took: 0.110110998154 seconds
+That took: 0.0991010665894 seconds
+That took: 0.0693130493164 seconds
+That took: 0.0257389545441 seconds
+took: 0.0257511138916 seconds
+That took: 0.0579400062561 seconds
+That took: 0.0817959308624 seconds
+That took: 0.0702879428864 seconds
+That took: 0.0690498352051 seconds
+That took: 0.0713291168213 seconds
+That took: 0.0710821151733 seconds
+Fr, 17 Aug 2012 13:33:25 +0000
+That took: 0.185747146606 seconds
+That took: 0.298774957657 seconds
+That took: 0.0343301296234 seconds
+took: 0.0343451499939 seconds
+That took: 0.0527729988098 seconds
+That took: 0.0707278251648 seconds
+That took: 0.0345859527588 seconds
+That took: 0.0821328163147 seconds
+That took: 0.0339939594269 seconds
+took: 0.0340209007263 seconds
+That took: 0.0334558486938 seconds
+That took: 0.038202047348 seconds
+took: 0.0382161140442 seconds
+That took: 0.0379929542542 seconds
+That took: 0.301299095154 seconds
+Fr, 17 Aug 2012 13:34:21 +0000
+That took: 0.110220909119 seconds
+Fr, 17 Aug 2012 13:34:45 +0000
+That took: 0.178231954575 seconds
+That took: 0.0537021160126 seconds
+That took: 0.031133890152 seconds
+That took: 0.0425109863281 seconds
+That took: 0.0340700149536 seconds
+That took: 0.0311579704285 seconds
+That took: 0.0338380336761 seconds
+That took: 0.320223093033 seconds
+That took: 0.102433919907 seconds
+That took: 0.0329818725586 seconds
+That took: 0.0452041625977 seconds
+took: 0.0452301502228 seconds
+That took: 0.470757007599 seconds
+took: 0.470765113831 seconds
+That took: 0.0559749603271 seconds
+Fr, 17 Aug 2012 13:36:24 +0000
+That took: 0.168785095215 seconds
+That took: 0.0608420372009 seconds
+That took: 0.039656162262 seconds
+That took: 0.26846408844 seconds
+Fr, 17 Aug 2012 13:39:14 +0000
+That took: 0.682765007019 seconds
+Fr, 17 Aug 2012 13:39:02 +0000
+That took: 0.172281980515 seconds
+Fr, 17 Aug 2012 13:48:16 +0000
+That took: 0.112622022629 seconds
+Fr, 17 Aug 2012 13:47:12 +0000
+That took: 0.112879037857 seconds
+Fr, 17 Aug 2012 13:46:42 +0000
+That took: 0.119169950485 seconds
+Fr, 17 Aug 2012 13:50:35 +0000
+That took: 0.122607946396 seconds
+Fr, 17 Aug 2012 13:54:50 +0000
+That took: 0.120804071426 seconds
+Fr, 17 Aug 2012 13:56:05 +0000
+That took: 0.171516895294 seconds
+Fr, 17 Aug 2012 13:59:24 +0000
+That took: 0.173485994339 seconds
+Fr, 17 Aug 2012 14:00:04 +0000
+That took: 0.133780956268 seconds
+Fr, 17 Aug 2012 14:02:07 +0000
+That took: 0.111243009567 seconds
+Fr, 17 Aug 2012 14:02:46 +0000
+That took: 0.126528024673 seconds
+Fr, 17 Aug 2012 14:04:15 +0000
+That took: 0.143733978271 seconds
+That took: 1.10544300079 seconds
+That took: 0.625975131989 seconds
+That took: 0.044224023819 seconds
+took: 0.0442500114441 seconds
+That took: 0.0481882095337 seconds
+took: 0.0482001304626 seconds
+That took: 0.0362079143524 seconds
+That took: 0.0536458492279 seconds
+took: 0.0536599159241 seconds
+That took: 1.64539313316 seconds
+took: 1.64540219307 seconds
+That took: 0.0513391494751 seconds
+That took: 0.0296609401703 seconds
+That took: 0.0423579216003 seconds
+Fr, 17 Aug 2012 14:08:53 +0000
+That took: 0.114430904388 seconds
+Fr, 17 Aug 2012 14:09:16 +0000
+That took: 0.17204785347 seconds
+That took: 0.263522148132 seconds
+That took: 0.0814828872681 seconds
+That took: 0.0326790809631 seconds
+Fr, 17 Aug 2012 14:10:09 +0000
+That took: 0.192203998566 seconds
+Fr, 17 Aug 2012 14:13:24 +0000
+That took: 0.117084026337 seconds
+Fr, 17 Aug 2012 14:13:05 +0000
+That took: 0.115369081497 seconds
+That took: 0.270706892014 seconds
+That took: 0.0764131546021 seconds
+That took: 0.0372760295868 seconds
+That took: 0.174144983292 seconds
+Fr, 17 Aug 2012 14:13:52 +0000
+That took: 0.109843969345 seconds
+Fr, 17 Aug 2012 14:14:37 +0000
+That took: 0.120617866516 seconds
+That took: 0.0451090335846 seconds
+Fr, 17 Aug 2012 14:14:26 +0000
+That took: 0.116039037704 seconds
+Fr, 17 Aug 2012 14:19:07 +0000
+That took: 0.124787092209 seconds
+Fr, 17 Aug 2012 14:19:43 +0000
+That took: 0.111484050751 seconds
+That took: 0.0455319881439 seconds
+That took: 0.0390479564667 seconds
+That took: 0.0397231578827 seconds
+That took: 0.0439140796661 seconds
+That took: 0.176241874695 seconds
+That took: 0.0867540836334 seconds
+Fr, 17 Aug 2012 14:21:57 +0000
+That took: 0.117057085037 seconds
+That took: 0.0334630012512 seconds
+That took: 0.0375299453735 seconds
+Fr, 17 Aug 2012 14:23:38 +0000
+That took: 0.180238962173 seconds
+Fr, 17 Aug 2012 14:24:18 +0000
+That took: 0.1656498909 seconds
+Fr, 17 Aug 2012 14:26:46 +0000
+That took: 0.121344089508 seconds
+Fr, 17 Aug 2012 14:26:05 +0000
+That took: 0.185479164124 seconds
+That took: 0.497084856033 seconds
+Fr, 17 Aug 2012 14:28:00 +0000
+That took: 0.119585990906 seconds
+Fr, 17 Aug 2012 14:28:31 +0000
+That took: 0.129342079163 seconds
+Fr, 17 Aug 2012 14:32:23 +0000
+That took: 0.112046003342 seconds
+Fr, 17 Aug 2012 14:33:20 +0000
+That took: 0.260540962219 seconds
+Fr, 17 Aug 2012 14:33:28 +0000
+That took: 0.624852180481 seconds
+Fr, 17 Aug 2012 14:33:37 +0000
+That took: 0.169964075089 seconds
+Fr, 17 Aug 2012 14:35:57 +0000
+That took: 0.127007007599 seconds
+That took: 0.248797893524 seconds
+Fr, 17 Aug 2012 14:37:41 +0000
+That took: 0.175336122513 seconds
+Fr, 17 Aug 2012 14:42:24 +0000
+That took: 0.112679004669 seconds
+Fr, 17 Aug 2012 14:43:03 +0000
+That took: 0.135293960571 seconds
+Fr, 17 Aug 2012 14:43:55 +0000
+That took: 0.185879945755 seconds
+Mo, 20 Aug 2012 07:16:04 +0000
+That took: 0.941012144089 seconds
+That took: 0.479270935059 seconds
+That took: 0.343080997467 seconds
+That took: 0.395556926727 seconds
+That took: 0.421415805817 seconds
+That took: 0.341639041901 seconds
+Mo, 20 Aug 2012 07:17:28 +0000
+That took: 0.122178792953 seconds
+That took: 0.0364489555359 seconds
+That took: 0.0406091213226 seconds
+That took: 0.288768053055 seconds
+That took: 0.0402121543884 seconds
+took: 0.0402381420135 seconds
+That took: 0.0585608482361 seconds
+That took: 0.0319240093231 seconds
+took: 0.031938791275 seconds
+That took: 0.0309181213379 seconds
+took: 0.0309340953827 seconds
+That took: 0.0426568984985 seconds
+took: 0.0426828861237 seconds
+That took: 0.0535311698914 seconds
+That took: 0.0798349380493 seconds
+That took: 0.0507180690765 seconds
+That took: 0.0468420982361 seconds
+took: 0.0468571186066 seconds
+That took: 0.0623459815979 seconds
+took: 0.0623741149902 seconds
+That took: 0.0571329593658 seconds
+took: 0.057147026062 seconds
+That took: 0.13175201416 seconds
+took: 0.131765127182 seconds
+That took: 0.225919008255 seconds
+That took: 0.325429916382 seconds
+Mo, 20 Aug 2012 07:20:39 +0000
+That took: 0.706971883774 seconds
+Mo, 20 Aug 2012 07:21:38 +0000
+That took: 0.68496799469 seconds
+Mo, 20 Aug 2012 07:23:35 +0000
+That took: 0.63845705986 seconds
+Mo, 20 Aug 2012 07:27:12 +0000
+That took: 0.70726108551 seconds
+Mo, 20 Aug 2012 07:28:48 +0000
+That took: 0.693768978119 seconds
+That took: 0.582536935806 seconds
+That took: 0.0403940677643 seconds
+took: 0.0404100418091 seconds
+That took: 0.622442007065 seconds
+took: 0.622452020645 seconds
+That took: 0.211858034134 seconds
+That took: 0.296997070312 seconds
+Mo, 20 Aug 2012 07:30:19 +0000
+That took: 0.121830940247 seconds
+Mo, 20 Aug 2012 07:30:26 +0000
+That took: 0.714898109436 seconds
+Mo, 20 Aug 2012 07:32:19 +0000
+That took: 0.814573049545 seconds
+Mo, 20 Aug 2012 07:33:29 +0000
+That took: 0.609543085098 seconds
+That took: 0.548038005829 seconds
+That took: 0.0525169372559 seconds
+took: 0.0525450706482 seconds
+That took: 0.614358901978 seconds
+took: 0.614367961884 seconds
+That took: 0.247636079788 seconds
+That took: 0.0337190628052 seconds
+That took: 0.042014837265 seconds
+Mo, 20 Aug 2012 07:36:27 +0000
+That took: 0.631662845612 seconds
+That took: 0.443659067154 seconds
+Mo, 20 Aug 2012 08:02:00 +0000
+That took: 0.651412963867 seconds
+Mo, 20 Aug 2012 08:06:04 +0000
+That took: 0.696475982666 seconds
+That took: 0.457249879837 seconds
+That took: 0.0328311920166 seconds
+took: 0.0328481197357 seconds
+Mo, 20 Aug 2012 08:07:46 +0000
+That took: 0.658024072647 seconds
+That took: 6.13027501106 seconds
+That took: 0.506985902786 seconds
+That took: 0.0473849773407 seconds
+took: 0.0474410057068 seconds
+Mo, 20 Aug 2012 08:16:31 +0000
+Mo, 20 Aug 2012 08:19:05 +0000
+Mo, 20 Aug 2012 08:21:13 +0000
+Mo, 20 Aug 2012 08:21:43 +0000
+Mo, 20 Aug 2012 08:24:36 +0000
+Mo, 20 Aug 2012 08:25:10 +0000
+Mo, 20 Aug 2012 08:25:27 +0000
+Mo, 20 Aug 2012 08:26:12 +0000
+Mo, 20 Aug 2012 08:26:36 +0000
+Mo, 20 Aug 2012 08:27:59 +0000
+That took: 2.02460002899 seconds
+Mo, 20 Aug 2012 08:28:34 +0000
+Mo, 20 Aug 2012 08:29:23 +0000
+Mo, 20 Aug 2012 08:30:01 +0000
+Mo, 20 Aug 2012 08:42:00 +0000
+That took: 0.649533033371 seconds
+That took: 9.05796909332 seconds
+That took: 12.8994090557 seconds
+That took: 14.8463180065 seconds
+Mo, 20 Aug 2012 08:52:59 +0000
+That took: 0.633217811584 seconds
+Mo, 20 Aug 2012 09:05:26 +0000
+That took: 0.709078788757 seconds
+Mo, 20 Aug 2012 09:09:21 +0000
+That took: 0.685882806778 seconds
+Mo, 20 Aug 2012 09:10:51 +0000
+That took: 0.684957027435 seconds
+Mo, 20 Aug 2012 09:11:21 +0000
+That took: 0.705315113068 seconds
+Mo, 20 Aug 2012 09:14:55 +0000
+That took: 0.679225921631 seconds
+Mo, 20 Aug 2012 09:16:50 +0000
+That took: 0.639605998993 seconds
+Mo, 20 Aug 2012 09:18:04 +0000
+That took: 0.614938020706 seconds
+Mo, 20 Aug 2012 09:18:30 +0000
+That took: 0.676330089569 seconds
+Mo, 20 Aug 2012 09:20:11 +0000
+That took: 0.676414012909 seconds
+Mo, 20 Aug 2012 09:22:21 +0000
+That took: 0.707309961319 seconds
+Mo, 20 Aug 2012 09:23:46 +0000
+That took: 0.657073974609 seconds
+Mo, 20 Aug 2012 09:26:36 +0000
+That took: 0.666455030441 seconds
+Mo, 20 Aug 2012 09:29:53 +0000
+That took: 0.6727039814 seconds
+Mo, 20 Aug 2012 09:31:31 +0000
+That took: 0.705657958984 seconds
+Mo, 20 Aug 2012 09:32:27 +0000
+That took: 0.666033983231 seconds
+Mo, 20 Aug 2012 09:34:21 +0000
+That took: 0.634751081467 seconds
+Mo, 20 Aug 2012 10:28:19 +0000
+That took: 0.671439886093 seconds
+Mo, 20 Aug 2012 10:33:53 +0000
+That took: 0.660074949265 seconds
+Mo, 20 Aug 2012 10:34:36 +0000
+That took: 0.647035837173 seconds
+Mo, 20 Aug 2012 10:35:03 +0000
+That took: 0.705873012543 seconds
+Mo, 20 Aug 2012 10:37:04 +0000
+That took: 0.630971193314 seconds
+Mo, 20 Aug 2012 10:38:17 +0000
+That took: 0.664561986923 seconds
+Mo, 20 Aug 2012 10:38:47 +0000
+That took: 0.638766050339 seconds
+Mo, 20 Aug 2012 10:41:25 +0000
+That took: 0.629145860672 seconds
+Mo, 20 Aug 2012 10:42:17 +0000
+That took: 0.649408102036 seconds
+Mo, 20 Aug 2012 10:44:38 +0000
+That took: 0.65580201149 seconds
+Mo, 20 Aug 2012 10:45:23 +0000
+That took: 0.747616052628 seconds
+Mo, 20 Aug 2012 10:54:43 +0000
+That took: 0.700294017792 seconds
+That took: 0.425137996674 seconds
+That took: 0.380159854889 seconds
+That took: 0.419969081879 seconds
+That took: 0.434439182281 seconds
+That took: 0.413511037827 seconds
+That took: 0.355840921402 seconds
+That took: 0.328691005707 seconds
+That took: 0.340382814407 seconds
+That took: 0.313962936401 seconds
+That took: 0.366807937622 seconds
+That took: 0.354824066162 seconds
+That took: 0.209618091583 seconds
+Mo, 20 Aug 2012 10:57:11 +0000
+That took: 0.656452894211 seconds
+Mo, 20 Aug 2012 10:57:54 +0000
+That took: 0.662055015564 seconds
+Mo, 20 Aug 2012 10:58:27 +0000
+That took: 0.656903028488 seconds
+Mo, 20 Aug 2012 10:59:46 +0000
+That took: 0.658972978592 seconds
+Mo, 20 Aug 2012 11:00:11 +0000
+That took: 0.70548915863 seconds
+Mo, 20 Aug 2012 11:03:16 +0000
+That took: 0.63986992836 seconds
+Mo, 20 Aug 2012 11:04:46 +0000
+That took: 0.654174089432 seconds
+Mo, 20 Aug 2012 11:07:33 +0000
+That took: 0.662842988968 seconds
+Mo, 20 Aug 2012 11:08:54 +0000
+That took: 0.657926082611 seconds
+Mo, 20 Aug 2012 11:10:50 +0000
+That took: 0.669166088104 seconds
+Mo, 20 Aug 2012 11:16:50 +0000
+That took: 0.645648002625 seconds
+Mo, 20 Aug 2012 11:19:36 +0000
+That took: 0.619719028473 seconds
+Mo, 20 Aug 2012 11:22:30 +0000
+That took: 0.681827068329 seconds
+Mo, 20 Aug 2012 11:23:19 +0000
+That took: 0.643837928772 seconds
+Mo, 20 Aug 2012 11:25:24 +0000
+That took: 0.672554969788 seconds
+Mo, 20 Aug 2012 11:26:02 +0000
+That took: 0.651804208755 seconds
+Mo, 20 Aug 2012 11:35:39 +0000
+That took: 0.669404029846 seconds
+Mo, 20 Aug 2012 11:38:28 +0000
+That took: 0.627372026443 seconds
+Mo, 20 Aug 2012 11:56:22 +0000
+That took: 0.674180030823 seconds
+Mo, 20 Aug 2012 11:56:59 +0000
+That took: 0.68841791153 seconds
+Mo, 20 Aug 2012 11:57:37 +0000
+That took: 0.664889097214 seconds
+Mo, 20 Aug 2012 12:08:06 +0000
+That took: 0.635060071945 seconds
+Mo, 20 Aug 2012 12:08:55 +0000
+That took: 0.654078006744 seconds
+Mo, 20 Aug 2012 12:14:26 +0000
+That took: 0.656173944473 seconds
+Mo, 20 Aug 2012 12:26:01 +0000
+That took: 0.634383201599 seconds
+Mo, 20 Aug 2012 12:28:26 +0000
+That took: 0.630277872086 seconds
+Mo, 20 Aug 2012 12:29:16 +0000
+That took: 0.81637096405 seconds
+Mo, 20 Aug 2012 12:30:20 +0000
+That took: 0.677456140518 seconds
+Mo, 20 Aug 2012 12:30:54 +0000
+That took: 0.646073102951 seconds
+Mo, 20 Aug 2012 12:33:30 +0000
+That took: 0.820529937744 seconds
+Mo, 20 Aug 2012 12:34:53 +0000
+That took: 0.614023923874 seconds
+Mo, 20 Aug 2012 12:42:20 +0000
+That took: 0.659802913666 seconds
+Mo, 20 Aug 2012 12:47:51 +0000
+That took: 0.683096885681 seconds
+Mo, 20 Aug 2012 12:49:22 +0000
+That took: 0.644929170609 seconds
+Mo, 20 Aug 2012 12:50:42 +0000
+That took: 0.689889907837 seconds
+Mo, 20 Aug 2012 12:53:09 +0000
+That took: 0.651256084442 seconds
+Mo, 20 Aug 2012 12:56:36 +0000
+That took: 0.673029899597 seconds
+Mo, 20 Aug 2012 13:00:41 +0000
+That took: 0.659172058105 seconds
+Mo, 20 Aug 2012 13:01:01 +0000
+That took: 0.713944911957 seconds
+Mo, 20 Aug 2012 13:01:40 +0000
+That took: 0.681236028671 seconds
+Mo, 20 Aug 2012 13:11:41 +0000
+That took: 0.592972993851 seconds
+Mo, 20 Aug 2012 13:19:43 +0000
+That took: 0.678761959076 seconds
+Mo, 20 Aug 2012 13:28:50 +0000
+That took: 0.669364213943 seconds
+Mo, 20 Aug 2012 13:38:33 +0000
+That took: 0.638161897659 seconds
+Mo, 20 Aug 2012 13:40:27 +0000
+That took: 0.638111829758 seconds
+Mo, 20 Aug 2012 13:42:25 +0000
+That took: 0.674626111984 seconds
+Mo, 20 Aug 2012 13:44:12 +0000
+That took: 0.651473045349 seconds
+Mo, 20 Aug 2012 13:54:43 +0000
+That took: 0.643100976944 seconds
+Mo, 20 Aug 2012 13:55:08 +0000
+That took: 0.63586807251 seconds
+Mo, 20 Aug 2012 13:57:10 +0000
+That took: 0.670257091522 seconds
+Mo, 20 Aug 2012 13:58:36 +0000
+That took: 0.641201972961 seconds
+Mo, 20 Aug 2012 14:00:05 +0000
+That took: 0.651206970215 seconds
+Mo, 20 Aug 2012 14:01:38 +0000
+That took: 0.703592061996 seconds
+Mo, 20 Aug 2012 14:02:18 +0000
+That took: 0.642416000366 seconds
+Mo, 20 Aug 2012 14:03:15 +0000
+That took: 0.636527061462 seconds
+Mo, 20 Aug 2012 14:04:20 +0000
+That took: 0.671110868454 seconds
+Mo, 20 Aug 2012 14:05:12 +0000
+That took: 0.65302491188 seconds
+Mo, 20 Aug 2012 14:07:27 +0000
+That took: 0.659718036652 seconds
+Mo, 20 Aug 2012 14:09:57 +0000
+That took: 0.683749914169 seconds
+Mo, 20 Aug 2012 14:10:40 +0000
+That took: 0.659630060196 seconds
+Mo, 20 Aug 2012 14:11:14 +0000
+That took: 0.657329082489 seconds
+Mo, 20 Aug 2012 14:12:02 +0000
+That took: 0.6555519104 seconds
+Mo, 20 Aug 2012 14:13:09 +0000
+That took: 0.709362030029 seconds
+Mo, 20 Aug 2012 14:13:19 +0000
+That took: 0.661123991013 seconds
+Mo, 20 Aug 2012 14:15:45 +0000
+That took: 0.658708095551 seconds
+Mo, 20 Aug 2012 14:16:10 +0000
+That took: 0.679024934769 seconds
+Mo, 20 Aug 2012 14:16:31 +0000
+That took: 0.66919708252 seconds
+Mo, 20 Aug 2012 14:16:54 +0000
+That took: 0.636198043823 seconds
+Mo, 20 Aug 2012 14:20:07 +0000
+That took: 0.644996881485 seconds
+Mo, 20 Aug 2012 14:20:31 +0000
+That took: 0.693068981171 seconds
+Mo, 20 Aug 2012 14:21:00 +0000
+That took: 0.61855006218 seconds
+Mo, 20 Aug 2012 14:21:28 +0000
+That took: 0.689692020416 seconds
+Mo, 20 Aug 2012 14:22:01 +0000
+That took: 0.643532037735 seconds
+Mo, 20 Aug 2012 14:22:30 +0000
+That took: 0.655355930328 seconds
+Mo, 20 Aug 2012 14:22:56 +0000
+That took: 0.670414924622 seconds
+Mo, 20 Aug 2012 14:23:29 +0000
+That took: 0.626319169998 seconds
+Mo, 20 Aug 2012 14:25:01 +0000
+That took: 0.731471061707 seconds
+Mo, 20 Aug 2012 14:28:53 +0000
+That took: 0.644748926163 seconds
+Mo, 20 Aug 2012 14:30:13 +0000
+That took: 0.671065092087 seconds
+Mo, 20 Aug 2012 14:34:21 +0000
+That took: 0.677033185959 seconds
+Mo, 20 Aug 2012 14:39:27 +0000
+That took: 0.693898200989 seconds
+Mo, 20 Aug 2012 14:40:05 +0000
+That took: 0.647859811783 seconds
+Mo, 20 Aug 2012 14:40:45 +0000
+That took: 0.679477214813 seconds
+Mo, 20 Aug 2012 14:41:19 +0000
+That took: 0.70216012001 seconds
+Di, 21 Aug 2012 07:19:28 +0000
+That took: 0.667901039124 seconds
+Di, 21 Aug 2012 07:20:52 +0000
+That took: 0.676994085312 seconds
+Di, 21 Aug 2012 07:24:48 +0000
+That took: 0.645860910416 seconds
+Di, 21 Aug 2012 07:26:51 +0000
+That took: 0.615254878998 seconds
+Di, 21 Aug 2012 07:27:46 +0000
+That took: 0.622912883759 seconds
+That took: 4.35581803322 seconds
+That took: 9.15671992302 seconds
+That took: 11.3770520687 seconds
+That took: 12.6976180077 seconds
+That took: 15.5522630215 seconds
+That took: 17.3799169064 seconds
+That took: 18.9151568413 seconds
+That took: 20.1394150257 seconds
+That took: 21.3002429008 seconds
+That took: 22.5999150276 seconds
+That took: 25.227866888 seconds
+That took: 27.0367760658 seconds
+That took: 28.5495100021 seconds
+That took: 29.9547159672 seconds
+That took: 31.6370198727 seconds
+That took: 35.3760390282 seconds
+That took: 38.2327549458 seconds
+That took: 40.2007229328 seconds
+That took: 41.9519228935 seconds
+That took: 44.0686218739 seconds
+That took: 45.6105840206 seconds
+That took: 47.1843678951 seconds
+That took: 49.0926249027 seconds
+Di, 21 Aug 2012 07:34:39 +0000
+That took: 0.637909889221 seconds
+That took: 0.472060918808 seconds
+That took: 0.37090086937 seconds
+That took: 0.267565965652 seconds
+That took: 0.157886981964 seconds
+That took: 0.163892030716 seconds
+That took: 0.158458948135 seconds
+That took: 0.190232038498 seconds
+That took: 0.203954935074 seconds
+That took: 0.202961921692 seconds
+That took: 3.41790509224 seconds
+That took: 5.18653392792 seconds
+That took: 0.217330932617 seconds
+That took: 0.239285945892 seconds
+took: 0.239303827286 seconds
+That took: 0.207477807999 seconds
+took: 0.207489013672 seconds
+That took: 0.224319219589 seconds
+That took: 0.200389146805 seconds
+That took: 0.321384191513 seconds
+That took: 0.2043800354 seconds
+That took: 0.211611032486 seconds
+That took: 3.00555896759 seconds
+That took: 5.45524501801 seconds
+That took: 0.225367069244 seconds
+took: 0.225387096405 seconds
+That took: 0.238090991974 seconds
+took: 0.238140106201 seconds
+That took: 0.29979300499 seconds
+took: 0.299812078476 seconds
+That took: 0.426587820053 seconds
+took: 0.426599979401 seconds
+That took: 0.55335688591 seconds
+took: 0.554636955261 seconds
+That took: 4.1302959919 seconds
+Di, 21 Aug 2012 07:39:46 +0000
+That took: 0.636965036392 seconds
+That took: 3.96557116508 seconds
+That took: 14.1229720116 seconds
+That took: 14.885322094 seconds
+That took: 16.0294570923 seconds
+That took: 18.7839281559 seconds
+That took: 22.1924650669 seconds
+Di, 21 Aug 2012 07:44:33 +0000
+That took: 0.628010988235 seconds
+That took: 3.97798085213 seconds
+That took: 0.492966175079 seconds
+That took: 0.393040180206 seconds
+That took: 0.249636173248 seconds
+Di, 21 Aug 2012 07:45:14 +0000
+That took: 0.679851055145 seconds
+That took: 0.488816022873 seconds
+That took: 0.381816148758 seconds
+That took: 0.274371147156 seconds
+That took: 0.158914089203 seconds
+That took: 0.190189123154 seconds
+That took: 0.188535928726 seconds
+That took: 0.178905963898 seconds
+Di, 21 Aug 2012 07:46:24 +0000
+That took: 0.691637992859 seconds
+That took: 0.554389953613 seconds
+That took: 0.446351051331 seconds
+Di, 21 Aug 2012 07:47:00 +0000
+That took: 0.706484079361 seconds
+That took: 0.438960075378 seconds
+That took: 0.361253023148 seconds
+That took: 0.281767845154 seconds
+That took: 0.180115938187 seconds
+That took: 0.156727075577 seconds
+That took: 0.157410144806 seconds
+Di, 21 Aug 2012 07:47:16 +0000
+That took: 0.710947990417 seconds
+That took: 0.550555944443 seconds
+That took: 0.312428951263 seconds
+That took: 0.118062019348 seconds
+That took: 0.0991401672363 seconds
+That took: 0.105731964111 seconds
+That took: 0.115106105804 seconds
+That took: 0.102890014648 seconds
+That took: 0.0965800285339 seconds
+That took: 0.129291057587 seconds
+That took: 0.122581005096 seconds
+That took: 0.13253903389 seconds
+That took: 0.13133597374 seconds
+That took: 0.113983154297 seconds
+That took: 0.107070922852 seconds
+That took: 0.120723009109 seconds
+That took: 0.117682933807 seconds
+That took: 0.121918201447 seconds
+That took: 0.170287847519 seconds
+That took: 0.108597993851 seconds
+That took: 0.147562980652 seconds
+That took: 0.152266025543 seconds
+That took: 0.144260883331 seconds
+That took: 0.130033016205 seconds
+That took: 0.149991035461 seconds
+That took: 0.165546894073 seconds
+That took: 0.176414012909 seconds
+That took: 0.176039934158 seconds
+That took: 0.183701038361 seconds
+That took: 0.231164932251 seconds
+That took: 0.189584970474 seconds
+That took: 0.217839002609 seconds
+took: 0.217853069305 seconds
+That took: 0.157140016556 seconds
+That took: 0.169378042221 seconds
+That took: 0.185917139053 seconds
+took: 0.185930013657 seconds
+That took: 0.225338935852 seconds
+That took: 0.328697919846 seconds
+That took: 10.5176439285 seconds
+Di, 21 Aug 2012 07:53:13 +0000
+That took: 1.01714801788 seconds
+That took: 0.5040102005 seconds
+Di, 21 Aug 2012 07:53:31 +0000
+That took: 0.622636079788 seconds
+That took: 0.418030977249 seconds
+Di, 21 Aug 2012 07:56:53 +0000
+Di, 21 Aug 2012 07:57:07 +0000
+That took: 0.728615999222 seconds
+Di, 21 Aug 2012 07:57:33 +0000
+That took: 0.658347129822 seconds
+Di, 21 Aug 2012 07:57:59 +0000
+That took: 0.691236972809 seconds
+Di, 21 Aug 2012 07:58:25 +0000
+That took: 0.648277997971 seconds
+Di, 21 Aug 2012 07:59:00 +0000
+That took: 0.670600891113 seconds
+Di, 21 Aug 2012 07:59:36 +0000
+That took: 0.671618938446 seconds
+That took: 24.6214170456 seconds
+That took: 35.9863519669 seconds
+Di, 21 Aug 2012 08:05:40 +0000
+That took: 0.661551952362 seconds
+That took: 9.54304909706 seconds
+That took: 19.9233510494 seconds
+That took: 26.8231239319 seconds
+That took: 29.4156010151 seconds
+Di, 21 Aug 2012 08:18:04 +0000
+That took: 0.661926984787 seconds
+Di, 21 Aug 2012 08:18:52 +0000
+That took: 0.661915063858 seconds
+Di, 21 Aug 2012 08:21:07 +0000
+That took: 0.659961938858 seconds
+Di, 21 Aug 2012 08:21:16 +0000
+That took: 0.672559976578 seconds
+Di, 21 Aug 2012 08:21:40 +0000
+That took: 0.652507066727 seconds
+Di, 21 Aug 2012 08:22:39 +0000
+That took: 0.672379970551 seconds
+That took: 6.09605693817 seconds
+Di, 21 Aug 2012 08:26:33 +0000
+That took: 0.700522899628 seconds
+Di, 21 Aug 2012 08:27:18 +0000
+That took: 0.680254936218 seconds
+Di, 21 Aug 2012 08:27:54 +0000
+That took: 0.677478075027 seconds
+That took: 6.91049814224 seconds
+That took: 9.95881509781 seconds
+That took: 12.2382090092 seconds
+Di, 21 Aug 2012 08:34:12 +0000
+That took: 0.648037910461 seconds
+Di, 21 Aug 2012 08:34:33 +0000
+That took: 0.614927053452 seconds
+Di, 21 Aug 2012 08:41:27 +0000
+That took: 0.715527057648 seconds
+Di, 21 Aug 2012 08:55:57 +0000
+That took: 0.654289960861 seconds
+Di, 21 Aug 2012 08:56:42 +0000
+That took: 0.697921037674 seconds
+Di, 21 Aug 2012 08:58:04 +0000
+That took: 0.681555986404 seconds
+Di, 21 Aug 2012 08:59:04 +0000
+That took: 0.730215072632 seconds
+Di, 21 Aug 2012 09:00:52 +0000
+That took: 0.712104082108 seconds
+Di, 21 Aug 2012 09:00:58 +0000
+That took: 0.666863918304 seconds
+That took: 4.37254405022 seconds
+Di, 21 Aug 2012 09:15:44 +0000
+That took: 0.649538040161 seconds
+That took: 4.79096698761 seconds
+That took: 6.38618397713 seconds
+That took: 7.78200292587 seconds
+That took: 10.0463240147 seconds
+That took: 11.3107450008 seconds
+Di, 21 Aug 2012 09:17:10 +0000
+That took: 0.634526968002 seconds
+That took: 4.68239307404 seconds
+Di, 21 Aug 2012 09:17:49 +0000
+That took: 0.640774965286 seconds
+That took: 6.84498596191 seconds
+Di, 21 Aug 2012 09:18:14 +0000
+That took: 0.71246099472 seconds
+That took: 4.25878095627 seconds
+Di, 21 Aug 2012 09:18:40 +0000
+That took: 0.694032907486 seconds
+That took: 5.6217520237 seconds
+Di, 21 Aug 2012 09:19:15 +0000
+That took: 0.648104190826 seconds
+That took: 6.14971899986 seconds
+That took: 14.2608611584 seconds
+Di, 21 Aug 2012 09:24:00 +0000
+That took: 0.700067996979 seconds
+Di, 21 Aug 2012 09:24:38 +0000
+That took: 0.693801164627 seconds
+Di, 21 Aug 2012 09:35:35 +0000
+That took: 0.652587890625 seconds
+That took: 10.2909429073 seconds
+Di, 21 Aug 2012 09:37:48 +0000
+That took: 0.65105009079 seconds
+Di, 21 Aug 2012 09:38:23 +0000
+That took: 0.639978885651 seconds
+Di, 21 Aug 2012 10:25:15 +0000
+That took: 0.647633075714 seconds
+Di, 21 Aug 2012 10:26:59 +0000
+That took: 0.685319900513 seconds
+Di, 21 Aug 2012 10:27:48 +0000
+That took: 0.649954080582 seconds
+Di, 21 Aug 2012 10:28:57 +0000
+That took: 0.742192029953 seconds
+Di, 21 Aug 2012 10:29:24 +0000
+That took: 0.724916934967 seconds
+Di, 21 Aug 2012 10:29:44 +0000
+That took: 0.647696018219 seconds
+That took: 6.12112498283 seconds
+That took: 7.79084706306 seconds
+That took: 8.58946204185 seconds
+That took: 9.26089596748 seconds
+That took: 11.0769948959 seconds
+Di, 21 Aug 2012 10:30:20 +0000
+That took: 0.697983980179 seconds
+Di, 21 Aug 2012 10:30:36 +0000
+That took: 0.642833948135 seconds
+Di, 21 Aug 2012 10:35:14 +0000
+That took: 0.654067993164 seconds
+Di, 21 Aug 2012 10:35:56 +0000
+That took: 0.683919906616 seconds
+Di, 21 Aug 2012 10:37:22 +0000
+That took: 0.669897079468 seconds
+Di, 21 Aug 2012 10:37:54 +0000
+That took: 0.669976949692 seconds
+Di, 21 Aug 2012 10:38:27 +0000
+That took: 0.682378053665 seconds
+Di, 21 Aug 2012 10:40:11 +0000
+That took: 0.632153987885 seconds
+Di, 21 Aug 2012 10:41:57 +0000
+That took: 0.650975942612 seconds
+Di, 21 Aug 2012 10:42:24 +0000
+That took: 0.693022966385 seconds
+Di, 21 Aug 2012 10:43:10 +0000
+That took: 0.658817052841 seconds
+That took: 5.42841005325 seconds
+Di, 21 Aug 2012 10:43:37 +0000
+That took: 0.659045934677 seconds
+That took: 5.09949493408 seconds
+That took: 0.478605985641 seconds
+That took: 0.371766090393 seconds
+That took: 0.440420866013 seconds
+That took: 0.391096115112 seconds
+That took: 0.440820932388 seconds
+That took: 0.493539810181 seconds
+took: 0.493551969528 seconds
+That took: 0.352924823761 seconds
+That took: 0.428143978119 seconds
+Di, 21 Aug 2012 10:44:35 +0000
+That took: 0.672407150269 seconds
+That took: 4.69586801529 seconds
+That took: 0.479860067368 seconds
+That took: 0.397129058838 seconds
+That took: 0.416566848755 seconds
+That took: 0.33531498909 seconds
+That took: 0.435498952866 seconds
+That took: 0.403836965561 seconds
+Di, 21 Aug 2012 10:44:51 +0000
+That took: 0.647857904434 seconds
+That took: 4.41591000557 seconds
+Di, 21 Aug 2012 10:46:53 +0000
+That took: 0.678345918655 seconds
+That took: 5.74430584908 seconds
+Di, 21 Aug 2012 10:47:44 +0000
+That took: 0.690893173218 seconds
+Di, 21 Aug 2012 10:48:29 +0000
+That took: 0.669001102448 seconds
+Di, 21 Aug 2012 10:49:14 +0000
+That took: 0.701458930969 seconds
+Di, 21 Aug 2012 10:49:45 +0000
+That took: 0.646255970001 seconds
+Di, 21 Aug 2012 10:49:51 +0000
+That took: 0.713335990906 seconds
+Di, 21 Aug 2012 11:13:14 +0000
+That took: 0.659241914749 seconds
+Di, 21 Aug 2012 11:13:34 +0000
+That took: 0.70685505867 seconds
+Di, 21 Aug 2012 11:15:11 +0000
+That took: 0.664728879929 seconds
+Di, 21 Aug 2012 11:22:29 +0000
+That took: 0.725536108017 seconds
+Di, 21 Aug 2012 11:23:47 +0000
+That took: 0.658349990845 seconds
+Di, 21 Aug 2012 11:33:02 +0000
+That took: 0.707734107971 seconds
+Di, 21 Aug 2012 11:34:14 +0000
+That took: 0.707914829254 seconds
+Di, 21 Aug 2012 11:35:18 +0000
+That took: 0.669672012329 seconds
+Di, 21 Aug 2012 11:36:00 +0000
+That took: 0.700206041336 seconds
+Di, 21 Aug 2012 11:37:08 +0000
+That took: 0.679208993912 seconds
+Di, 21 Aug 2012 11:37:28 +0000
+That took: 0.641983985901 seconds
+Di, 21 Aug 2012 11:39:16 +0000
+That took: 0.723937988281 seconds
+Di, 21 Aug 2012 11:39:38 +0000
+That took: 0.73686504364 seconds
+Di, 21 Aug 2012 11:40:25 +0000
+That took: 0.704281806946 seconds
+Di, 21 Aug 2012 11:40:49 +0000
+That took: 0.727330207825 seconds
+Di, 21 Aug 2012 11:41:19 +0000
+That took: 0.685574054718 seconds
+Di, 21 Aug 2012 11:48:16 +0000
+That took: 0.667161941528 seconds
+Di, 21 Aug 2012 11:49:43 +0000
+That took: 0.669708967209 seconds
+Di, 21 Aug 2012 11:50:09 +0000
+That took: 0.67787194252 seconds
+Di, 21 Aug 2012 11:50:27 +0000
+That took: 0.674457788467 seconds
+Di, 21 Aug 2012 11:51:28 +0000
+That took: 0.760581016541 seconds
+Di, 21 Aug 2012 11:55:03 +0000
+That took: 0.697672128677 seconds
+Di, 21 Aug 2012 11:55:27 +0000
+That took: 0.689931869507 seconds
+Di, 21 Aug 2012 11:56:13 +0000
+That took: 0.688832998276 seconds
+Di, 21 Aug 2012 11:56:36 +0000
+That took: 0.736268997192 seconds
+Di, 21 Aug 2012 11:58:54 +0000
+That took: 0.662533044815 seconds
+That took: 0.489500999451 seconds
+Di, 21 Aug 2012 12:00:21 +0000
+That took: 0.717180967331 seconds
+Di, 21 Aug 2012 12:01:30 +0000
+That took: 0.695152997971 seconds
+Di, 21 Aug 2012 12:01:38 +0000
+That took: 0.710843801498 seconds
+That took: 5.39320397377 seconds
+Di, 21 Aug 2012 12:02:00 +0000
+That took: 0.730297088623 seconds
+That took: 5.84482812881 seconds
+That took: 23.7416191101 seconds
+That took: 32.6085100174 seconds
+Di, 21 Aug 2012 12:04:25 +0000
+That took: 0.652721881866 seconds
+That took: 5.13106393814 seconds
+That took: 10.6129739285 seconds
+That took: 12.4853301048 seconds
+That took: 14.2370069027 seconds
+That took: 16.2169969082 seconds
+That took: 20.2861058712 seconds
+That took: 21.881385088 seconds
+That took: 23.7293820381 seconds
+That took: 25.1708269119 seconds
+That took: 26.8143689632 seconds
+That took: 28.6031780243 seconds
+That took: 30.4164180756 seconds
+Di, 21 Aug 2012 12:05:34 +0000
+That took: 0.699069976807 seconds
+That took: 4.76630997658 seconds
+That took: 7.12917900085 seconds
+That took: 9.21821498871 seconds
+That took: 10.7934298515 seconds
+That took: 12.2287769318 seconds
+Di, 21 Aug 2012 12:08:31 +0000
+That took: 0.705438137054 seconds
+That took: 5.57471013069 seconds
+That took: 6.94401311874 seconds
+That took: 8.63325405121 seconds
+Di, 21 Aug 2012 12:10:56 +0000
+That took: 0.71485710144 seconds
+That took: 6.17677307129 seconds
+That took: 9.92147922516 seconds
+That took: 12.0585680008 seconds
+That took: 14.0489301682 seconds
+That took: 15.4311301708 seconds
+Di, 21 Aug 2012 12:11:42 +0000
+That took: 0.642506122589 seconds
+That took: 7.67356514931 seconds
+That took: 11.7419581413 seconds
+Di, 21 Aug 2012 12:12:05 +0000
+That took: 0.667431116104 seconds
+That took: 4.88031697273 seconds
+That took: 12.6154670715 seconds
+That took: 0.499368190765 seconds
+Di, 21 Aug 2012 12:15:54 +0000
+That took: 0.653254985809 seconds
+That took: 5.87562394142 seconds
+That took: 10.2534179688 seconds
+That took: 12.6195149422 seconds
+That took: 14.9572589397 seconds
+That took: 16.2784030437 seconds
+That took: 41.0413651466 seconds
+That took: 46.530493021 seconds
+That took: 49.6734280586 seconds
+That took: 56.0470530987 seconds
+Di, 21 Aug 2012 12:17:54 +0000
+That took: 0.721920967102 seconds
+That took: 6.47207283974 seconds
+That took: 11.4267668724 seconds
+Di, 21 Aug 2012 12:25:12 +0000
+That took: 0.703950166702 seconds
+That took: 4.73258805275 seconds
+That took: 0.484828948975 seconds
+That took: 0.369714021683 seconds
+Di, 21 Aug 2012 12:26:31 +0000
+That took: 0.691444158554 seconds
+That took: 7.11349010468 seconds
+Di, 21 Aug 2012 12:27:27 +0000
+That took: 0.667877912521 seconds
+That took: 0.608409166336 seconds
+That took: 0.562546014786 seconds
+That took: 4.67096614838 seconds
+That took: 0.640673875809 seconds
+That took: 0.513455867767 seconds
+Di, 21 Aug 2012 12:28:25 +0000
+That took: 0.670608043671 seconds
+That took: 4.34324193001 seconds
+That took: 0.626392841339 seconds
+That took: 0.510334014893 seconds
+That took: 0.497035980225 seconds
+Di, 21 Aug 2012 12:29:03 +0000
+That took: 0.677436113358 seconds
+That took: 4.78599500656 seconds
+That took: 0.839057207108 seconds
+That took: 0.665804862976 seconds
+That took: 0.650867938995 seconds
+That took: 0.766839027405 seconds
+That took: 0.792550086975 seconds
+That took: 0.739943027496 seconds
+That took: 0.783290863037 seconds
+That took: 0.755921125412 seconds
+That took: 0.773900032043 seconds
+That took: 0.79300904274 seconds
+That took: 0.810832023621 seconds
+That took: 8.30983495712 seconds
+That took: 0.575412034988 seconds
+That took: 0.824002027512 seconds
+took: 0.824031829834 seconds
+That took: 0.615193843842 seconds
+That took: 0.873430013657 seconds
+took: 0.873451948166 seconds
+That took: 0.897630929947 seconds
+That took: 0.855991840363 seconds
+That took: 0.954761981964 seconds
+That took: 0.797163009644 seconds
+That took: 0.722671031952 seconds
+That took: 0.680042982101 seconds
+That took: 0.758432149887 seconds
+That took: 0.947340011597 seconds
+Di, 21 Aug 2012 12:34:13 +0000
+That took: 0.938483953476 seconds
+That took: 6.61531805992 seconds
+Di, 21 Aug 2012 12:35:38 +0000
+That took: 0.696208000183 seconds
+Di, 21 Aug 2012 12:37:24 +0000
+That took: 0.699891090393 seconds
+That took: 0.440010070801 seconds
+That took: 0.376541137695 seconds
+That took: 0.258008956909 seconds
+That took: 0.251960039139 seconds
+That took: 0.256615161896 seconds
+Di, 21 Aug 2012 12:43:50 +0000
+That took: 0.723115921021 seconds
+Di, 21 Aug 2012 12:44:07 +0000
+That took: 0.640789985657 seconds
+Di, 21 Aug 2012 12:44:24 +0000
+That took: 0.667042016983 seconds
+Di, 21 Aug 2012 12:44:40 +0000
+That took: 0.721704959869 seconds
+Di, 21 Aug 2012 12:52:42 +0000
+That took: 0.720839977264 seconds
+Di, 21 Aug 2012 12:53:13 +0000
+That took: 0.702501058578 seconds
+Di, 21 Aug 2012 12:55:01 +0000
+That took: 0.705691814423 seconds
+Di, 21 Aug 2012 12:55:48 +0000
+That took: 0.677055835724 seconds
+Di, 21 Aug 2012 12:57:49 +0000
+That took: 0.710328102112 seconds
+Di, 21 Aug 2012 12:58:49 +0000
+That took: 0.718513965607 seconds
+Di, 21 Aug 2012 12:59:31 +0000
+That took: 0.678858995438 seconds
+Di, 21 Aug 2012 12:59:56 +0000
+That took: 0.732316017151 seconds
+Di, 21 Aug 2012 13:00:34 +0000
+That took: 0.708935976028 seconds
+Di, 21 Aug 2012 13:02:12 +0000
+That took: 0.666764974594 seconds
+Di, 21 Aug 2012 13:03:11 +0000
+That took: 0.705523967743 seconds
+Di, 21 Aug 2012 13:04:36 +0000
+That took: 0.680536031723 seconds
+Di, 21 Aug 2012 13:04:50 +0000
+That took: 0.708788871765 seconds
+Di, 21 Aug 2012 13:05:12 +0000
+That took: 0.666332006454 seconds
+Di, 21 Aug 2012 13:06:59 +0000
+That took: 0.696871995926 seconds
+Di, 21 Aug 2012 13:07:46 +0000
+That took: 0.662503004074 seconds
+Di, 21 Aug 2012 13:11:30 +0000
+That took: 0.750820875168 seconds
+Di, 21 Aug 2012 13:12:09 +0000
+That took: 0.713725090027 seconds
+Di, 21 Aug 2012 13:12:53 +0000
+That took: 0.683009147644 seconds
+That took: 5.58233499527 seconds
+That took: 9.71107316017 seconds
+That took: 11.107475996 seconds
+Di, 21 Aug 2012 13:21:41 +0000
+That took: 0.667857170105 seconds
+Di, 21 Aug 2012 13:22:05 +0000
+That took: 0.658615112305 seconds
+Di, 21 Aug 2012 13:22:49 +0000
+That took: 0.733001947403 seconds
+Di, 21 Aug 2012 13:25:56 +0000
+That took: 0.695163965225 seconds
+Di, 21 Aug 2012 13:29:32 +0000
+That took: 0.694823980331 seconds
+Di, 21 Aug 2012 13:33:15 +0000
+That took: 0.721326112747 seconds
+Di, 21 Aug 2012 13:36:03 +0000
+That took: 0.683193922043 seconds
+Di, 21 Aug 2012 13:44:49 +0000
+That took: 0.665850877762 seconds
+That took: 0.466130018234 seconds
+That took: 0.448963880539 seconds
+That took: 0.304967164993 seconds
+That took: 5.58880996704 seconds
+Processing of all 9 tiledependent datasets took: 71.2335488796 seconds
+Di, 21 Aug 2012 13:56:34 +0000
+That took: 0.690410852432 seconds
+That took: 4.8395409584 seconds
+Processing of all 9 tiledependent datasets took: 0.00193905830383 seconds
+Di, 21 Aug 2012 13:59:04 +0000
+That took: 0.710476875305 seconds
+That took: 6.13907599449 seconds
+Di, 21 Aug 2012 14:02:55 +0000
+That took: 0.692903995514 seconds
+That took: 5.15589690208 seconds
+Processing of all 9 tiledependent datasets took: 0.00249886512756 seconds
+Di, 21 Aug 2012 14:03:53 +0000
+That took: 0.630034923553 seconds
+That took: 4.98757481575 seconds
+Di, 21 Aug 2012 14:07:32 +0000
+That took: 0.653084993362 seconds
+That took: 4.95734405518 seconds
+Processing of all 9 tiledependent datasets took: 0.557378053665 seconds
+Di, 21 Aug 2012 14:09:24 +0000
+That took: 0.690640926361 seconds
+That took: 4.86740708351 seconds
+Processing of all 9 tiledependent datasets took: 0.152602910995 seconds
+That took: 17.8686230183 seconds
+Processing of all 9 tiledependent datasets took: 0.657082796097 seconds
+That took: 24.1820149422 seconds
+Processing of all 9 tiledependent datasets took: 0.727616071701 seconds
+Mi, 22 Aug 2012 07:18:59 +0000
+That took: 1.04320788383 seconds
+That took: 8.86874699593 seconds
+Processing of all 9 tiledependent datasets took: 0.752683877945 seconds
+That took: 0.646962165833 seconds
+That took: 0.523014068604 seconds
+That took: 0.366986036301 seconds
+That took: 0.398713827133 seconds
+That took: 0.402385950089 seconds
+Processing of all 9 tiledependent datasets took: 0.130817890167 seconds
+Mi, 22 Aug 2012 07:22:13 +0000
+That took: 0.692857980728 seconds
+That took: 0.493342876434 seconds
+That took: 0.400331020355 seconds
+That took: 0.282274007797 seconds
+That took: 5.32114005089 seconds
+That took: 0.384221792221 seconds
+Processing of all 9 tiledependent datasets took: 71.0757050514 seconds
+Mi, 22 Aug 2012 07:32:31 +0000
+That took: 0.717989206314 seconds
+That took: 0.484531879425 seconds
+That took: 0.346075057983 seconds
+That took: 0.278743982315 seconds
+That took: 0.253185987473 seconds
+That took: 4.57455801964 seconds
+That took: 0.369338989258 seconds
+That took: 0.37268614769 seconds
+Mi, 22 Aug 2012 07:34:27 +0000
+That took: 0.686816930771 seconds
+That took: 0.41179394722 seconds
+That took: 0.370214939117 seconds
+That took: 0.239852905273 seconds
+That took: 0.244561910629 seconds
+That took: 4.29867601395 seconds
+Mi, 22 Aug 2012 07:41:55 +0000
+That took: 0.760035991669 seconds
+That took: 0.456755876541 seconds
+That took: 0.396112918854 seconds
+That took: 0.278614997864 seconds
+That took: 0.247361898422 seconds
+That took: 3.88595890999 seconds
+Processing of all 9 tiledependent datasets took: 72.5640368462 seconds
+Mi, 22 Aug 2012 07:34:52 +0000
+That took: 0.688247919083 seconds
+That took: 0.464677095413 seconds
+That took: 0.374902009964 seconds
+That took: 0.233882904053 seconds
+That took: 0.254018783569 seconds
+That took: 6.17152285576 seconds
+Mi, 22 Aug 2012 07:44:52 +0000
+That took: 0.699617862701 seconds
+That took: 4.9113919735 seconds
+That took: 0.64143705368 seconds
+That took: 0.500083208084 seconds
+That took: 0.394710063934 seconds
+That took: 0.40042090416 seconds
+Mi, 22 Aug 2012 07:47:11 +0000
+That took: 0.710104942322 seconds
+That took: 0.526816129684 seconds
+That took: 0.410635948181 seconds
+That took: 0.312900066376 seconds
+That took: 0.305150985718 seconds
+That took: 4.249958992 seconds
+Mi, 22 Aug 2012 07:50:40 +0000
+That took: 0.643887996674 seconds
+That took: 0.43825507164 seconds
+That took: 0.386259078979 seconds
+That took: 0.23993897438 seconds
+That took: 0.228820085526 seconds
+That took: 3.81651997566 seconds
+Processing of all 9 tiledependent datasets took: 66.1546399593 seconds
+Mi, 22 Aug 2012 08:28:47 +0000
+That took: 0.704586982727 seconds
+That took: 0.504247903824 seconds
+That took: 0.395559072495 seconds
+That took: 0.28373503685 seconds
+That took: 0.233684062958 seconds
+That took: 3.62213206291 seconds
+Mi, 22 Aug 2012 08:29:59 +0000
+That took: 0.6895840168 seconds
+That took: 0.537975072861 seconds
+That took: 0.380109071732 seconds
+That took: 0.269786119461 seconds
+That took: 0.250632047653 seconds
+That took: 4.78218102455 seconds
+Mi, 22 Aug 2012 08:32:12 +0000
+That took: 0.693922996521 seconds
+That took: 0.440235853195 seconds
+That took: 0.364717006683 seconds
+That took: 0.24485707283 seconds
+That took: 0.231450080872 seconds
+That took: 8.42330098152 seconds
+Mi, 22 Aug 2012 08:34:52 +0000
+That took: 0.70263004303 seconds
+That took: 0.464202165604 seconds
+That took: 0.363223075867 seconds
+That took: 0.277050971985 seconds
+That took: 0.182976007462 seconds
+That took: 0.267809867859 seconds
+took: 0.267821073532 seconds
+Mi, 22 Aug 2012 09:03:33 +0000
+That took: 0.672572135925 seconds
+Mi, 22 Aug 2012 09:13:55 +0000
+That took: 0.684084892273 seconds
+That took: 0.479521989822 seconds
+That took: 0.395435094833 seconds
+That took: 0.245042085648 seconds
+That took: 4.64711499214 seconds
+That took: 0.414181947708 seconds
+Processing of all 9 tiledependent datasets took: 74.0425670147 seconds
+Mi, 22 Aug 2012 09:18:49 +0000
+That took: 0.652301073074 seconds
+That took: 0.476361989975 seconds
+That took: 0.388787984848 seconds
+That took: 0.278413057327 seconds
+That took: 4.35980415344 seconds
+Processing of all 9 tiledependent datasets took: 67.5094189644 seconds
+Mi, 22 Aug 2012 09:26:18 +0000
+That took: 0.658518791199 seconds
+That took: 0.484141111374 seconds
+That took: 0.370880126953 seconds
+That took: 0.250549077988 seconds
+That took: 3.87859892845 seconds
+Processing of all 9 tiledependent datasets took: 71.9999029636 seconds
+Mi, 22 Aug 2012 09:28:11 +0000
+That took: 0.689270019531 seconds
+That took: 5.58517503738 seconds
+That took: 8.98519301414 seconds
+That took: 0.690461874008 seconds
+That took: 0.567787885666 seconds
+That took: 0.431430101395 seconds
+Processing of all 9 tiledependent datasets took: 78.4298369884 seconds
+Mi, 22 Aug 2012 09:31:20 +0000
+That took: 0.717201948166 seconds
+That took: 5.1102180481 seconds
+That took: 0.647373914719 seconds
+That took: 0.539293050766 seconds
+That took: 0.394376039505 seconds
+Processing of all 9 tiledependent datasets took: 73.8749330044 seconds
+Mi, 22 Aug 2012 09:38:25 +0000
+That took: 0.693876981735 seconds
+That took: 5.17479801178 seconds
+That took: 0.658700942993 seconds
+That took: 0.549492835999 seconds
+That took: 0.402184963226 seconds
+Processing of all 9 tiledependent datasets took: 72.749163866 seconds
+Mi, 22 Aug 2012 10:42:25 +0000
+That took: 0.67436003685 seconds
+That took: 0.518293857574 seconds
+That took: 0.403862953186 seconds
+That took: 5.24752306938 seconds
+Processing of all 9 tiledependent datasets took: 77.8736228943 seconds
+Mi, 22 Aug 2012 10:52:48 +0000
+That took: 0.783689975739 seconds
+That took: 4.71547913551 seconds
+Processing of all 9 tiledependent datasets took: 0.140352964401 seconds
+Mi, 22 Aug 2012 10:54:40 +0000
+That took: 0.677832126617 seconds
+That took: 4.99052000046 seconds
+Processing of all 9 tiledependent datasets took: 0.676789999008 seconds
+Mi, 22 Aug 2012 10:57:59 +0000
+That took: 0.696985006332 seconds
+That took: 5.49052095413 seconds
+Processing of all 9 tiledependent datasets took: 0.584469079971 seconds
+Mi, 22 Aug 2012 11:00:09 +0000
+That took: 0.709282159805 seconds
+Mi, 22 Aug 2012 11:00:38 +0000
+That took: 0.746537208557 seconds
+Mi, 22 Aug 2012 11:03:08 +0000
+That took: 0.704869031906 seconds
+Mi, 22 Aug 2012 11:09:43 +0000
+That took: 0.669137001038 seconds
+Mi, 22 Aug 2012 11:09:56 +0000
+That took: 0.710154056549 seconds
+Mi, 22 Aug 2012 11:10:42 +0000
+That took: 0.692140817642 seconds
+Mi, 22 Aug 2012 11:10:58 +0000
+That took: 0.699398994446 seconds
+Mi, 22 Aug 2012 11:12:39 +0000
+That took: 0.749634027481 seconds
+Mi, 22 Aug 2012 11:13:46 +0000
+That took: 0.661906003952 seconds
+Mi, 22 Aug 2012 11:14:09 +0000
+That took: 0.763558864594 seconds
+Mi, 22 Aug 2012 11:14:22 +0000
+That took: 0.710952997208 seconds
+Mi, 22 Aug 2012 11:14:42 +0000
+That took: 0.734147787094 seconds
+Mi, 22 Aug 2012 12:01:31 +0000
+That took: 0.801719903946 seconds
+That took: 5.82156991959 seconds
+Processing of all 9 tiledependent datasets took: 0.557143211365 seconds
+Mi, 22 Aug 2012 12:02:24 +0000
+That took: 0.733834981918 seconds
+That took: 0.480467796326 seconds
+That took: 0.39822602272 seconds
+That took: 0.250934839249 seconds
+That took: 6.25739884377 seconds
+Processing of all 9 tiledependent datasets took: 74.5197792053 seconds
+Mi, 22 Aug 2012 12:10:22 +0000
+That took: 0.655697107315 seconds
+That took: 7.3600230217 seconds
+Processing of all 9 tiledependent datasets took: 75.851444006 seconds
+That took: 0.630765914917 seconds
+That took: 0.538506031036 seconds
+That took: 0.440811872482 seconds
+Mi, 22 Aug 2012 12:15:19 +0000
+That took: 0.672868967056 seconds
+That took: 5.80240106583 seconds
+Processing of all 9 tiledependent datasets took: 98.0335261822 seconds
+Mi, 22 Aug 2012 12:18:33 +0000
+That took: 0.664983034134 seconds
+That took: 7.34422922134 seconds
+Processing of all 9 tiledependent datasets took: 76.390859127 seconds
+Mi, 22 Aug 2012 12:21:30 +0000
+That took: 0.672607898712 seconds
+That took: 5.31316184998 seconds
+Processing of all 9 tiledependent datasets took: 79.0017797947 seconds
+Mi, 22 Aug 2012 12:26:26 +0000
+That took: 0.718042850494 seconds
+That took: 5.67138791084 seconds
+Processing of all 9 tiledependent datasets took: 76.6358149052 seconds
+Mi, 22 Aug 2012 12:30:31 +0000
+That took: 0.703498125076 seconds
+That took: 9.63976192474 seconds
+That took: 12.6619870663 seconds
+Processing of all 9 tiledependent datasets took: 76.6842598915 seconds
+Mi, 22 Aug 2012 12:44:29 +0000
+That took: 0.682665109634 seconds
+That took: 6.38823008537 seconds
+Processing of all 9 tiledependent datasets took: 76.2702229023 seconds
+Mi, 22 Aug 2012 12:49:25 +0000
+That took: 0.677433013916 seconds
+That took: 6.56097412109 seconds
+Processing of all 9 tiledependent datasets took: 74.3240921497 seconds
+Mi, 22 Aug 2012 12:54:51 +0000
+That took: 0.682733058929 seconds
+That took: 6.66688299179 seconds
+Processing of all 9 tiledependent datasets took: 74.5385000706 seconds
+Mi, 22 Aug 2012 13:00:12 +0000
+That took: 0.665620088577 seconds
+That took: 5.28379511833 seconds
+Processing of all 9 tiledependent datasets took: 81.3281600475 seconds
+Mi, 22 Aug 2012 13:09:11 +0000
+That took: 0.672096014023 seconds
+Mi, 22 Aug 2012 13:09:31 +0000
+That took: 0.674476861954 seconds
+That took: 10.0125000477 seconds
+Mi, 22 Aug 2012 13:10:46 +0000
+Mi, 22 Aug 2012 13:13:22 +0000
+That took: 0.282710075378 seconds
+Mi, 22 Aug 2012 13:13:39 +0000
+That took: 0.26881814003 seconds
+Mi, 22 Aug 2012 13:13:56 +0000
+Mi, 22 Aug 2012 13:15:26 +0000
+Mi, 22 Aug 2012 13:17:30 +0000
+Mi, 22 Aug 2012 13:21:26 +0000
+Mi, 22 Aug 2012 13:22:50 +0000
+Mi, 22 Aug 2012 13:24:09 +0000
+That took: 2.418612957 seconds
+Mi, 22 Aug 2012 13:24:40 +0000
+That took: 2.42841506004 seconds
+Mi, 22 Aug 2012 13:25:54 +0000
+That took: 2.14020895958 seconds
+That took: 9.09084105492 seconds
+That took: 11.5766341686 seconds
+That took: 2.16735601425 seconds
+That took: 1.34745788574 seconds
+That took: 0.751373052597 seconds
+That took: 0.625550031662 seconds
+That took: 0.76198887825 seconds
+That took: 1.09170889854 seconds
+That took: 1.52891898155 seconds
+That took: 1.52415204048 seconds
+That took: 1.16651391983 seconds
+That took: 1.10260891914 seconds
+That took: 1.44972109795 seconds
+That took: 1.60248684883 seconds
+took: 1.60249400139 seconds
+That took: 1.7262699604 seconds
+took: 1.72627711296 seconds
+That took: 2.16768312454 seconds
+That took: 2.25395393372 seconds
+Processing of all 9 tiledependent datasets took: 74.6490309238 seconds
+That took: 194.69999814 seconds
+That took: 2.07560801506 seconds
+That took: 1.79374814034 seconds
+That took: 1.2639029026 seconds
+That took: 1.06961512566 seconds
+That took: 1.05420303345 seconds
+That took: 0.983263969421 seconds
+That took: 0.905333995819 seconds
+Mi, 22 Aug 2012 13:32:35 +0000
+That took: 2.24217009544 seconds
+That took: 1.67065691948 seconds
+That took: 1.51478099823 seconds
+That took: 7.3759098053 seconds
+Processing of all 9 tiledependent datasets took: 81.3498930931 seconds
+That took: 150.38469696 seconds
+That took: 1.61732888222 seconds
+Mi, 22 Aug 2012 13:37:48 +0000
+That took: 2.35956120491 seconds
+That took: 9.98433303833 seconds
+That took: 15.843996048 seconds
+Processing of all 9 tiledependent datasets took: 73.6808600426 seconds
+Mi, 22 Aug 2012 13:41:31 +0000
+That took: 2.07151603699 seconds
+That took: 8.06050801277 seconds
+Processing of all 9 tiledependent datasets took: 101.343252897 seconds
+That took: 129.546564102 seconds
+Mi, 22 Aug 2012 13:44:23 +0000
+That took: 2.03807091713 seconds
+That took: 7.38775801659 seconds
+That took: 13.0563850403 seconds
+That took: 2.14702701569 seconds
+That took: 1.80467796326 seconds
+That took: 1.17989683151 seconds
+That took: 1.0888068676 seconds
+That took: 0.996505975723 seconds
+That took: 0.933521032333 seconds
+That took: 1.0974419117 seconds
+That took: 0.815490961075 seconds
+Mi, 22 Aug 2012 13:45:30 +0000
+That took: 0.687508821487 seconds
+That took: 5.90370488167 seconds
+That took: 9.47221183777 seconds
+Mi, 22 Aug 2012 13:46:19 +0000
+That took: 2.08222103119 seconds
+That took: 9.53282213211 seconds
+That took: 13.2016201019 seconds
+That took: 1.9689040184 seconds
+That took: 1.65073084831 seconds
+That took: 1.67612409592 seconds
+That took: 9.88761401176 seconds
+That took: 14.4914281368 seconds
+That took: 1.0028591156 seconds
+That took: 0.967723846436 seconds
+That took: 1.00839114189 seconds
+That took: 0.761049032211 seconds
+That took: 0.798229932785 seconds
+That took: 0.795813798904 seconds
+That took: 0.845211982727 seconds
+That took: 0.799068927765 seconds
+That took: 0.784265995026 seconds
+Mi, 22 Aug 2012 13:49:21 +0000
+That took: 2.0613899231 seconds
+Mi, 22 Aug 2012 13:50:07 +0000
+That took: 2.11416697502 seconds
+That took: 18.0000069141 seconds
+Mi, 22 Aug 2012 13:54:36 +0000
+That took: 2.02984285355 seconds
+That took: 8.16759300232 seconds
+Mi, 22 Aug 2012 13:55:26 +0000
+That took: 2.09743404388 seconds
+Mi, 22 Aug 2012 13:56:48 +0000
+That took: 2.09765410423 seconds
+That took: 9.97928094864 seconds
+Mi, 22 Aug 2012 13:57:47 +0000
+That took: 2.09370183945 seconds
+That took: 7.11861300468 seconds
+Mi, 22 Aug 2012 14:01:02 +0000
+That took: 2.09719586372 seconds
+That took: 6.96197485924 seconds
+Mi, 22 Aug 2012 14:05:38 +0000
+That took: 2.10728001595 seconds
+That took: 11.2016918659 seconds
+Mi, 22 Aug 2012 14:06:46 +0000
+That took: 2.07586789131 seconds
+That took: 8.03167581558 seconds
+Mi, 22 Aug 2012 14:08:02 +0000
+That took: 2.09953308105 seconds
+That took: 6.98785710335 seconds
+Mi, 22 Aug 2012 14:09:43 +0000
+That took: 2.06306004524 seconds
+That took: 8.1514749527 seconds
+Mi, 22 Aug 2012 14:11:12 +0000
+That took: 2.09291195869 seconds
+That took: 6.56810903549 seconds
+Mi, 22 Aug 2012 14:12:48 +0000
+That took: 2.0307431221 seconds
+That took: 6.95455908775 seconds
+Mi, 22 Aug 2012 14:19:14 +0000
+That took: 2.11592388153 seconds
+That took: 8.04808402061 seconds
+Mi, 22 Aug 2012 14:20:44 +0000
+That took: 2.04998803139 seconds
+That took: 8.47668194771 seconds
+Mi, 22 Aug 2012 14:21:24 +0000
+That took: 2.06152510643 seconds
+That took: 7.39779806137 seconds
+Processing of all 9 tiledependent datasets took: 0.54159283638 seconds
+Mi, 22 Aug 2012 14:22:11 +0000
+That took: 2.11419892311 seconds
+That took: 8.38490891457 seconds
+Processing of all 9 tiledependent datasets took: 0.541059970856 seconds
+Processing of all 9 tiledependent datasets took: 0.566904067993 seconds
+Mi, 22 Aug 2012 14:24:15 +0000
+That took: 2.11078310013 seconds
+That took: 8.50214409828 seconds
+Processing of all 9 tiledependent datasets took: 74.7921180725 seconds
+That took: 108.60552907 seconds
+That took: 118.640954018 seconds
+That took: 121.748049021 seconds
+That took: 125.484373093 seconds
+Processing of all 9 tiledependent datasets took: 73.925014019 seconds
+That took: 219.791133165 seconds
+That took: 2.37707686424 seconds
+That took: 1.92372512817 seconds
+That took: 1.2184779644 seconds
+That took: 1.15640592575 seconds
+That took: 1.15562200546 seconds
+That took: 1.05533099174 seconds
+That took: 0.978662967682 seconds
+Do, 23 Aug 2012 07:38:06 +0000
+That took: 2.4986770153 seconds
+That took: 9.3126039505 seconds
+Processing of all 9 tiledependent datasets took: 0.610133171082 seconds
+Do, 23 Aug 2012 07:39:42 +0000
+That took: 2.05434298515 seconds
+Do, 23 Aug 2012 07:40:37 +0000
+That took: 2.05882692337 seconds
+Do, 23 Aug 2012 07:41:56 +0000
+That took: 2.07946395874 seconds
+Do, 23 Aug 2012 07:42:46 +0000
+That took: 2.01477909088 seconds
+Do, 23 Aug 2012 07:43:04 +0000
+That took: 2.0500729084 seconds
+Do, 23 Aug 2012 07:43:42 +0000
+That took: 2.13314390182 seconds
+Do, 23 Aug 2012 07:43:57 +0000
+That took: 2.1297109127 seconds
+Do, 23 Aug 2012 07:45:57 +0000
+That took: 2.0845990181 seconds
+Do, 23 Aug 2012 07:47:12 +0000
+That took: 2.10393691063 seconds
+Do, 23 Aug 2012 07:47:48 +0000
+That took: 2.08871603012 seconds
+Do, 23 Aug 2012 07:50:10 +0000
+That took: 2.16053986549 seconds
+That took: 8.23380899429 seconds
+Processing of all 9 tiledependent datasets took: 0.528792142868 seconds
+Do, 23 Aug 2012 07:53:05 +0000
+That took: 2.04536318779 seconds
+Do, 23 Aug 2012 07:53:28 +0000
+That took: 2.02837610245 seconds
+Do, 23 Aug 2012 07:53:53 +0000
+That took: 2.12758183479 seconds
+Do, 23 Aug 2012 07:54:59 +0000
+That took: 2.11499595642 seconds
+That took: 19.4551520348 seconds
+Processing of all 9 tiledependent datasets took: 0.538918972015 seconds
+Do, 23 Aug 2012 08:10:08 +0000
+That took: 2.007791996 seconds
+That took: 8.82963705063 seconds
+Do, 23 Aug 2012 08:11:14 +0000
+That took: 2.0609588623 seconds
+That took: 8.31823992729 seconds
+That took: 30.5107758045 seconds
+That took: 35.3585588932 seconds
+That took: 39.0055258274 seconds
+That took: 41.5999510288 seconds
+That took: 44.8557507992 seconds
+Do, 23 Aug 2012 08:17:10 +0000
+That took: 0.706806898117 seconds
+That took: 7.07329392433 seconds
+Do, 23 Aug 2012 08:18:06 +0000
+That took: 0.658940076828 seconds
+That took: 4.94171190262 seconds
+Processing of all 9 tiledependent datasets took: 80.7003760338 seconds
+That took: 0.641391038895 seconds
+Do, 23 Aug 2012 08:21:10 +0000
+That took: 0.63881611824 seconds
+That took: 0.512824058533 seconds
+That took: 0.359313011169 seconds
+That took: 0.418732881546 seconds
+That took: 0.362981796265 seconds
+That took: 0.415995121002 seconds
+That took: 0.435375928879 seconds
+That took: 4.91289401054 seconds
+Processing of all 9 tiledependent datasets took: 74.9684710503 seconds
+That took: 0.58468914032 seconds
+took: 0.584721088409 seconds
+That took: 0.62059211731 seconds
+That took: 0.453347921371 seconds
+Do, 23 Aug 2012 08:24:20 +0000
+That took: 0.654723882675 seconds
+That took: 4.95964288712 seconds
+That took: 0.652756929398 seconds
+That took: 0.485796928406 seconds
+Processing of all 9 tiledependent datasets took: 72.3202040195 seconds
+Do, 23 Aug 2012 08:28:10 +0000
+That took: 0.726143836975 seconds
+That took: 6.54581999779 seconds
+Processing of all 9 tiledependent datasets took: 74.7416980267 seconds
+That took: 123.676851988 seconds
+Do, 23 Aug 2012 08:33:24 +0000
+Do, 23 Aug 2012 08:33:41 +0000
+Do, 23 Aug 2012 08:36:34 +0000
+That took: 2.10992407799 seconds
+That took: 8.30564498901 seconds
+Do, 23 Aug 2012 08:37:02 +0000

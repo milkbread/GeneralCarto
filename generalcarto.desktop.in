@@ -1,0 +1,8 @@
+[Desktop Entry]
+_Name=Generalcarto
+_Comment=Generalcarto application
+Categories=GNOME;Utility;
+Exec=generalcarto
+Icon=generalcarto
+Terminal=false
+Type=Application

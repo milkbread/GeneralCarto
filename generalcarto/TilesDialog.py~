@@ -1,0 +1,365 @@
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+from gi.repository import Gtk # pylint: disable=E0611
+
+from generalcarto_lib.helpers import get_builder
+
+import gettext
+from gettext import gettext as _
+gettext.textdomain('generalcarto')
+
+from generalcarto import rendering
+import mapnik2 as mapnik
+from generalcarto import functions as func
+import os
+
+from multiprocessing import Pool
+import time
+import pprocess
+
+
+class TilesDialog(Gtk.Dialog):
+    __gtype_name__ = "TilesDialog"
+
+    def __new__(cls, sent):
+                """Special static method that's automatically called by Python when 
+                constructing a new instance of this class.
+                
+                Returns a fully instantiated TilesDialog object.
+                """
+                #get the sent informations
+                global tile_parts
+                tile_parts = sent.split(':')
+                #print tile_parts 
+
+                #initialization of all sent data
+                prj = mapnik.Projection("+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs")
+                extent = tile_parts[0].split('(')[1].split(')')[0].split(', ')
+                print extent
+	            c0 = prj.inverse(mapnik.Coord(float(extent[0]),float(extent[2])))
+                c1 = prj.inverse(mapnik.Coord(float(extent[1]),float(extent[3])))
+                bbox = (c0.x, c0.y, c1.x, c1.y)
+                global mapfile        
+                mapfile = tile_parts[1]
+                global tile_dir
+                tile_dir = tile_parts[2]
+                global maxZoom
+                maxZoom = int(tile_parts[4])
+                minZoom = int(tile_parts[3])
+                #get the minimal tile view for setted dataset -->minimum means: mind. 9 Tiles are created
+                global all_tiles
+	            all_tiles = rendering.renderTiles(bbox, tile_dir, minZoom, maxZoom)
+                #initialize the tile rendering object
+                global renderer
+                renderer = rendering.RenderThread(tile_dir, mapfile, maxZoom)
+                #save start zoom
+                global start_zoom
+                start_zoom = all_tiles[0][2]
+                #find all x and y names of the necessary tiles and...               
+                global x
+                x = []
+                x.append(all_tiles[0][0])
+                global y
+                y = []
+                y.append(all_tiles[0][1])
+                for i in range(1, len(all_tiles)):
+                    if (all_tiles[i])[0] > (all_tiles[i-1])[0]:
+                        x.append(all_tiles[i][0])
+                #print 'all x: '+str(x)
+                for j in range(1,len(x)):
+                    if (all_tiles[j])[1] > (all_tiles[j-1])[1]:
+                        y.append(all_tiles[j][1])
+                #print 'all y: '+str(y)
+                #...get the zentral tile of all possible
+                global zentral_tile
+                zentral_tile = func.getZentralTile(x,y)
+                #initialize the size of the tile buffer
+                global buffer_size
+                buffer_size = 128                
+                #render the the central and all 8 surrounding tiles
+                global rendered_tiles
+                global first_zentral_uri
+                first_zentral_uri = all_tiles[0][3]
+                zoom = start_zoom
+
+                c0, c1 = renderer.calcTileCoordinates(zentral_tile, zoom)
+                print 'Coordinates of Tile:',c0, c1
+
+                global start_time
+                start_time = time.time()	    
+        
+                            
+                #initialize the zoomfactor, that is relative to the start zoom
+                global zoomFactor
+                zoomFactor = 0
+                
+                builder = get_builder('TilesDialog')
+                global new_object
+                new_object = builder.get_object('tiles_dialog')
+                new_object.finish_initializing(builder)
+                return new_object
+                
+
+    def finish_initializing(self, builder):
+        """Called when we're finished initializing.
+
+        finish_initalizing should be called after parsing the ui definition
+        and creating a TilesDialog object with it in order to
+        finish initializing the start of the new TilesDialog
+        instance.
+        """
+        # Get a reference to the builder and set up the signals.
+        self.builder = builder
+        self.ui = builder.get_ui(self)
+        
+        rendered_tiles = new_object.render_on_demand(first_zentral_uri, start_zoom, zentral_tile, buffer_size)
+        #show the initially rendered tiles
+        new_object.show_tiles(rendered_tiles)
+        #show the initially setted size of the tile buffer
+        self.ui.entry_buffer.set_text(str(buffer_size))
+
+        self.ui.label_zoom.set_text(str(start_zoom))
+
+        
+
+    #Go East
+    def on_button_right_clicked(self, widget, data=None):
+        global start_time
+        start_time = time.time()	    
+        #zoom is relative to start and zoomfactor
+        zoom = start_zoom + zoomFactor
+        #change the x values for new tiles
+        x.append(x[len(x)-1]+1)   
+        x.pop(0)
+        #set new zentral tile
+        global zentral_tile
+        zentral_tile = func.getZentralTile(x,y)
+        #set tile uri
+        tile_uri = tile_dir + str(zoom)
+        #render the new tiles
+        global rendered_tiles
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        #show the new tiles
+        new_object.show_tiles(rendered_tiles)
+
+    #Go West
+    def on_button_left_clicked(self, widget, data=None):
+        global start_time
+        start_time = time.time()	    
+        #zoom is relative to start and zoomfactor
+        zoom = start_zoom + zoomFactor
+        #change the x values for new tiles
+        x.insert(0, x[0]-1)
+        x.pop(len(x)-1)
+        #set new zentral tile
+        global zentral_tile
+        zentral_tile = func.getZentralTile(x,y)
+        #set tile uri
+        tile_uri = tile_dir + str(zoom)
+        #render the new tiles
+        global rendered_tiles
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        #show the new tiles
+        new_object.show_tiles(rendered_tiles)
+
+    #Go North
+    def on_button_up_clicked(self, widget, data=None):
+        global start_time
+        start_time = time.time()	    
+        #zoom is relative to start and zoomfactor
+        zoom = start_zoom + zoomFactor
+        #change the y values for new tiles
+        y.insert(0, y[0]-1)
+        y.pop(len(y)-1)
+        #set new zentral tile
+        global zentral_tile
+        zentral_tile = func.getZentralTile(x,y)
+        #set tile uri
+        tile_uri = tile_dir + str(zoom)
+        #render the new tiles
+        global rendered_tiles
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        #show the new tiles
+        new_object.show_tiles(rendered_tiles)
+
+    #Go South
+    def on_button_down_clicked(self, widget, data=None):
+        global start_time
+        start_time = time.time()	    
+        #zoom is relative to start and zoomfactor
+        zoom = start_zoom + zoomFactor
+        #change the y values for new tiles
+        y.append(y[len(y)-1]+1)   
+        y.pop(0)
+        #set new zentral tile
+        global zentral_tile
+        zentral_tile = func.getZentralTile(x,y)
+        #set tile uri
+        tile_uri = tile_dir + str(zoom)
+        #render the new tiles
+        global rendered_tiles
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        #show the new tiles
+        new_object.show_tiles(rendered_tiles)
+
+    #Zoom in
+    def on_button_zoom_in_clicked(self, widget, data=None):
+        global start_time
+        start_time = time.time()	    
+        #zoom is relative to start and zoomfactor...so zoomfactor has to be increased while zooming
+        global zoomFactor
+        zoomFactor = zoomFactor + 1
+        zoom = start_zoom + zoomFactor
+        #set the new zentral tile
+        global zentral_tile
+        zentral_tile = ((zentral_tile[0]*2)+1,(zentral_tile[1]*2)+1)
+        #set the tile uri
+        tile_uri = tile_dir + str(zoom)
+        #change label to new zoomfactor
+        self.ui.label_zoom.set_text(str(zoom))
+        #clear all x
+        for i in xrange(len(x)):
+            x.pop()
+        #clear all y
+        for i in xrange(len(y)):
+            y.pop()
+        #fill x and y with new tiles
+        for i in range(-1,2):
+            x.append(zentral_tile[0]+i)
+            y.append(zentral_tile[1]+i)
+        #make dir if it does'n exitst
+        if not os.path.isdir(tile_dir + str(zoom)):
+			    os.mkdir(tile_dir + str(zoom))
+        #render the new tiles
+        global rendered_tiles
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        #show the new tiles
+        new_object.show_tiles(rendered_tiles)
+
+    #Zoom out
+    def on_button_zoom_out_clicked(self, widget, data=None):
+        global start_time
+        start_time = time.time()	    
+        
+        #zoom is relative to start and zoomfactor...so zoomfactor has to be decreased while zooming
+        global zoomFactor
+        zoomFactor = zoomFactor - 1
+        zoom = start_zoom + zoomFactor
+        #set the new zentral tile
+        global zentral_tile
+        zentral_tile = ((zentral_tile[0]/2),(zentral_tile[1]/2))
+        #set the tile uri
+        tile_uri = tile_dir + str(zoom)
+        #change label to new zoomfactor
+        self.ui.label_zoom.set_text(str(zoom))
+        #clear all x
+        for i in xrange(len(x)):
+            x.pop()
+        #clear all y
+        for i in xrange(len(y)):
+            y.pop()
+        #fill x and y with new tiles
+        for i in range(-1,2):
+            x.append(zentral_tile[0]+i)
+            y.append(zentral_tile[1]+i)
+        #make dir if it does'n exitst
+        if not os.path.isdir(tile_dir + str(zoom)):
+			    os.mkdir(tile_dir + str(zoom))
+        #render the new tiles
+        global rendered_tiles
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        #show the new tiles
+        new_object.show_tiles(rendered_tiles)
+
+    #Enables user to reload the tiles - e.g. when stylefile was changed
+    def on_button_reload_clicked(self, widget, data=None):
+        renderer.reload_mapfile(mapfile)
+        zoom = start_zoom + zoomFactor
+        tile_uri = tile_dir + str(zoom)
+        rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile, buffer_size)
+        new_object.show_tiles(rendered_tiles)
+
+    #Enables user to define the size of the buffer which is used when rendering each tile
+    def on_button_buffer_clicked(self, widget, data=None):
+        global buffer_size
+        buffer_size = int(self.ui.entry_buffer.get_text())
+        
+        
+    def on_btn_ok_clicked(self, widget, data=None):
+        """The user has elected to save the changes.
+
+        Called before the dialog returns Gtk.ResponseType.OK from run().
+        """
+        renderer.closeWriter()
+        os.system(' rm -rf '+ tile_dir)
+        print 'Deleted tile_dir!'
+        pass
+
+    def on_btn_cancel_clicked(self, widget, data=None):
+        """The user has elected cancel changes.
+
+        Called before the dialog returns Gtk.ResponseType.CANCEL for run()
+        """
+        
+        pass
+
+    #@property
+    #displays the rendered tiles
+    def show_tiles(self, rendered_tiles):
+        self.ui.image1.set_from_file(rendered_tiles[0]) 
+        self.ui.image2.set_from_file(rendered_tiles[1]) 
+        self.ui.image3.set_from_file(rendered_tiles[2]) 
+        self.ui.image4.set_from_file(rendered_tiles[3]) 
+        self.ui.image5.set_from_file(rendered_tiles[4]) 
+        self.ui.image6.set_from_file(rendered_tiles[5]) 
+        self.ui.image7.set_from_file(rendered_tiles[6]) 
+        self.ui.image8.set_from_file(rendered_tiles[7]) 
+        self.ui.image9.set_from_file(rendered_tiles[8])
+        print "That took: ", time.time() - start_time
+
+    def render_on_demand(self, tile_uri, zoom, zentral_tile, buffer_size):
+        rendered_tiles = []
+	    args = []
+        print zentral_tile
+	    for k in range(-1,2):
+          for l in range(-1,2):
+			    start_time = time.time()
+			    if not os.path.isdir(tile_uri + '/' + str(zentral_tile[0]+k)):
+				    os.mkdir(tile_uri + '/' + str(zentral_tile[0]+k))
+                uri = tile_uri + '/' + str(zentral_tile[0]+k) + '/' + str(zentral_tile[1]+l) + '.png'
+           #                 print uri
+                            # Submit tile to be rendered
+			    renderer.render_tile(uri, zentral_tile[0]+k, zentral_tile[1]+l, zoom, buffer_size)#(tile_uri, x, y, z)
+			    arg = (tile_dir, mapfile, maxZoom, uri, zentral_tile[0]+k, zentral_tile[1]+l, zoom, buffer_size)
+			    args.append(arg)
+                #rendering.pure_tile_rendering(arg)
+                rendered_tiles.append(uri)	
+			    #print self.m.scale()/0.00028
+			    #self.wobj.write( uri+'\n')
+			    #self.wobj.write('took: '+str(time.time() - start_time)+ ' seconds\n')
+
+        print len(args)
+	    #pool = Pool(processes = 4)
+	    #pool.map(rendering.pure_tile_rendering, args)
+
+        
+
+#        nproc = 4  	# maximum number of simultaneous processes desired
+#	    results = pprocess.Map(limit=nproc, reuse=1)
+#	    parallel_function = results.manage(pprocess.MakeReusable(rendering.pure_tile_rendering))	
+#	    [parallel_function(args2) for args2 in args];  # Start computing things
+#	    parallel_results = results[0:10]
+
+        return rendered_tiles
+
+    
+
+
+
+if __name__ == "__main__":
+    dialog = TilesDialog()
+    dialog.show()
+    Gtk.main()

@@ -1,0 +1,379 @@
+# -*- Mode: Python; coding: utf-8; indent-tabs-mode: nil; tab-width: 4 -*-
+### BEGIN LICENSE
+# This file is in the public domain
+### END LICENSE
+
+import gettext
+from gettext import gettext as _
+gettext.textdomain('generalcarto')
+
+from gi.repository import Gtk # pylint: disable=E0611
+import logging
+logger = logging.getLogger('generalcarto')
+
+from generalcarto_lib import Window
+from generalcarto.AboutGeneralcartoDialog import AboutGeneralcartoDialog
+from generalcarto.PreferencesGeneralcartoDialog import PreferencesGeneralcartoDialog
+
+from generalcarto import gdal_functions as gdal
+from generalcarto import rendering
+from generalcarto.TilesDialog import TilesDialog
+from generalcarto import functions as func
+from generalcarto.StyleditDialog import StyleditDialog
+from generalcarto import pycURL_version_one_polygon as pycURL
+from generalcarto import xmlFunctions as xmlFunc
+
+import mapnik
+
+from quickly import prompts
+from quickly.widgets.dictionary_grid import DictionaryGrid
+import glob
+import os
+
+import time
+
+from generalcarto import postgreFunctions as postgres
+
+   
+        
+# See generalcarto_lib.Window.py for more details about how this class works
+class GeneralcartoWindow(Window):
+    __gtype_name__ = "GeneralcartoWindow"
+    
+    def finish_initializing(self, builder): # pylint: disable=E1002
+        """Set up the main window"""
+        super(GeneralcartoWindow, self).finish_initializing(builder)
+
+        self.AboutDialog = AboutGeneralcartoDialog
+        self.PreferencesDialog = PreferencesGeneralcartoDialog 
+
+        
+        global path
+        path = ''
+
+        global dicts
+        dicts = dict()
+        global keylist            
+        keylist = dicts.keys()
+
+        ####
+        #initialize some global variables
+        global image
+        image = ''
+        global checkbutton
+        checkbutton = False
+        global checkbutton_open
+        checkbutton_open = False
+        global shapefile
+        shapefile = ''
+        global new_stylesheet
+        new_stylesheet = ''        
+        global projection 
+        projection = '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs'
+        global prj
+        prj = mapnik.Projection(projection)
+
+        global styles
+        styles = []
+
+        # Get a reference to the builder and set up the signals.
+        self.builder = builder
+        self.ui = builder.get_ui(self)
+
+
+                
+        #initialize the entries for the (simple) image size
+        self.ui.image1.clear()
+
+        #initialize the entry for the zoomlevels for the tile rendering
+        self.ui.entry1.set_text('0')
+        self.ui.entry2.set_text('18')   
+
+        #initialize the wps-server adress
+        self.ui.entry_server.set_text('http://kartographie.geo.tu-dresden.de/webgen_wps/wps')
+
+        #initialize the wps-process store
+        global all_processes   
+        all_processes = [] 
+        global chosen_identifier
+        chosen_identifier = ''
+        
+        
+
+    ####let the user choose a directory that contains one or more mapnik style files
+    def on_button_style_clicked(self, widget, data=None):  
+        #let the user choose a path with the directory chooser
+        global path
+        response, path = prompts.choose_directory()
+
+        #make certain the user said ok before working
+        if response == Gtk.ResponseType.OK:
+           
+           #make a list of the supported xml files
+           global dicts
+           dicts = dict()
+           counter = 0
+           #iterate through root directory
+           for files in glob.glob(path + "/*.xml"):
+                    if files.endswith('.xml'):
+                        #create a URI in a format gstreamer likes
+                        file_uri = path
+                        fileSplit = files.split(path + "/")                        
+                        dicts[str(counter)] = fileSplit[1]    
+                        counter = counter + 1   
+           global keylist            
+           keylist = dicts.keys()
+           keylist.sort() 
+
+            #fill the combotextbox with the xml-files of the initially user-chosen directory
+        for key in keylist: 
+	           #print key, value
+               self.ui.comboboxtext1.append_text(dicts[key])    
+
+    #set style and shape when combobox has changed
+    def on_comboboxtext1_changed(self, widget, data=None):
+        #get the chosen stylefile
+        global new_stylesheet
+        new_stylesheet = self.ui.comboboxtext1.get_active_text() 
+        user_xml = new_stylesheet
+
+        #open style file if user wants to
+	    if checkbutton_open == True:
+            os.system('gedit --new-window ' + path+'/'+new_stylesheet)
+
+        #global styles
+        #styles, layer, map_definition = func.getContents(path+'/'+new_stylesheet)
+        layers = func.getLayer(path+'/'+new_stylesheet)
+        self.ui.comboboxtext_shape.remove_all()
+        for layer in layers:
+            self.ui.comboboxtext_shape.append_text(layer)
+
+        
+
+    #lets user choose a shapefile, which will be taken to automatically get an extent of the data
+    def on_comboboxtext_shape_changed(self, widget, data=None):
+        global shapefile
+        shapefile = self.ui.comboboxtext_shape.get_active_text()         
+
+        try:
+            #... of a given shapefile
+            extent = gdal.getExtentFromShape(shapefile)
+            #convert extent to geographical coordinates...for displaying them to the user
+            c0 = prj.inverse(mapnik.Coord(round(extent[0],5),round(extent[2],5)))
+            c1 = prj.inverse(mapnik.Coord(round(extent[1],5),round(extent[3],5)))                    
+
+            #fill the entries with the values of the found extent            
+            self.ui.entry_lllo.set_text(str(c0.x))
+            self.ui.entry_urlo.set_text(str(c1.x))
+            self.ui.entry_llla.set_text(str(c0.y))
+            self.ui.entry_urla.set_text(str(c1.y)) 
+
+            if checkbutton == False:
+                self.ui.checkbutton1.activate()
+            self.ui.label2.set_text('Extent successfully determined!') 
+            splitted = shapefile.split('/')
+            pure_name = splitted[len(splitted)-1]
+            self.ui.entry_chosen.set_text(pure_name)
+        except:
+            if checkbutton == True:
+                self.ui.checkbutton1.activate()
+            self.ui.label2.set_text('Unable to get extent of shapefile!') 
+        
+        
+    #Display map tiles with a on-the fly rendering of the concrete 9 tiles that will be displayed
+    def on_button_tiles_clicked(self, widget, data=None):
+     if new_stylesheet != '':
+      if shapefile != '':
+        extent = []
+        
+        #get/set the bounding box/extent
+        try:            
+            c0 = prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
+            c1 = prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
+            extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
+        except:
+            self.ui.label8.set_text('Emtpty entry or not as float!')
+            self.ui.image1.clear()
+        #Go on if extent was setted, respectively no error occured
+        if extent != '':    
+        #    try:  
+#                print 'bbox:'+str(bbox)
+                #initialize the information that will be send to the ui
+                mapfile = path+'/'+new_stylesheet
+                tile_dir = path+'/tiles/'     #'/home/ralf/Software/Quickly/testdaten/tiles/'
+                maxZoom = self.ui.entry2.get_text()
+                minZoom = self.ui.entry1.get_text()
+                #collect all in one string, as this seems to be the only way
+                sending = str(extent) + ':' + mapfile + ':' + tile_dir + ':' + minZoom + ':' + maxZoom 
+
+                tiler =  TilesDialog(sending)
+                result = tiler.run() 
+                #close the dialog, and check whether to proceed        
+                tiler.destroy()
+                if result != Gtk.ResponseType.OK:
+                    return                   
+         #   except:
+          #      self.ui.label8.set_text('Extent has only emtpty entries or is not given as float!')
+           #     self.ui.image1.clear()
+      else:
+        self.ui.label8.set_text('Please choose a shape file!')
+     else:
+        self.ui.label8.set_text('Please choose a style file!')
+
+
+    #Perform a simple rendering of a single *.png image file
+    def on_button_render_clicked(self, widget, data=None):       
+      if new_stylesheet != '':
+            global image
+            image = path+'/user_image.png'
+        
+            try:
+                c0 = prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
+                c1 = prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
+                extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
+                rendering.complexRun(image, path+'/'+new_stylesheet, extent)
+                self.ui.image1.set_from_file(image)  
+                self.ui.label2.set_text('Saved to: ' + image)              
+            except:
+                self.ui.label8.set_text('Extent is emtpty entry or not float!')
+                self.ui.image1.clear()
+
+      else:
+        self.ui.label8.set_text('Please choose a style file!')
+    
+
+    def on_checkbutton1_toggled(self, widget, data=None):
+        global checkbutton
+        if checkbutton == True:
+            checkbutton = False 
+        elif checkbutton == False:
+            checkbutton = True
+        
+    def on_checkbutton_open_toggled(self, widget, data=None):
+        global checkbutton_open
+        if checkbutton_open == True:
+            checkbutton_open = False 
+        elif checkbutton_open == False:
+            checkbutton_open = True
+
+    def on_button_styledit_clicked(self, widget, data=None):
+        if new_stylesheet != '':
+            styler = StyleditDialog(path+'/'+new_stylesheet)
+            result = styler.run() 
+            #close the dialog, and check whether to proceed        
+            styler.destroy()
+            if result != Gtk.ResponseType.OK:
+                return  
+
+    def getResult(self):
+        if image != '':
+            return image
+        else:
+            return 'None'
+
+    def on_button_get_clicked(self, widget, data=None):
+        global all_processes
+        all_processes = xmlFunc.getCapabilities(self.ui.entry_server.get_text() + '?service=WPS&Request=GetCapabilities')
+        #print all_processes
+        for i in xrange(len(all_processes[0])):
+            #print all_processes[2][i]
+            self.ui.comboboxtext_processes.append_text(all_processes[2][i])
+
+    def on_comboboxtext_processes_changed(self, widget, data=None):
+        chosen_process = []
+        chosen_process.append(self.ui.comboboxtext_processes.get_active_text())#Title
+        for i in xrange(len(all_processes[0])):
+            if all_processes[2][i] == chosen_process[0]:
+                chosen_process.append(all_processes[1][i])#Abstract
+                chosen_process.append(all_processes[0][i])#Identifier
+        self.ui.label_process.set_text(chosen_process[1])
+        global chosen_identifier
+        chosen_identifier = chosen_process[2]
+
+    
+
+# self.entryForText.get_buffer().insert(self.entryForText.get_buffer().get_end_iter(),  "\n" + your_text)
+
+    def on_button_describe_clicked(self, widget, data=None):
+        if chosen_identifier != '':
+            self.all_parameters = xmlFunc.describeProcess(self.ui.entry_server.get_text() + '?service=WPS&Request=DescribeProcess&Service=WPS&Version=1.0.0&Identifier=' + chosen_identifier)
+            #print self.all_parameters
+                    
+            if len(self.all_parameters[0]) == 1: 
+                notice = 'There are no additional paramters'
+            else: 
+                notice = 'Necessary parameters (with default values)' 
+                    
+            self.ui.textview1.get_buffer().set_text(notice)                 #help: http://ubuntuforums.org/showthread.php?t=426671
+            end_iter = self.ui.textview1.get_buffer().get_end_iter()
+            self.ui.textview1.get_buffer().insert(end_iter,"\n" + self.all_parameters[2][0]+':'+self.all_parameters[3][0])            
+            for i in range(1,len(self.all_parameters[0])):
+                self.ui.textview1.get_buffer().insert(end_iter,"\n" + self.all_parameters[0][i]+ ' (' +self.all_parameters[2][i]+ '):' +self.all_parameters[4][i] + ' (' + self.all_parameters[3][i] + ')')
+        else:
+            self.ui.label2.set_text('No Process chosen!')
+        
+        
+        
+        
+    def on_button_make_clicked(self, widget, data=None):
+        
+        #get the values that are shown to the user and are eventually changed
+        buff = self.ui.textview1.get_buffer()
+        start_iter = buff.get_start_iter()
+        end_iter = buff.get_end_iter()
+        text = buff.get_text(start_iter, end_iter, True)
+        #get them line by line
+        lines = text.split('\n')
+        #change the values of the input data        
+        for i in range(2,len(lines)):
+            self.all_parameters[4][i-1] = lines[i].split(':')[1].split('(')[0]	    
+			
+        #initiate the xml-creation            
+        try:
+            gdal.openOGR(shapefile, chosen_identifier, self.all_parameters) 
+            print 'real xml-creation'
+        except:
+            source = "/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/linesvgtl270112.shp"
+            func_ident = 'ch.unizh.geo.webgen.service.LineSmoothing'
+            func_parameters = []
+            tile_extent = (1368218.8239467188, 6489266.422147293, 1407310.7903451964, 6528358.388545775)
+#(1368218.8239467188, 6489266.422147293, 1407310.7903451964, 6528358.388545775)
+#851 LineString(s) were processed in 0.407 seconds!
+#helping test-xml-creation
+
+            att_filter = []
+	        attFilter = dict()
+	        att_filter.append(attFilter)
+	        attFilter['field'] = 'waterway'
+	        attFilter['operator'] = '!='
+	        attFilter['value'] = '\'\''		
+            gdal.openOGR(source, func_ident, func_parameters, tile_extent, att_filter)   
+            print 'helping test-xml-creation'
+        
+    def on_button_send_clicked(self, widget, data=None):
+        start_time = time.time()        
+        
+        #filename = "testWPSFile.xml"
+        filename = "testWPSFile-lines.xml"
+        location = "/home/klammer/Software/Quickly/generalcarto/data/media/"
+        #filename = "test.xml"
+        #location = '/home/ralf/Software/Quickly/generalcarto/data/media/'
+        #server = "http://localhost:8080/webgen_wps/wps"
+        server = "http://kartographie.geo.tu-dresden.de/webgen_wps/wps"
+
+        #request the WebGenServer
+        transformedFile = pycURL.main(filename, location, server)
+        #func.readResultedFile(transformedFile)
+    
+        end_time = time.time()-start_time
+        print "It took " + str(round(end_time,3)) + " seconds!"
+
+    def on_button_postgis_clicked(self, widget, data=None):
+        postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/result.gml')
+        #postgres.postgresTest()
+
+    def on_button1_clicked(self, widget, data=None):
+        #rendering.testMapnik()
+        #func.test_multiprocessing()
+
+        

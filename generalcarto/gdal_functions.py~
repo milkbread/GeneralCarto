@@ -1,0 +1,289 @@
+#!/usr/bin/env python
+import os
+
+import sys
+import ogr
+
+from generalcarto import xmlFunctions as xmlFunc
+import time
+
+def getExtentFromShape(shapefile):
+	print shapefile
+	ds = ogr.Open(shapefile)
+        if ds is None:
+	        print "Open failed.\n"
+	        #sys.exit( 1 )
+	else:
+		layer = ds.GetLayer(0)
+		layer.ResetReading()
+                
+	return layer.GetExtent()
+    
+def makeValidFilter(old_filter):
+    filter = old_filter.replace('(', '')
+    filter = filter.replace(')', '')
+    filter = filter.replace('[', '')
+    filter = filter.replace(']', '')
+    return filter
+    
+def getDataInfos(source, tile_extent, filter):
+    #print filter
+    #prepare the filter, for a SQL-query
+    filter = makeValidFilter(filter)
+    #print filter
+    datasource = ogr.Open(source)
+    if datasource is None:
+        print "Unable to open the shapefile!!!\n"
+        #sys.exit( 1 )
+    else:
+        counter = 0
+        for i in xrange(datasource.GetLayerCount()):
+            layer = datasource.GetLayer(i)
+            layer.ResetReading()
+            #print 'FeatureCount:', layer.GetFeatureCount()
+    
+            #make the where statement from the given filterattributes
+            where_statement = 'WHERE ' + filter    
+            command = "SELECT * FROM "+ layer.GetName() + ' ' + where_statement
+            print command
+            filtered_datasource =  datasource.ExecuteSQL(command)
+            
+            #spatial filtering the data in relation to the extent of the processed tile
+            layer.SetSpatialFilterRect(tile_extent[0], tile_extent[1], tile_extent[2], tile_extent[3])
+#            print 'FeatureCount:', layer.GetFeatureCount()
+            featCount = layer.GetFeatureCount()
+            
+            return featCount
+
+
+
+#That is a function that:
+#	-reads a shapefile
+#	-and fills the geometries to a WebGen-WPS-conform XML(GML) file
+# 	-the XML-file is also initialized in that function but uses another function (makeWPSxml)
+#	--> there are some filterings included:
+#			- spatial filter --> to just use data of tile-area
+#			- attribute (semantical) filter --> to just use the attributes that should be generalized
+#Source: That site was very helpfull: http://nullege.com/codes/show/src%40v%40e%40vectorformats-0.1%40vectorformats%40Formats%40OGR.py/85/ogr.Geometry.AddPoint_2D/python
+	
+def openOGR(source, func_ident, func_parameters, tile_extent, att_filter, dest_file):
+	#set time of starting the processing
+	start_time = time.time()
+    
+    filter = makeValidFilter(att_filter)
+
+	#open the specified shapefile
+	ds = ogr.Open(source)
+
+	#initialize the main object     --> needs the identifier of the function and the directory and name of resulting file
+        xmlMaker = xmlFunc.makeWPSxml(func_ident, dest_file)
+        #send the input paramater of the function to the makeWPSxml-object     --> meaning the generalization parameters
+	#!!!!if else is just for the creation and testing of that functionality!!!
+	if len(func_parameters) != 0:
+	#!!!
+		for i in range(1,len(func_parameters[0])):
+			xmlMaker.addInputParameter(func_parameters[0][i], func_parameters[1][i], func_parameters[2][i], func_parameters[4][i])
+	#!!!
+	else:
+		identifier = 'tolerance'#'minlength'
+		title = 'tolerance'#'minlength'
+		abstract = 'tolerance'#'minimum length'
+		parameter = str(10)
+		xmlMaker.addInputParameter(identifier, title, abstract, parameter)
+		xmlMaker.addInputParameter('segmentation', 'segmentation', 'segmentation', 'false')
+	#!!!        
+        
+	geometry_type = ''
+	if ds is None:
+	    print "Unable to open the shapefile!!!\n"
+	    #sys.exit( 1 )
+	else:
+
+#		print "Number of Layers: " + str(ds.GetLayerCount())
+		counter = 0
+		for i in xrange(ds.GetLayerCount()):
+			layer = ds.GetLayer(i)
+			layer.ResetReading()
+#			print layer.GetExtent()
+
+			#attribute filtering the data in relation to the semantic that should be generalized
+			#make the where statement from the given filterattributes
+			where_statement = 'WHERE '	+ filter		
+#			for i in xrange(len(att_filter)):
+#				if i > 0:
+#					where_statement = where_statement + ' AND ' 
+#				where_statement = where_statement + att_filter[i]['field'] + att_filter[i]['operator'] + att_filter[i]['value']
+			#print where_statement
+
+			command = "SELECT * FROM "+ layer.GetName() + ' ' + where_statement
+			exe =  ds.ExecuteSQL(command)
+			print command
+#			print 'FeatureCount:', exe.GetFeatureCount()
+
+			#spatial filtering the data in relation to the extent of the processed tile
+			print tile_extent
+			layer.SetSpatialFilterRect(tile_extent[0], tile_extent[1], tile_extent[2], tile_extent[3])
+			
+#			print "Number of Features: " + str(layer.GetFeatureCount())
+#			print layer.GetExtent()
+			
+			#set the bounding box of the geometrical data        
+			#dummyBox = (1,2,3,4)
+			xmlMaker.setBBox(layer.GetExtent())
+
+			feature = layer.GetNextFeature()
+#			print layer.GetFeatureCount()
+			while feature is not None:
+				geom = feature.GetGeometryRef()
+				
+		
+#				print feature.GetField('osm_id')
+				geometry = feature.GetGeometryRef()
+				#print geometry.GetGeometryType()
+
+
+				if geometry.GetGeometryType() == ogr.wkbMultiPolygon:
+					#print "MultiPolygon" + str(geometry.GetGeometryCount())
+					for x in xrange(geometry.GetGeometryCount()):
+						#print "loop - geometries"
+						ring = geometry.GetGeometryRef(x)
+						#print str(ring)
+						points = badPointExtruder(str(ring))
+								#print ring.GetPointCount()
+								#points = ring.GetPointCount() ... doesn't work!
+					#	for p in xrange(len(points[0])):
+							#print "loop - points"
+								#would be better...but doesn't work
+								#lon, lat, z = ring.GetPoint(p)
+								#gring.AddPoint_2D(lon, lat)		
+							#print float(points[0][p])
+					
+				elif geometry.GetGeometryType() == ogr.wkbPolygon:
+				#	print "Polygon"									
+					ring = geometry.GetGeometryRef(0)
+					points = ring.GetPointCount()
+					all_points = []
+					for p in xrange(points):
+						lon, lat, z = ring.GetPoint(p)
+						one_point = []
+						one_point.append(lon)
+						one_point.append(lat)
+						all_points.append(one_point)
+					#make a WPS-executable XML-File containing the geometries
+					xmlMaker.addFeature('Polygon', all_points)
+					
+				elif geometry.GetGeometryType() == ogr.wkbPoint:
+				#	print "Point"					
+					lon, lat, z = geometry.GetPoint()
+				
+				elif geometry.GetGeometryType() == ogr.wkbMultiPoint:
+				#	print "Multipoint"
+					#points = geometry.GetGeometryCount()
+					points = secondBadPointExtruder(str(geometry))					
+					for p in xrange(len(points[0])):
+						gring = ogr.Geometry(type=ogr.wkbPoint)
+				  	        gring.AddPoint_2D(float(points[0][p]), float(points[1][p]))
+				        	geometryN.AddGeometry(gring)	
+					#	lon, lat, z = geometry.GetPoint(p)
+					#	print geometry
+					#geometryN.AddPoint_2D(lon, lat)
+	
+
+				elif geometry.GetGeometryType() == ogr.wkbLineString:
+					geometry_type = "LineString"
+					#print counter
+					counter = counter + 1									
+					points = geometry.GetPointCount()
+					all_points = []
+					for p in xrange(points):
+						lon, lat, z = geometry.GetPoint(p)
+						#print lon, lat
+						one_point = []
+						#print 'number:',len(all_points)
+						#for j in xrange(len(all_points)):
+							#if lon == all_points[j][0]:
+							#	print 'da isser'
+								
+							#if lat == all_points[j][1]:
+							#	print 'da isser...der Ronny unter den Punkten'
+								
+						one_point.append(lon)
+						one_point.append(lat)
+						all_points.append(one_point)
+					#make a WPS-executable XML-File containing the geometries
+					xmlMaker.addFeature('Linestring', all_points)
+						
+						
+				elif geometry.GetGeometryType() == ogr.wkbMultiLineString:
+					print "MultiLineString"
+					for y in xrange(geometry.GetGeometryCount()):
+						ring = geometry.GetGeometryRef(y)
+						points = ring.GetPointCount()
+						for p in xrange(points):
+							lon, lat, z = ring.GetPoint(p)
+
+				feature.Destroy()
+    				feature = layer.GetNextFeature()
+
+	#finish the process of creation
+        xmlMaker.createXML()
+	print counter, geometry_type + '(s) were processed in '+ str(round(time.time()-start_time, 3))  +' seconds!'
+	return counter
+
+#For any reason, the functions GetPointCount and GetPoint do not work for multipolygons
+#therefore I need this function...it gets all points of the rings of a multipolygon				
+def badPointExtruder(geometry):
+	subs = geometry.split('((')
+	subs = subs[1].split('))')	
+	subs = subs[0].split(',')
+	lon = []
+	lat = []
+	length = len(subs)
+	#print subs
+	for i in xrange(length):
+		subs2 = subs[i].split(' ')
+		#print subs2
+		lat.append(subs2[0])
+		lon.append(subs2[1])
+			
+	coords = []
+	coords.append(lon)
+	coords.append(lat)
+	return coords
+
+#same is true for multipoints
+def secondBadPointExtruder(geometry):
+	subs = geometry.split('(')
+	subs = subs[1].split(')')	
+	subs = subs[0].split(' ')
+	#print subs	
+	length = len(subs)
+	lon = []
+	lat = []
+	if length == 2:
+		subsLon = subs[0].split(',')
+		lon.append(subsLon[0]+'.'+subsLon[1])
+		subsLat = subs[1].split(',')
+		lat.append(subsLat[0]+'.'+subsLat[1])
+	else:
+		for i in xrange(length):
+			if i == 0:
+				subs2 = subs[i].split(',')			
+				lon.append(subs2[0]+'.'+subs2[1])
+			elif i == length-1:
+				subs2 = subs[i].split(',')			
+				lat.append(subs2[0]+'.'+subs2[1])
+			else:	
+				subs2 = subs[i].split(',')
+				lat.append(subs2[0]+'.'+subs2[1])
+				lon.append(subs2[2]+'.'+subs2[3])
+	coords = []
+	coords.append(lon)
+	coords.append(lat)
+	return coords
+	
+
+
+				
+
+

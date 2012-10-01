@@ -168,7 +168,8 @@ class GeneralcartoWindow(Window):
                 maxZoom = self.ui.entry2.get_text()
                 minZoom = self.ui.entry1.get_text()
                 #collect all in one string, as this seems to be the only way
-                sending = str(extent) + ':' + mapfile + ':' + tile_dir + ':' + minZoom + ':' + maxZoom 
+                title = 'Tool for tile-based on-the-fly-generalisation   \n+'
+                sending = title + str(extent) + ':' + mapfile + ':' + tile_dir + ':' + minZoom + ':' + maxZoom 
                 #print sending
                 tiler =  TilesDialog(sending)
                 result = tiler.run() 

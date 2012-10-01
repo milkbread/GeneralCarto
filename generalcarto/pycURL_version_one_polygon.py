@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#Author: Ralf Klammer 2011
+#Author: Ralf Klammer 2012
 
 #good Help: http://www.angryobjects.com/2011/10/15/http-with-python-pycurl-by-example/
 

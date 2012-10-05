@@ -66,6 +66,10 @@ class TilesDialog(Gtk.Dialog):
         global maxZoom
         maxZoom = int(tile_parts[4])
         minZoom = int(tile_parts[3])
+        global generalHome
+        generalHome = tile_parts[5]
+        global logs
+        logs = tile_parts[6]
         #get the minimal tile view for setted dataset -->minimum means: mind. 9 Tiles are created
         global all_tiles
         all_tiles = rendering.calcNecTiles(bbox, tile_dir, minZoom, maxZoom)
@@ -125,7 +129,7 @@ class TilesDialog(Gtk.Dialog):
         self.builder = builder
         self.ui = builder.get_ui(self)
         
-        func.writeToLog('TilesDialog was opened and initialized',True)
+        func.writeToLog('TilesDialog was opened and initialized',logs,True)
         
         #initialize the wps-server adress
         self.ui.entry_server.set_text('http://kartographie.geo.tu-dresden.de/webgen_wps/wps')
@@ -501,18 +505,23 @@ class TilesDialog(Gtk.Dialog):
                 #informations for sending the valid xml-wps file to the server
                 server = self.ui.entry_server.get_text()
                 dest_file = "WebGen_WPS_"+str(tile[0])+"_"+str(tile[1])+"_"+str(z)+".xml"
-                folder = "/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/"
+                xml_files_folder = generalHome + 'xmlfiles/'
+                if not os.path.isdir(xml_files_folder):
+                    os.mkdir(xml_files_folder)
+        
+                #folder = "/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/"
                 infos.append(server)
                 infos.append(dest_file)
-                infos.append(folder)
+                infos.append(xml_files_folder)
                 chosen_filter = str(self.filter)
                 infos.append(chosen_filter)
                 infos.append(params)
                 infos.append(tile)
+                infos.append(logs)
                 #store all infos in an array, so it is possible to give that array to the multiprocessing-pool (that just takes one variable)
                 extentBunch.append(infos)
                 
-            func.writeToLog('Initiated WPS-Execute-Filecreation with...\n\t...server: %s \n\t...filter: %s \n\t...function: %s \n\t...parameters: %s' %(server, str(chosen_filter), str(func_ident), str(params)))
+            func.writeToLog('Initiated WPS-Execute-Filecreation with...\n\t...server: %s \n\t...filter: %s \n\t...function: %s \n\t...parameters: %s' %(server, str(chosen_filter), str(func_ident), str(params)),logs)
             pool = Pool(processes = 9)        
             results = pool.map(rendering.doWPSProcess, extentBunch)
            #print results
@@ -776,11 +785,12 @@ class TilesDialog(Gtk.Dialog):
 
         Called before the dialog returns Gtk.ResponseType.OK from run().
         """
-        wobj = open('/home/klammer/log-files/GeneralCarto-last-mapfile.xml', 'w')
+        logs = os.getenv("HOME") + '/GeneralCarto/log-files/'
+        wobj = open(logs+'GeneralCarto-last-mapfile.xml', 'w')
         wobj.write(mapnik.save_map_to_string(self.mapnik_map))
         wobj.close
         
-        func.writeToLog('Deleted tile_dir! %s' %os.system(' rm -rf '+ tile_dir))
+        func.writeToLog('Deleted tile_dir! %s' %os.system(' rm -rf '+ tile_dir),logs)
         pass
 
     def on_btn_cancel_clicked(self, widget, data=None):
@@ -817,8 +827,8 @@ class TilesDialog(Gtk.Dialog):
         result, scale = new_object.render_on_demand_as_loop(tile_uri, zoom, zentral_tile)
         self.ui.label_scale.set_text("1 : " + str(int(round(scale,0))))
         #set log-output
-        func.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!')
-        func.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(zentral_tile), str(zoom)))
+        func.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!',logs)
+        func.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(zentral_tile), str(zoom)),logs)
         return result
         
         
@@ -898,7 +908,8 @@ if __name__ == "__main__":
 ###*****************Unused or old versions of functions*****************###
 
 def render_on_demand_for_a_speedTest(self, tile_uri, zoom, zentral_tile):
-        wobj = open('/home/klammer/log-files/GeneralCarto-multi-vs-loop-rendering.txt', 'a')
+        logs = os.getenv("HOME") + '/GeneralCarto/log-files/'
+        wobj = open(logs+'GeneralCarto-multi-vs-loop-rendering.txt', 'a')
         start_time = time.time()
         result, scale = new_object.render_on_demand_as_multiprocessing(tile_uri, zoom, zentral_tile)
         wobj.write('\n')

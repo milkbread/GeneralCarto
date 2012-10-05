@@ -1,8 +1,13 @@
 import xml.etree.ElementTree as xml
 import time
+import os
 
-def writeToLog(content, init = False):
-    file = open('/home/klammer/log-files/GeneralCarto-log.txt',"a")
+def writeToLog(content, logs, init = False):
+    #home = os.getenv("HOME")
+    #logs = home + '/GeneralCarto/log-files/'
+    #if not os.path.isdir(logs):
+     #   os.mkdir(logs)
+    file = open(logs+'GeneralCarto-log.txt',"a")
     if init == True:
         file.write('\n***********************************************************')
         file.write('\n'+str(time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())))

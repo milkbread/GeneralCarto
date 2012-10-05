@@ -65,6 +65,17 @@ class GeneralcartoWindow(Window):
         if mapnik.mapnik_version() < 200100:
             print "You're having a too old version of mapnik...install minimum version 2.1.0!!!"
             sys.exit()
+            
+        home = os.getenv("HOME")
+        self.generalHome = home + '/GeneralCarto/'
+        if not os.path.isdir(self.generalHome):
+            os.mkdir(self.generalHome)
+        self.logs = self.generalHome + 'log-files/'
+        if not os.path.isdir(self.logs):
+            os.mkdir(self.logs)
+        self.tile_dir = self.generalHome + 'tiles/' 
+        if not os.path.isdir(self.tile_dir):
+            os.mkdir(self.tile_dir)
         
     ####let the user choose a directory that contains one or more mapnik style files
     def on_button_style_clicked(self, widget, data=None):  
@@ -119,7 +130,7 @@ class GeneralcartoWindow(Window):
                 self.ui.comboboxtext_postgis.append_text(content)
                 self.ui.label_srs.set_text(layer.srs)
             else:
-                func.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!')
+                func.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!', self.logs)
                 self.ui.label_srs.set_text('')
   
     #lets user choose a shapefile, which will be taken to automatically get an extent of the data
@@ -164,12 +175,11 @@ class GeneralcartoWindow(Window):
 #                print 'bbox:'+str(bbox)
                 #initialize the information that will be send to the ui
                 mapfile = self.path+'/'+self.mapfile
-                tile_dir = self.path+'/tiles/'     #'/home/ralf/Software/Quickly/testdaten/tiles/'
                 maxZoom = self.ui.entry2.get_text()
                 minZoom = self.ui.entry1.get_text()
                 #collect all in one string, as this seems to be the only way
                 title = 'Tool for tile-based on-the-fly-generalisation   \n+'
-                sending = title + str(extent) + ':' + mapfile + ':' + tile_dir + ':' + minZoom + ':' + maxZoom 
+                sending = title + str(extent) + ':' + mapfile + ':' + self.tile_dir + ':' + minZoom + ':' + maxZoom + ':' + self.generalHome + ':' + self.logs
                 #print sending
                 tiler =  TilesDialog(sending)
                 result = tiler.run() 
@@ -205,8 +215,7 @@ class GeneralcartoWindow(Window):
 
     #Perform a simple rendering of a single *.png self.image file
     def showPreview(self):
-        self.image = self.path+'/user_image.png'
-        
+        self.image = self.generalHome+'user_image.png'
         try:
             c0 = self.prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
             c1 = self.prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
@@ -246,9 +255,7 @@ class GeneralcartoWindow(Window):
 ###Testfunctions
 
     def on_button_short_clicked(self, widget, data=None):
-        sending = 'Tool for tile-based on-the-fly-generalisation   \n+(1324637.159999081, 1405011.9800014955, 6477402.360002069, 6546380.469994396):/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/slippy_vogtland_with_shapes.xml:/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/tiles/:0:18'
-        #sending = '(1324637.159999081, 1405011.9800014955, 6477402.360002069, 6546380.469994396):/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/vogtland_style_PC-version_withoutpostgre.xml:/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/tiles/:0:18'
-        
+        sending = 'Tool for tile-based on-the-fly-generalisation   \n+(1324637.159999081, 1405011.9800014955, 6477402.360002069, 6546380.469994396):/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml:/home/klammer/GeneralCarto/tiles/:0:18:'+self.generalHome+':'+self.logs
         tiler =  TilesDialog(sending)
         result = tiler.run() 
         #close the dialog, and check whether to proceed        

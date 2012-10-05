@@ -162,15 +162,16 @@ def calcNecTiles(bbox, tile_dir, minZoom,maxZoom):
 ###Functions that are used for the communication with WPS-Server
 ###Most functions are very specific written for WebGen-WPS...so not generic enough
 
-def makeWPSfile(tile_extent, dest_file, source, func_ident, filter, func_params, tile):
+def makeWPSfile(tile_extent, dest_file, source, func_ident, filter, func_params, tile, logs_folder):
     
     func_parameters = func_params
     start_time = time.time() 
     #print source, filter, tile_extent
     result, geometry_type = gdal.openOGR(source, func_ident, func_parameters, tile_extent, filter, dest_file) 
     #***log-output
-    func.writeToLog('Make WPS-Execute-File for...\n\t...tile: %s \n\t...tile_extent: %s ' %(str(tile), str(tile_extent)))
-    func.writeToLog( str(result) + ' ' + geometry_type + '(s) were processed in '+ str(round(time.time()-start_time, 3))  +' seconds!')
+    logs = str(logs_folder)
+    func.writeToLog('Make WPS-Execute-File for...\n\t...tile: %s \n\t...tile_extent: %s ' %(str(tile), str(tile_extent)), logs)
+    func.writeToLog( str(result) + ' ' + geometry_type + '(s) were processed in '+ str(round(time.time()-start_time, 3))  +' seconds!',logs)
     #***
     return result, geometry_type
 
@@ -187,9 +188,10 @@ def doWPSProcess(params):
     folder = params[5]
     filter = params[6]
     func_params = params[7]
+    logs_folder = params[8]
     #make a xml-file, that is valid for the Execute-command of WebGen_WPS
     
-    test, geometry_type = makeWPSfile(tile_extent, folder+dest_file, source, func_ident, filter, func_params, params[8])
+    test, geometry_type = makeWPSfile(tile_extent, folder+dest_file, source, func_ident, filter, func_params, params[8], logs_folder)
     result = ''
     if test > 0:  
         #try to send execute-file to the server until it was successfull
@@ -199,7 +201,7 @@ def doWPSProcess(params):
                 name = dest_file.split('WebGen_WPS')[1].split('.')[0]
                 start_time = time.time()    
                 result = sendFile(dest_file, folder, name, server)
-                func.writeToLog( 'Processing of: %s with: %s %s(s) took %s seconds!' % (dest_file, test, geometry_type, str(round(time.time()-start_time, 3))))
+                func.writeToLog( 'Processing of: %s with: %s %s(s) took %s seconds!' % (dest_file, test, geometry_type, str(round(time.time()-start_time, 3))),logs_folder)
                 
    #             failure = 0
                 print 'Success'

@@ -127,7 +127,12 @@ def main(filenameI, locationI, nameI, serverI):
                     #print found
                 else:
                     func.writeToLog( "Any problem occured while using pycURL!!!")
-                    wobj = open('/home/klammer/log-files/GeneralCarto-pycURL-ERRORresponse.xml')
+                    ome = os.getenv("HOME")
+        self.generalHome = home + '/GeneralCarto/'
+        if not os.path.isdir(self.generalHome):
+            os.mkdir(self.generalHome)
+        self.logs = self.generalHome + 'log-files/'
+                    wobj = open(os.getenv("HOME")+ 'log-files/GeneralCarto-pycURL-ERRORresponse.xml')
                     wobj.write( response )
                     wobj.close()
                     

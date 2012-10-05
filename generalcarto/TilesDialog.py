@@ -20,10 +20,14 @@ from generalcarto import postgreFunctions as postgre
 import os
 
 from multiprocessing import Pool, Process
+import multiprocessing
 import time
 import pprocess
 
 import xml.etree.ElementTree as xml
+
+import time
+from threading import Thread  
 
 
 class TilesDialog(Gtk.Dialog):
@@ -830,7 +834,7 @@ class TilesDialog(Gtk.Dialog):
         func.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!',logs)
         func.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(zentral_tile), str(zoom)),logs)
         return result
-        
+    
         
     def render_on_demand_as_loop(self, tile_uri, zoom, zentral_tile):
         rendered_tiles = []

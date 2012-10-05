@@ -75,17 +75,13 @@ def pure_tile_rendering(args):
         tile_extent = (c0.x,c0.y, c1.x,c1.y)
         
         # Bounding box for the tile
-        if hasattr(mapnik,'mapnik_version') and mapnik.mapnik_version() >= 800:
-            bbox = mapnik.Box2d(c0.x,c0.y, c1.x,c1.y)
-        else:
-            bbox = mapnik.Envelope(c0.x,c0.y, c1.x,c1.y)
+        bbox = mapnik.Envelope(c0.x,c0.y, c1.x,c1.y)
         m.zoom_to_box(bbox)
 
         # Render image with default Agg renderer
         im = mapnik.Image(m.height, m.width)
         mapnik.render(m, im)
         im.save(tile_uri, 'png256') 
-  
         return m.scale()/0.00028
 
 #This function does only...

@@ -77,11 +77,11 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 DistUtilsExtra.auto.setup(
     name='generalcarto',
     version='0.1',
-    #license='GPL-3',
-    #author='Your Name',
-    #author_email='email@ubuntu.com',
-    #description='UI for managing …',
-    #long_description='Here a longer description',
+    license='GPL-3',
+    author='Ralf Klammer',
+    author_email='milkbread@freenet.de',
+    description='UI for managing tile based mapping with automatic generalisation',
+    #long_description='Here should be a longer description',
     #url='https://launchpad.net/generalcarto',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )

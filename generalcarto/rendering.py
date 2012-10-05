@@ -1,7 +1,7 @@
 import mapnik
 import os
 from generalcarto import gdal_functions as gdal
-from generalcarto import pycURL_version_one_polygon as pycURL
+from generalcarto import pycURL
 from generalcarto import functions as func
 import sys
 import time
@@ -162,14 +162,13 @@ def calcNecTiles(bbox, tile_dir, minZoom,maxZoom):
 ###Functions that are used for the communication with WPS-Server
 ###Most functions are very specific written for WebGen-WPS...so not generic enough
 
-def makeWPSfile(tile_extent, dest_file, source, func_ident, filter, func_params, tile, logs_folder):
+def makeWPSfile(tile_extent, dest_file, source, func_ident, filter, func_params, tile, logs):
     
     func_parameters = func_params
     start_time = time.time() 
     #print source, filter, tile_extent
     result, geometry_type = gdal.openOGR(source, func_ident, func_parameters, tile_extent, filter, dest_file) 
     #***log-output
-    logs = str(logs_folder)
     func.writeToLog('Make WPS-Execute-File for...\n\t...tile: %s \n\t...tile_extent: %s ' %(str(tile), str(tile_extent)), logs)
     func.writeToLog( str(result) + ' ' + geometry_type + '(s) were processed in '+ str(round(time.time()-start_time, 3))  +' seconds!',logs)
     #***
@@ -188,9 +187,9 @@ def doWPSProcess(params):
     folder = params[5]
     filter = params[6]
     func_params = params[7]
-    logs_folder = params[8]
-    #make a xml-file, that is valid for the Execute-command of WebGen_WPS
+    logs_folder = str(params[9])
     
+    #make a xml-file, that is valid for the Execute-command of WebGen_WPS
     test, geometry_type = makeWPSfile(tile_extent, folder+dest_file, source, func_ident, filter, func_params, params[8], logs_folder)
     result = ''
     if test > 0:  

@@ -16,34 +16,11 @@ class ExtentWindow(Gtk.Window):
         
         self.initializeContents()
         
+        #This is very necessary for an additional windwo...it handles the click on the close button of the window
         self.window.connect("delete-event", self.closedThisWindow)
-        self.closed = False
-
-        
-    def closedThisWindow(self, one, two):
         self.closed = True
-        self.window.hide()
-        return True
-        
-    def getStatus(self):
-        return self.closed
-
-    def getWindow(self):
-        return self.window
-        
-    def initializeMapfile(self, mapfile, preview_window_class):
-        self.comboboxtext_shape.remove_all()
-        self.comboboxtext_postgis.remove_all()
-        
-        self.preview_window_class = preview_window_class
-        self.preview_window_class.initImage()
-        
-        
-        self.mapfile = mapfile
-        self.fillComboboxes(mapfile)
-        self.window.show_all()
-        
-        
+ 
+###Initializations 
     def initializeContents(self):
         self.comboboxtext_shape = self.builder.get_object('comboboxtext_shape')
         self.comboboxtext_shape.connect("changed", self.on_comboboxtext_shape_changed)
@@ -55,6 +32,51 @@ class ExtentWindow(Gtk.Window):
         self.entry_urlo = self.builder.get_object('entry_urlo')
         self.entry_llla = self.builder.get_object('entry_llla')
         self.entry_urla = self.builder.get_object('entry_urla')
+
+    def initializeMapfile(self, mapfile, preview_window_class):
+        self.comboboxtext_shape.remove_all()
+        self.comboboxtext_postgis.remove_all()
+        
+        self.preview_window_class = preview_window_class
+        self.preview_window_class.initImage()
+        
+        
+        self.mapfile = mapfile
+        self.fillComboboxes(mapfile)
+        self.showWindow()
+        
+###Window communcations with outter world
+    def showWindow(self):
+        self.window.show_all()
+        self.closed = False
+        
+    def hideWindow(self):
+        self.window.hide()
+        self.closed = True
+        
+    def getStatus(self):
+        return self.closed
+
+    def getWindow(self):
+        return self.window
+        
+    def closeWindow(self):
+        self.destroy()
+    
+    def getExtentFromBoxes(self):
+        return self.calculateExtent()
+        
+    #Perform a simple rendering of a single *.png self.image file
+    def showPreview(self, mapfile):
+        rendering.simpleRendering(self.previewImage, mapfile, self.calculateExtent())
+        self.preview_window_class.reloadImage()
+        self.preview_window_class.showWindow()
+        
+###Listeners
+    def closedThisWindow(self, one, two):
+        self.closed = True
+        self.window.hide()
+        return True #this prevents the window from getting destroyed
 
     #lets user choose a shapefile, which will be taken to automatically get an extent of the data
     def on_comboboxtext_shape_changed(self, widget):
@@ -78,25 +100,9 @@ class ExtentWindow(Gtk.Window):
                 if content == table:
                     self.setExtent(layer)
                     self.label_chosen_extent.set_text('Extent of %s datasource: \n%s\n(modifiable)'%(params.get('type'), content))
-        # TODO(Ralf) Please implement the quick preview as extra window.
         self.showPreview(self.mapfile)
-    
-    def on_button2_clicked(self, widget):
-        self.label2.set_label("Directly changed")
 
-    def on_button3_clicked(self, widget):
-        self.label2.set_label("Changed by additional button")
-
-
-    def changeLabelFromOutside(self, input):
-        self.label2.set_label(input)
-
-    def closeWindow(self):
-        self.destroy()
-    
-    def getExtentFromBoxes(self):
-        return self.calculateExtent()
-        
+###Additional functions
     def calculateExtent(self):
         c0 = self.prj.forward(mapnik.Coord(float(self.entry_lllo.get_text()),float(self.entry_llla.get_text())))
         c1 = self.prj.forward(mapnik.Coord(float(self.entry_urlo.get_text()),float(self.entry_urla.get_text()))) 
@@ -120,8 +126,7 @@ class ExtentWindow(Gtk.Window):
                 self.label_srs.set_text(layer.srs)
             else:
                 functions.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!', self.logfiles)
-                self.label_srs.set_text('')
-                
+                self.label_srs.set_text('')               
         
                 
     def extractFileName(self, fileString):
@@ -152,10 +157,6 @@ class ExtentWindow(Gtk.Window):
         except:
             functions.writeToLog('Unable to get extent of shapefile!', self.logfiles) 
             
-    #Perform a simple rendering of a single *.png self.image file
-    def showPreview(self, mapfile):
-        rendering.simpleRendering(self.previewImage, mapfile, self.calculateExtent())
-        self.preview_window_class.reloadImage()
-        self.preview_window_class.getWindow().show_all()
+    
         
     

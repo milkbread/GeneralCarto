@@ -248,7 +248,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="mnu_extent">
-                        <property name="label">Extent</property>
+                        <property name="label">   Extent</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -258,7 +258,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="mnu_preview">
-                        <property name="label">Preview</property>
+                        <property name="label">   Preview</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>

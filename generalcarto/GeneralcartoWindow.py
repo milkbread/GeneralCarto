@@ -27,7 +27,6 @@ import glob
 import os
 import time
 import sys
-
 import ogr
 
 from generalcarto.old_and_test_functions import test_multiprocessing
@@ -78,16 +77,11 @@ class GeneralcartoWindow(Window):
         self.previewImage = self.generalHome + "user_image.png"
         self.path = ""
         
-        #initialize the external windows
-        self.previewWindow_open = False
-        self.openPreviewWindow()
+        self.loadWindows()
         
-        self.extentWindow_open = False
-        self.openExtentWindow()
-        #self.windowClassExtent.initializeMapfile('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')
+        self.menuItemIndicator = "<  "
         
-        
-        
+###Listeners
     ####let the user choose a directory that contains one or more mapnik style files
     def on_button_style_clicked(self, widget, data=None):  
         #let the user choose a self.path with the directory chooser
@@ -124,16 +118,7 @@ class GeneralcartoWindow(Window):
         if self.checkbutton_open == True:
             os.system('gedit --new-window ' + self.path+'/'+self.mapfile)
         
-        #if self.windowClassExtent.getStatus() == True:
-         #   self.openExtentWindow()
-        #if self.windowClassPreview.getStatus() == True:
-         #   self.openPreviewWindow()
-        
         self.windowClassExtent.initializeMapfile(self.path+'/'+self.mapfile, self.windowClassPreview)
-        
-
-        
-        
   
     #Display map tiles by an on-the fly rendering of the concrete 9 tiles that will be displayed
     def on_button_tiles_clicked(self, widget, data=None):
@@ -179,44 +164,38 @@ class GeneralcartoWindow(Window):
 
 
                 
-###Function for steering the external windows            
-        
+###Listeners and functions for communicating the external windows            
+    def loadWindows(self):
+        #initialize the external windows
+        self.openPreviewWindow() 
+        #self.windowClassPreview.showWindow()
+        self.openExtentWindow()
+        #self.windowClassExtent.initializeMapfile('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')    
+    
     def on_mnu_extent_activate(self, widget, data=None):
-        #if self.windowClassExtent.getStatus() == False:
-            if self.extentWindow_open == False or self.windowClassExtent.getStatus() == True:
-                self.windowClassExtent.getWindow().show_all()
-                self.extentWindow_open = True
-            elif self.extentWindow_open == True:
-                self.windowClassExtent.getWindow().hide()
-                self.extentWindow_open = False
-        #else:
-         #   self.openExtentWindow()
-          #  self.windowClassExtent.getWindow().show_all()
-           # if self.path != "":
-            #    self.windowClassExtent.initializeMapfile(self.path+'/'+self.mapfile, self.windowClassPreview)
+        if self.windowClassExtent.getStatus() == True:
+            self.ui.mnu_extent.set_label(self.menuItemIndicator + self.ui.mnu_extent.get_label())
+            self.windowClassExtent.showWindow()
+        elif self.windowClassExtent.getStatus() == False:
+            self.ui.mnu_extent.set_label(self.ui.mnu_extent.get_label().split(self.menuItemIndicator)[1])
+            self.windowClassExtent.hideWindow()        
         
     def openExtentWindow(self):
         self.windowClassExtent = ExtentWindow(self.logs, self.previewImage)
         
     def on_mnu_preview_activate(self, widget, data=None):
-       # if self.windowClassPreview.getStatus() == False:
-            if self.previewWindow_open == False or self.windowClassPreview.getStatus() == True:
-                self.windowClassPreview.getWindow().show_all()
-                self.previewWindow_open = True
-            elif self.previewWindow_open == True:
-                self.windowClassPreview.getWindow().hide()
-                self.previewWindow_open = False
-        #else:
-         #   self.openPreviewWindow()
-          #  self.windowClassPreview.getWindow().show_all()
-            
+        if self.windowClassPreview.getStatus() == True:
+            self.ui.mnu_preview.set_label(self.menuItemIndicator + self.ui.mnu_preview.get_label())
+            self.windowClassPreview.showWindow()
+        elif self.windowClassPreview.getStatus() == False:
+            self.ui.mnu_preview.set_label(self.ui.mnu_preview.get_label().split(self.menuItemIndicator)[1])
+            self.windowClassPreview.hideWindow()
          
     def openPreviewWindow(self):
         self.windowClassPreview = PreviewWindow(self.previewImage)
         
     def on_button_window_clicked(self, widget, data=None):
-        print self.windowClassExtent.getStatus()    
-    
+        print self.windowClassExtent.getStatus()  
                 
                 
 ###Additional Functions

@@ -796,6 +796,8 @@ class TilesDialog(Gtk.Dialog):
         
         func.writeToLog('Deleted tile_dir! %s' %os.system(' rm -rf '+ tile_dir),logs)
         pass
+        
+   
 
     def on_btn_cancel_clicked(self, widget, data=None):
         """The user has elected cancel changes.

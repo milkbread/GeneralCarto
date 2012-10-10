@@ -31,6 +31,7 @@ import sys
 import ogr
 
 from generalcarto.old_and_test_functions import test_multiprocessing
+from generalcarto import Toolbars
 
    
         
@@ -77,6 +78,14 @@ class GeneralcartoWindow(Window):
         if not os.path.isdir(self.tile_dir):
             os.mkdir(self.tile_dir)
         
+        self.extentWindow_open = False
+        #self.openExtentWindow('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml', '/home/klammer/GeneralCarto/log-files/')
+        
+        
+        
+
+        
+        
     ####let the user choose a directory that contains one or more mapnik style files
     def on_button_style_clicked(self, widget, data=None):  
         #let the user choose a self.path with the directory chooser
@@ -98,16 +107,14 @@ class GeneralcartoWindow(Window):
                         counter = counter + 1   
            keylist = dicts.keys()
            keylist.sort() 
-
-            #fill the combotextbox with the xml-files of the initially user-chosen directory
+        
+        #fill the combotextbox with the xml-files of the initially user-chosen directory
         for key in keylist: 
                 #print key, value
                self.ui.comboboxtext_file.append_text(dicts[key])    
 
     #set style and shape when combobox has changed
     def on_comboboxtext_file_changed(self, widget, data=None):
-        self.ui.comboboxtext_shape.remove_all()
-        self.ui.comboboxtext_postgis.remove_all()
         #get the chosen stylefile
         self.mapfile = self.ui.comboboxtext_file.get_active_text() 
         #print  self.path+'/'+self.mapfile
@@ -116,44 +123,10 @@ class GeneralcartoWindow(Window):
         if self.checkbutton_open == True:
             os.system('gedit --new-window ' + self.path+'/'+self.mapfile)
         
-        self.m = mapnik.Map(256,256)
-        mapnik.load_map(self.m,self.path+'/'+self.mapfile)
-        self.prj = mapnik.Projection(self.m.srs)
-        for layer in self.m.layers.__iter__():
-            params = layer.datasource.params()
-            type = params.get('type')
-            if type == 'shape':
-                self.ui.comboboxtext_shape.append_text(params.get('file'))
-                self.ui.label_srs.set_text(layer.srs)
-            elif type == 'postgis':
-                content = 'DB: %s\nTable: %s '%(params.get('dbname'), params.get('table'))
-                self.ui.comboboxtext_postgis.append_text(content)
-                self.ui.label_srs.set_text(layer.srs)
-            else:
-                func.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!', self.logs)
-                self.ui.label_srs.set_text('')
+        self.openExtentWindow(self.path+'/'+self.mapfile, self.logs)
+        
+        
   
-    #lets user choose a shapefile, which will be taken to automatically get an extent of the data
-    def on_comboboxtext_shape_changed(self, widget, data=None):
-        
-        self.shapefile = self.ui.comboboxtext_shape.get_active_text()         
-        for layer in self.m.layers.__iter__():
-            params = layer.datasource.params()
-            if params.get('type') == 'shape' and params.get('file') == self.shapefile:
-                self.setExtent(layer)
-        self.showPreview()
-    #lets user choose a table, which will be taken to automatically get an extent of the data
-    def on_comboboxtext_postgis_changed(self, widget, data=None):
-        
-        table = self.ui.comboboxtext_postgis.get_active_text()         
-        for layer in self.m.layers.__iter__():
-            params = layer.datasource.params()
-            if params.get('type') == 'postgis':
-                content = 'DB: %s\nTable: %s '%(params.get('dbname'), params.get('table'))
-                if content == table:
-                    self.setExtent(layer)
-        self.showPreview()
-        
     #Display map tiles with a on-the fly rendering of the concrete 9 tiles that will be displayed
     def on_button_tiles_clicked(self, widget, data=None):
      if self.mapfile != '':
@@ -162,10 +135,11 @@ class GeneralcartoWindow(Window):
         
         #get/set the bounding box/extent
         try:            
-            c0 = self.prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
-            c1 = self.prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
-            extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
-            print extent
+            #c0 = self.prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
+            #c1 = self.prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
+            #extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
+            #print extent
+            extent = self.windowClass.getExtentFromBoxes()
         except:
             self.ui.label8.set_text('Emtpty entry or not as float!')
             self.ui.image1.clear()
@@ -211,6 +185,24 @@ class GeneralcartoWindow(Window):
             if result != Gtk.ResponseType.OK:
                 return  
                 
+    def on_mnu_extent_activate(self, widget, data=None):
+        if self.extentWindow_open == False:
+            self.openExtentWindow()
+        elif self.extentWindow_open == True:
+            self.winExt.destroy()
+            self.extentWindow_open = False
+        
+    def openExtentWindow(self, mapfile, logs):
+        self.windowClass = Toolbars.ExtentWindow(mapfile, logs)
+        self.winExt = self.windowClass.getWindow()
+        self.winExt.show_all()
+        self.extentWindow_open = True
+        
+    def on_button_window_clicked(self, widget, data=None):
+        print self.windowClass.getExtentFromBoxes()
+    
+                
+                
 ###Additional Functions
 
     #Perform a simple rendering of a single *.png self.image file
@@ -227,31 +219,7 @@ class GeneralcartoWindow(Window):
             self.ui.label8.set_text('Extent has emtpty entries or not as float!')
             self.ui.image1.clear()
             
-    #shows user the extent of chosen datasource in geographical LonLat-Format
-    def setExtent(self, chosen_layer):
-        try:
-            #... of a given shapefile
-            #extent = gdal.getExtentFromShape(self.shapefile)
-            extent = chosen_layer.datasource.envelope()
-            print extent
-            #convert extent to geographical coordinates...for displaying them to the user
-            c0 = self.prj.inverse(mapnik.Coord(round(extent[0],20),round(extent[1],20)))
-            c1 = self.prj.inverse(mapnik.Coord(round(extent[2],20),round(extent[3],20)))            
-
-            #fill the entries with the values of the found extent            
-            self.ui.entry_lllo.set_text(str(c0.x))
-            self.ui.entry_urlo.set_text(str(c1.x))
-            self.ui.entry_llla.set_text(str(c0.y))
-            self.ui.entry_urla.set_text(str(c1.y)) 
-
-            self.ui.label2.set_text('Extent successfully determined!') 
-            splitted = self.shapefile.split('/')
-            pure_name = splitted[len(splitted)-1]
-            self.ui.entry_chosen.set_text(pure_name)
-        except:
-            self.ui.label2.set_text('Unable to get extent of shapefile!') 
-
-
+    
 ###Testfunctions
 
     def on_button_short_clicked(self, widget, data=None):

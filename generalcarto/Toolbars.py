@@ -4,7 +4,7 @@ from generalcarto import functions
 
 class ExtentWindow(Gtk.Window):
     
-    def __init__(self, mapfile, logfiles, name = "extent_window", file = "./data/ui/ExtentsWindow.glade"):
+    def __init__(self, logfiles, name = "extent_window", file = "./data/ui/ExtentsWindow.glade"):
         self.logfiles = logfiles
                 
         #basics for loading a *.glade file
@@ -12,7 +12,7 @@ class ExtentWindow(Gtk.Window):
         self.builder.add_from_file(file)
         self.window = self.builder.get_object(name)
         
-        self.initializeWindow()
+        self.initializeContents()
         
         #load the buttons and connect them to functions
         #self.builder.get_object('button1').connect("clicked", self.on_button1_clicked)
@@ -29,12 +29,15 @@ class ExtentWindow(Gtk.Window):
         #self.box = self.builder.get_object('box1')
         #self.box.pack_start(self.button3, True, True, 0)
         
-        self.fillComboboxes(mapfile)
+        
 
     def getWindow(self):
         return self.window
         
-    def initializeWindow(self):
+    def initializeMapfile(self, mapfile):
+        self.fillComboboxes(mapfile)
+        
+    def initializeContents(self):
         self.comboboxtext_shape = self.builder.get_object('comboboxtext_shape')
         self.comboboxtext_shape.connect("changed", self.on_comboboxtext_shape_changed)
         self.comboboxtext_postgis = self.builder.get_object('comboboxtext_postgis')

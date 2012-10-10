@@ -79,6 +79,7 @@ class GeneralcartoWindow(Window):
             os.mkdir(self.tile_dir)
         
         self.extentWindow_open = False
+        self.openExtentWindow(self.logs)
         #self.openExtentWindow('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml', '/home/klammer/GeneralCarto/log-files/')
         
         
@@ -117,13 +118,31 @@ class GeneralcartoWindow(Window):
     def on_comboboxtext_file_changed(self, widget, data=None):
         #get the chosen stylefile
         self.mapfile = self.ui.comboboxtext_file.get_active_text() 
-        #print  self.path+'/'+self.mapfile
-
+        
         #open style file if user wants to
         if self.checkbutton_open == True:
             os.system('gedit --new-window ' + self.path+'/'+self.mapfile)
         
-        self.openExtentWindow(self.path+'/'+self.mapfile, self.logs)
+        self.windowClass.initializeMapfile(self.path+'/'+self.mapfile)
+        
+        
+    def on_mnu_extent_activate(self, widget, data=None):
+        if self.extentWindow_open == False:
+            self.winExt.show_all()
+            self.extentWindow_open = True
+        elif self.extentWindow_open == True:
+            self.winExt.hide()
+            self.extentWindow_open = False
+        
+    def openExtentWindow(self, logs):
+        self.windowClass = Toolbars.ExtentWindow(logs)
+        self.winExt = self.windowClass.getWindow()
+        self.winExt.show_all()
+        self.winExt.hide()
+        
+        
+    def on_button_window_clicked(self, widget, data=None):
+        print self.windowClass.getExtentFromBoxes()
         
         
   
@@ -185,21 +204,7 @@ class GeneralcartoWindow(Window):
             if result != Gtk.ResponseType.OK:
                 return  
                 
-    def on_mnu_extent_activate(self, widget, data=None):
-        if self.extentWindow_open == False:
-            self.openExtentWindow()
-        elif self.extentWindow_open == True:
-            self.winExt.destroy()
-            self.extentWindow_open = False
-        
-    def openExtentWindow(self, mapfile, logs):
-        self.windowClass = Toolbars.ExtentWindow(mapfile, logs)
-        self.winExt = self.windowClass.getWindow()
-        self.winExt.show_all()
-        self.extentWindow_open = True
-        
-    def on_button_window_clicked(self, widget, data=None):
-        print self.windowClass.getExtentFromBoxes()
+    
     
                 
                 

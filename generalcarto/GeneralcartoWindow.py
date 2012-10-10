@@ -31,7 +31,8 @@ import sys
 import ogr
 
 from generalcarto.old_and_test_functions import test_multiprocessing
-from generalcarto import Toolbars
+from generalcarto.ExtentWindow import ExtentWindow
+from generalcarto.PreviewWindow import PreviewWindow 
 
    
         
@@ -53,11 +54,8 @@ class GeneralcartoWindow(Window):
         
         # Get a reference to the builder and set up the signals.
         self.builder = builder
-        self.ui = builder.get_ui(self)
-                
-        #initialize the entries for the (simple) self.image size
-        self.ui.image1.clear()
-
+        self.ui = builder.get_ui(self)                
+        
         #initialize the entry for the zoomlevels for the tile rendering
         self.ui.entry1.set_text('0')
         self.ui.entry2.set_text('18') 
@@ -77,14 +75,17 @@ class GeneralcartoWindow(Window):
         self.tile_dir = self.generalHome + 'tiles/' 
         if not os.path.isdir(self.tile_dir):
             os.mkdir(self.tile_dir)
+        self.previewImage = self.generalHome + "user_image.png"
+        self.path = ""
+        
+        #initialize the external windows
+        self.previewWindow_open = False
+        self.openPreviewWindow()
         
         self.extentWindow_open = False
-        self.openExtentWindow(self.logs)
-        #self.openExtentWindow('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml', '/home/klammer/GeneralCarto/log-files/')
+        self.openExtentWindow()
+        #self.windowClassExtent.initializeMapfile('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')
         
-        
-        
-
         
         
     ####let the user choose a directory that contains one or more mapnik style files
@@ -123,30 +124,18 @@ class GeneralcartoWindow(Window):
         if self.checkbutton_open == True:
             os.system('gedit --new-window ' + self.path+'/'+self.mapfile)
         
-        self.windowClass.initializeMapfile(self.path+'/'+self.mapfile)
+        #if self.windowClassExtent.getStatus() == True:
+         #   self.openExtentWindow()
+        #if self.windowClassPreview.getStatus() == True:
+         #   self.openPreviewWindow()
         
+        self.windowClassExtent.initializeMapfile(self.path+'/'+self.mapfile, self.windowClassPreview)
         
-    def on_mnu_extent_activate(self, widget, data=None):
-        if self.extentWindow_open == False:
-            self.winExt.show_all()
-            self.extentWindow_open = True
-        elif self.extentWindow_open == True:
-            self.winExt.hide()
-            self.extentWindow_open = False
-        
-    def openExtentWindow(self, logs):
-        self.windowClass = Toolbars.ExtentWindow(logs)
-        self.winExt = self.windowClass.getWindow()
-        self.winExt.show_all()
-        self.winExt.hide()
-        
-        
-    def on_button_window_clicked(self, widget, data=None):
-        print self.windowClass.getExtentFromBoxes()
+
         
         
   
-    #Display map tiles with a on-the fly rendering of the concrete 9 tiles that will be displayed
+    #Display map tiles by an on-the fly rendering of the concrete 9 tiles that will be displayed
     def on_button_tiles_clicked(self, widget, data=None):
      if self.mapfile != '':
       #if self.shapefile != '':
@@ -158,9 +147,9 @@ class GeneralcartoWindow(Window):
             #c1 = self.prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
             #extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
             #print extent
-            extent = self.windowClass.getExtentFromBoxes()
+            extent = self.windowClassExtent.getExtentFromBoxes()
         except:
-            self.ui.label8.set_text('Emtpty entry or not as float!')
+            #self.ui.label8.set_text('Emtpty entry or not as float!')
             self.ui.image1.clear()
         #Go on if extent was setted, respectively no error occured
         if extent != '':    
@@ -185,9 +174,53 @@ class GeneralcartoWindow(Window):
            #     self.ui.image1.clear()
       #else:
        # self.ui.label8.set_text('Please choose a shape file!')
-     else:
-        self.ui.label8.set_text('Please choose a style file!')
+    #else:
+        #self.ui.label8.set_text('Please choose a style file!')
 
+
+                
+###Function for steering the external windows            
+        
+    def on_mnu_extent_activate(self, widget, data=None):
+        #if self.windowClassExtent.getStatus() == False:
+            if self.extentWindow_open == False or self.windowClassExtent.getStatus() == True:
+                self.windowClassExtent.getWindow().show_all()
+                self.extentWindow_open = True
+            elif self.extentWindow_open == True:
+                self.windowClassExtent.getWindow().hide()
+                self.extentWindow_open = False
+        #else:
+         #   self.openExtentWindow()
+          #  self.windowClassExtent.getWindow().show_all()
+           # if self.path != "":
+            #    self.windowClassExtent.initializeMapfile(self.path+'/'+self.mapfile, self.windowClassPreview)
+        
+    def openExtentWindow(self):
+        self.windowClassExtent = ExtentWindow(self.logs, self.previewImage)
+        
+    def on_mnu_preview_activate(self, widget, data=None):
+       # if self.windowClassPreview.getStatus() == False:
+            if self.previewWindow_open == False or self.windowClassPreview.getStatus() == True:
+                self.windowClassPreview.getWindow().show_all()
+                self.previewWindow_open = True
+            elif self.previewWindow_open == True:
+                self.windowClassPreview.getWindow().hide()
+                self.previewWindow_open = False
+        #else:
+         #   self.openPreviewWindow()
+          #  self.windowClassPreview.getWindow().show_all()
+            
+         
+    def openPreviewWindow(self):
+        self.windowClassPreview = PreviewWindow(self.previewImage)
+        
+    def on_button_window_clicked(self, widget, data=None):
+        print self.windowClassExtent.getStatus()    
+    
+                
+                
+###Additional Functions
+  
         
     def on_checkbutton_open_toggled(self, widget, data=None):
         if self.checkbutton_open == True:
@@ -202,28 +235,7 @@ class GeneralcartoWindow(Window):
             #close the dialog, and check whether to proceed        
             styler.destroy()
             if result != Gtk.ResponseType.OK:
-                return  
-                
-    
-    
-                
-                
-###Additional Functions
-
-    #Perform a simple rendering of a single *.png self.image file
-    def showPreview(self):
-        self.image = self.generalHome+'user_image.png'
-        try:
-            c0 = self.prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
-            c1 = self.prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
-            extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
-            rendering.simpleRendering(self.image, self.path+'/'+self.mapfile, extent)
-            self.ui.image1.set_from_file(self.image)  
-            #self.ui.label2.set_text('Saved to: ' + self.image)          
-        except:
-            self.ui.label8.set_text('Extent has emtpty entries or not as float!')
-            self.ui.image1.clear()
-            
+                return    
     
 ###Testfunctions
 

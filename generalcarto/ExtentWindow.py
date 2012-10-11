@@ -5,9 +5,10 @@ from generalcarto import rendering
 
 class ExtentWindow(Gtk.Window):
     
-    def __init__(self, logfiles, preview_image,  name = "extent_window", file = "./data/ui/Toolbars.glade"):
+    def __init__(self, logfiles, preview_image, main_window, name = "extent_window", file = "./data/ui/Toolbars.glade"):
         self.logfiles = logfiles
         self.previewImage = preview_image
+        self.main_window = main_window
                 
         #basics for loading a *.glade file
         self.builder = Gtk.Builder()
@@ -19,6 +20,7 @@ class ExtentWindow(Gtk.Window):
         #This is very necessary for an additional windwo...it handles the click on the close button of the window
         self.window.connect("delete-event", self.closedThisWindow)
         self.closed = True
+        self.isMapfileInitialized = False
  
 ###Initializations 
     def initializeContents(self):
@@ -33,7 +35,12 @@ class ExtentWindow(Gtk.Window):
         self.entry_llla = self.builder.get_object('entry_llla')
         self.entry_urla = self.builder.get_object('entry_urla')
 
-    def initializeMapfile(self, mapfile, preview_window_class):
+    def initializeMapfile(self, mapnik_map, mapfile, preview_window_class):
+        self.isMapfileInitialized = False
+        self.mapnik_map = mapnik_map
+        self.mapfile = mapfile
+        
+        
         self.comboboxtext_shape.remove_all()
         self.comboboxtext_postgis.remove_all()
         
@@ -41,18 +48,23 @@ class ExtentWindow(Gtk.Window):
         self.preview_window_class.initImage()
         
         
-        self.mapfile = mapfile
-        self.fillComboboxes(mapfile)
+        self.fillComboboxes()
         self.showWindow()
+        
+        self.isMapfileInitialized = True
         
 ###Window communcations with outter world
     def showWindow(self):
-        self.window.show_all()
-        self.closed = False
+        if self.closed == True:
+            self.main_window.ui.mnu_extent.set_label(self.main_window.menuItemIndicator + self.main_window.ui.mnu_extent.get_label())
+            self.window.show_all()
+            self.closed = False
         
     def hideWindow(self):
-        self.window.hide()
-        self.closed = True
+        if self.closed == False:
+            self.main_window.ui.mnu_extent.set_label(self.main_window.ui.mnu_extent.get_label().split(self.main_window.menuItemIndicator)[1])
+            self.window.hide()
+            self.closed = True
         
     def getStatus(self):
         return self.closed
@@ -68,20 +80,20 @@ class ExtentWindow(Gtk.Window):
         
     #Perform a simple rendering of a single *.png self.image file
     def showPreview(self, mapfile):
-        rendering.simpleRendering(self.previewImage, mapfile, self.calculateExtent())
-        self.preview_window_class.reloadImage()
-        self.preview_window_class.showWindow()
-        
+        if self.isMapfileInitialized != False:
+            rendering.simpleRendering(self.previewImage, mapfile, self.calculateExtent())
+            self.preview_window_class.reloadImage()
+            self.preview_window_class.showWindow()
+            
 ###Listeners
-    def closedThisWindow(self, one, two):
-        self.closed = True
-        self.window.hide()
+    def closedThisWindow(self, window, event):
+        self.hideWindow()
         return True #this prevents the window from getting destroyed
 
     #lets user choose a shapefile, which will be taken to automatically get an extent of the data
     def on_comboboxtext_shape_changed(self, widget):
         self.shapeName = self.comboboxtext_shape.get_active_text()         
-        for layer in self.m.layers.__iter__():
+        for layer in self.mapnik_map.layers.__iter__():
             params = layer.datasource.params()
             if params.get('type') == 'shape' and self.extractFileName(params.get('file')) == self.shapeName:
                 self.setExtent(layer)
@@ -93,7 +105,7 @@ class ExtentWindow(Gtk.Window):
     #lets user choose a table, which will be taken to automatically get an extent of the data
     def on_comboboxtext_postgis_changed(self, widget):
         table = self.comboboxtext_postgis.get_active_text()         
-        for layer in self.m.layers.__iter__():
+        for layer in self.mapnik_map.layers.__iter__():
             params = layer.datasource.params()
             if params.get('type') == 'postgis':
                 content = 'DB: %s\nTable: %s '%(params.get('dbname'), params.get('table'))
@@ -108,12 +120,12 @@ class ExtentWindow(Gtk.Window):
         c1 = self.prj.forward(mapnik.Coord(float(self.entry_urlo.get_text()),float(self.entry_urla.get_text()))) 
         return (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
         
-    def fillComboboxes(self, mapfile):
+    def fillComboboxes(self):
         
-        self.m = mapnik.Map(256,256)
-        mapnik.load_map(self.m,mapfile)
-        self.prj = mapnik.Projection(self.m.srs)
-        for layer in self.m.layers.__iter__():
+        #self.m = mapnik.Map(256,256)
+        #mapnik.load_map(self.m,mapfile)
+        self.prj = mapnik.Projection(self.mapnik_map.srs)
+        for layer in self.mapnik_map.layers.__iter__():
             self.params = layer.datasource.params()
             type = self.params.get('type')
             if type == 'shape':

@@ -18,7 +18,6 @@ from generalcarto.TilesDialog import TilesDialog
 from generalcarto.StyleditDialog import StyleditDialog
 from generalcarto import gdal_functions as gdal
 from generalcarto import rendering
-from generalcarto import functions as func
 from generalcarto import postgreFunctions as postgres
 import mapnik
 from quickly import prompts
@@ -31,7 +30,10 @@ import ogr
 
 from generalcarto.old_and_test_functions import test_multiprocessing
 from generalcarto.ExtentWindow import ExtentWindow
+from generalcarto.TilesWindow import TilesWindow
+from generalcarto.ToolsWindow import ToolsWindow
 from generalcarto.PreviewWindow import PreviewWindow 
+from generalcarto.StylingWindow import StylingWindow 
 
    
         
@@ -63,6 +65,11 @@ class GeneralcartoWindow(Window):
         if mapnik.mapnik_version() < 200100:
             print "You're having a too old version of mapnik...install minimum version 2.1.0!!!"
             sys.exit()
+         
+        #initialize the size of the tile buffer
+        self.buffer_size = 128   
+        self.ui.entry_buffer.set_text(str(self.buffer_size))
+        
             
         home = os.getenv("HOME")
         self.generalHome = home + '/GeneralCarto/'
@@ -77,13 +84,16 @@ class GeneralcartoWindow(Window):
         self.previewImage = self.generalHome + "user_image.png"
         self.path = ""
         
+        self.menuItemIndicator = "<  "
+        
         self.loadWindows()
         
-        self.menuItemIndicator = "<  "
         
 ###Listeners
     ####let the user choose a directory that contains one or more mapnik style files
     def on_button_style_clicked(self, widget, data=None):  
+        self.ui.comboboxtext_file.remove_all()
+        
         #let the user choose a self.path with the directory chooser
         response, self.path = prompts.choose_directory()
 
@@ -112,14 +122,123 @@ class GeneralcartoWindow(Window):
     #set style and shape when combobox has changed
     def on_comboboxtext_file_changed(self, widget, data=None):
         #get the chosen stylefile
-        self.mapfile = self.ui.comboboxtext_file.get_active_text() 
+        mapfile_file = self.ui.comboboxtext_file.get_active_text()
+        self.mapfile = self.path+'/'+mapfile_file 
+        self.mapnik_map = mapnik.Map(256,256)
+        mapnik.load_map(self.mapnik_map, self.mapfile)
         
         #open style file if user wants to
         if self.checkbutton_open == True:
-            os.system('gedit --new-window ' + self.path+'/'+self.mapfile)
+            os.system('gedit --new-window ' + self.mapfile)
         
-        self.windowClassExtent.initializeMapfile(self.path+'/'+self.mapfile, self.windowClassPreview)
+        self.windowClassExtent.initializeMapfile(self.mapnik_map, self.mapfile, self.windowClassPreview)
+        
+    def on_button_show_tiles_clicked(self, widget, data=None):
+        #This is a debugging boolean...set it to True and you can access it quickly
+        quick = False
+        
+        try:
+            extent = self.windowClassExtent.getExtentFromBoxes()        
+            maxZoom = int(self.ui.entry2.get_text())
+            minZoom = int(self.ui.entry1.get_text())
+            buffer = int (self.ui.entry_buffer.get_text())
+            self.windowClassTiles.initializeParameters(extent, self.mapnik_map, self.tile_dir, minZoom, maxZoom, buffer, self.generalHome, self.logs)
+        except:
+            mapnik_map = mapnik.Map(256, 256)
+            self.mapnik_map = mapnik_map
+            mapnik.load_map(mapnik_map,'/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')        
+            self.windowClassTiles.initializeParameters((1323598.4969301731, 1399812.8074293039, 6476253.225965643, 6563857.1150525035), mapnik_map,  '/home/klammer/GeneralCarto/tiles/', 0, 18, self.ui.entry_buffer.get_text(), '/home/klammer/GeneralCarto/',  '/home/klammer/GeneralCarto/log-files/')
+            
+        
+        self.windowClassPreview.hideWindow()
+        self.windowClassTools.initializeTilesWindow(self.windowClassTiles)
+        self.windowClassTools.showWindow()
+        self.windowClassStyling.initializeTilesWindow(self.mapnik_map, self.windowClassTiles)
+        self.windowClassStyling.showWindow()
+        
+     
+    
+
+
+                
+###Listeners and functions for communicating the external windows            
+    def loadWindows(self):
+        #initialize the external windows
+        self.openPreviewWindow() 
+        self.openExtentWindow()
+        self.openTileWindow()
+        self.openToolsWindow()
+        self.openStylingWindow()
+        
+    def on_mnu_extent_activate(self, widget, data=None):
+        if self.windowClassExtent.getStatus() == True:
+            self.windowClassExtent.showWindow()
+        elif self.windowClassExtent.getStatus() == False:
+            self.windowClassExtent.hideWindow()        
+        
+    def openExtentWindow(self):
+        self.windowClassExtent = ExtentWindow(self.logs, self.previewImage, self)
+        
+    def on_mnu_preview_activate(self, widget, data=None):
+        if self.windowClassPreview.getStatus() == True:
+            self.windowClassPreview.showWindow()
+        elif self.windowClassPreview.getStatus() == False:
+            self.windowClassPreview.hideWindow()
+         
+    def openPreviewWindow(self):
+        self.windowClassPreview = PreviewWindow(self.previewImage, self)
+        
+    def on_mnu_tiles_activate(self, widget, data=None):
+        if self.windowClassTiles.getStatus() == True:
+            self.windowClassTiles.showWindow()
+        elif self.windowClassTiles.getStatus() == False:
+            self.windowClassTiles.hideWindow() 
+        
+    def openTileWindow(self):
+        self.windowClassTiles = TilesWindow(self.logs, self)
+        
+    def on_mnu_tools_activate(self, widget, data=None):
+        if self.windowClassTools.getStatus() == True:
+            self.windowClassTools.showWindow()
+        elif self.windowClassTools.getStatus() == False:
+            self.windowClassTools.hideWindow() 
+        
+    def openToolsWindow(self):
+        self.windowClassTools = ToolsWindow(self.logs, self)
+        
+    def on_mnu_styling_activate(self, widget, data=None):
+        if self.windowClassStyling.getStatus() == True:
+            self.windowClassStyling.showWindow()
+        elif self.windowClassStyling.getStatus() == False:
+            self.windowClassStyling.hideWindow() 
+        
+    def openStylingWindow(self):
+        self.windowClassStyling = StylingWindow(self.logs, self)
+    
+    def on_button_window_clicked(self, widget, data=None):
+        print self.windowClassExtent.getStatus()  
+                
+                
+###Additional Functions
   
+        
+    def on_checkbutton_open_toggled(self, widget, data=None):
+        if self.checkbutton_open == True:
+            self.checkbutton_open = False 
+        elif self.checkbutton_open == False:
+            self.checkbutton_open = True
+
+    def on_button_styledit_clicked(self, widget, data=None):
+        if self.mapfile != '':
+            styler = StyleditDialog(self.mapfile)
+            result = styler.run() 
+            #close the dialog, and check whether to proceed        
+            styler.destroy()
+            if result != Gtk.ResponseType.OK:
+                return    
+    
+###Test- & Old functions
+
     #Display map tiles by an on-the fly rendering of the concrete 9 tiles that will be displayed
     def on_button_tiles_clicked(self, widget, data=None):
      if self.mapfile != '':
@@ -141,12 +260,12 @@ class GeneralcartoWindow(Window):
         #    try:  
 #                print 'bbox:'+str(bbox)
                 #initialize the information that will be send to the ui
-                mapfile = self.path+'/'+self.mapfile
+                mapfile = self.mapfile
                 maxZoom = self.ui.entry2.get_text()
                 minZoom = self.ui.entry1.get_text()
                 #collect all in one string, as this seems to be the only way
                 title = 'Tool for tile-based on-the-fly-generalisation   \n+'
-                sending = title + str(extent) + ':' + mapfile + ':' + self.tile_dir + ':' + minZoom + ':' + maxZoom + ':' + self.generalHome + ':' + self.logs
+                sending = title + str(extent) + ':' + self.mapfile + ':' + self.tile_dir + ':' + minZoom + ':' + maxZoom + ':' + self.generalHome + ':' + self.logs
                 #print sending
                 tiler =  TilesDialog(sending)
                 result = tiler.run() 
@@ -161,62 +280,6 @@ class GeneralcartoWindow(Window):
        # self.ui.label8.set_text('Please choose a shape file!')
     #else:
         #self.ui.label8.set_text('Please choose a style file!')
-
-
-                
-###Listeners and functions for communicating the external windows            
-    def loadWindows(self):
-        #initialize the external windows
-        self.openPreviewWindow() 
-        #self.windowClassPreview.showWindow()
-        self.openExtentWindow()
-        #self.windowClassExtent.initializeMapfile('/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')    
-    
-    def on_mnu_extent_activate(self, widget, data=None):
-        if self.windowClassExtent.getStatus() == True:
-            self.ui.mnu_extent.set_label(self.menuItemIndicator + self.ui.mnu_extent.get_label())
-            self.windowClassExtent.showWindow()
-        elif self.windowClassExtent.getStatus() == False:
-            self.ui.mnu_extent.set_label(self.ui.mnu_extent.get_label().split(self.menuItemIndicator)[1])
-            self.windowClassExtent.hideWindow()        
-        
-    def openExtentWindow(self):
-        self.windowClassExtent = ExtentWindow(self.logs, self.previewImage)
-        
-    def on_mnu_preview_activate(self, widget, data=None):
-        if self.windowClassPreview.getStatus() == True:
-            self.ui.mnu_preview.set_label(self.menuItemIndicator + self.ui.mnu_preview.get_label())
-            self.windowClassPreview.showWindow()
-        elif self.windowClassPreview.getStatus() == False:
-            self.ui.mnu_preview.set_label(self.ui.mnu_preview.get_label().split(self.menuItemIndicator)[1])
-            self.windowClassPreview.hideWindow()
-         
-    def openPreviewWindow(self):
-        self.windowClassPreview = PreviewWindow(self.previewImage)
-        
-    def on_button_window_clicked(self, widget, data=None):
-        print self.windowClassExtent.getStatus()  
-                
-                
-###Additional Functions
-  
-        
-    def on_checkbutton_open_toggled(self, widget, data=None):
-        if self.checkbutton_open == True:
-            self.checkbutton_open = False 
-        elif self.checkbutton_open == False:
-            self.checkbutton_open = True
-
-    def on_button_styledit_clicked(self, widget, data=None):
-        if self.mapfile != '':
-            styler = StyleditDialog(self.path+'/'+self.mapfile)
-            result = styler.run() 
-            #close the dialog, and check whether to proceed        
-            styler.destroy()
-            if result != Gtk.ResponseType.OK:
-                return    
-    
-###Testfunctions
 
     def on_button_short_clicked(self, widget, data=None):
         sending = 'Tool for tile-based on-the-fly-generalisation   \n+(1324637.159999081, 1405011.9800014955, 6477402.360002069, 6546380.469994396):/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml:/home/klammer/GeneralCarto/tiles/:0:18:'+self.generalHome+':'+self.logs

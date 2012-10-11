@@ -26,11 +26,11 @@ def getDatasourceFromString(string,chosen_layer):
                         if exists == False:
                             command = "ogr2ogr -f 'ESRI Shapefile' "+ replaced_datasource +" " + datasource +" -overwrite"
                             test = os.system(command)
-                            func.writeToLog('%s is no valid name for processing with ogr!!!' %datasource)
-                            if test == 0:
-                                func.writeToLog('It was necessary to rename and copy "%s" to: "%s"' %(datasource, replaced_datasource))
-                            else:
-                                func.writeToLog('It was NOT possible to process following command: ', command)
+                         #   func.writeToLog('%s is no valid name for processing with ogr!!!' %datasource)
+                          #  if test == 0:
+                          #      func.writeToLog('It was necessary to rename and copy "%s" to: "%s"' %(datasource, replaced_datasource))
+                          #  else:
+                          #      func.writeToLog('It was NOT possible to process following command: ', command)
                             
                         datasource = replaced_datasource
                     contents['file'] = datasource

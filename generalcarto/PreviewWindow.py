@@ -2,8 +2,9 @@ from gi.repository import Gtk
 import mapnik
 
 class PreviewWindow(Gtk.Window):
-    def __init__(self, preview_image):
+    def __init__(self, preview_image, main_window):
         self.previewImage = preview_image
+        self.main_window = main_window
         Gtk.Window.__init__(self, title="Preview for extent")
         self.box = Gtk.VBox(spacing=2)
         self.add(self.box)
@@ -16,9 +17,8 @@ class PreviewWindow(Gtk.Window):
         self.connect("delete-event", self.closedThisWindow)
         self.closed = True
         
-    def closedThisWindow(self, one, two):
-        self.closed = True
-        self.hide()
+    def closedThisWindow(self, window, event):
+        self.hideWindow()
         return True #this prevents the window from getting destroyed
         
     def getStatus(self):
@@ -37,10 +37,14 @@ class PreviewWindow(Gtk.Window):
         self.image.set_from_file(self.previewImage)
         
     def showWindow(self):
-        self.show_all()
-        self.closed = False
+        if self.closed == True:
+            self.main_window.ui.mnu_preview.set_label(self.main_window.menuItemIndicator + self.main_window.ui.mnu_preview.get_label())
+            self.show_all()
+            self.closed = False
         
     def hideWindow(self):
-        self.hide()
-        self.closed = True
+        if self.closed == False:
+            self.main_window.ui.mnu_preview.set_label(self.main_window.ui.mnu_preview.get_label().split(self.main_window.menuItemIndicator)[1])
+            self.hide()
+            self.closed = True
     

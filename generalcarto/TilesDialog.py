@@ -191,94 +191,93 @@ class TilesDialog(Gtk.Dialog):
     def on_comboboxtext_style_changed(self, widget, data=None):
         self.ui.comboboxtext_rules.remove_all()
         self.ui.textview_symbols.get_buffer().set_text('') 
-        if self.ui.comboboxtext_style.get_active() != -1 :
-           if self.ui.comboboxtext_style.get_active_text().find('self.ui.comboboxtext_style.get_active()') == -1:
-                chosen_style_name = self.ui.comboboxtext_style.get_active_text()
-               #print chosen_style_name
-                self.chosen_style = self.mapnik_map.find_style(chosen_style_name)
-                self.mapnik_rules = []
-                #loop through all rules of the chosen style
-                if self.chosen_style.rules.__len__() == 0:
-                    self.ui.comboboxtext_rules.append_text('Style contains no rule!')
-                else:  
-                    for rule in self.chosen_style.rules.__iter__():
-                        rule_content = str(rule.filter) +' '+ str(rule.min_scale) +' '+ str(rule.max_scale) 
-                        mapnik_symbols = []
-                        for symbol in rule.symbols.__iter__():
-                            symbol_type = symbol.type()
-                            sym_params = {}
-                            #print dir(symbol)
-                            if symbol_type == 'polygon':
-                                polygon_symbolizer = symbol.polygon()
-                                
-                                sym_params['Fill'] = str(polygon_symbolizer.fill)
-                                sym_params['Fill-opacity'] = str(polygon_symbolizer.fill_opacity)
-                                sym_params['Gamma'] = str(polygon_symbolizer.gamma)
-                                #print symbol.fill, symbol.fill_opacity, symbol.gamma
-                                
-                            elif symbol_type == 'line':
-                                line_symbolizer = symbol.line()
-                                stroke = line_symbolizer.stroke
-                                sym_params['Color'] = str(stroke.color) 
-                                sym_params['Dash-offset'] = str(stroke.dash_offset) 
-                                sym_params['Gamma'] = str(stroke.gamma) 
-                                sym_params['Line-cap'] = str(stroke.line_cap) 
-                                sym_params['Line-join'] = str(stroke.line_join) 
-                                sym_params['Opacity'] = str(stroke.opacity) 
-                                sym_params['Width'] = str(stroke.width) 
-                                
-                                #for test in sym_params.keys():
-                                   #print test, sym_params[test]
-                                
-                                #print stroke.color, stroke.dash_offset, stroke.gamma, stroke.line_cap, stroke.line_join, stroke.opacity, stroke.width
-                            elif symbol_type == 'text':
-                                text_symbolizer = symbol.text()
-                                print dir(text_symbolizer)
-                                sym_params['allow overlap'] = str(text_symbolizer.allow_overlap)
-                                sym_params['avoid edges'] = str(text_symbolizer.avoid_edges)
-                                sym_params['displacement'] = str(text_symbolizer.displacement)
-                                sym_params['force_odd_labels'] = str(text_symbolizer.force_odd_labels)
-                                sym_params['format'] = str(text_symbolizer.format)
-                                sym_params['minimum_distance'] = str(text_symbolizer.minimum_distance)
-                                sym_params['minimum_path_length'] = str(text_symbolizer.minimum_path_length)
-                                sym_params['orientation'] = str(text_symbolizer.orientation)
-                                print text_symbolizer.name
-                                """
-                                 	allow_overlap
-                                    avoid_edges
-                                    displacement
-                                    force_odd_labels
-                                    format
-                                    format_treehas to be implemented to preview!!!
-                                    horizontal_alignment
-                                    justify_alignment
-                                    label_placement
-                                    label_position_tolerance
-                                    label_spacing
-                                    largest_bbox_only
-                                    maximum_angle_char_delta
-                                    minimum_distance
-                                    minimum_padding
-                                    minimum_path_length
-                                    orientation
-                                    text_ratio
-                                    vertical_alignment
-                                    wrap_width"""
-                            else:
-                                print 'Please implement the missing types!!!!!'
-                                
+        if self.ui.comboboxtext_style.get_active() != -1 :            
+            chosen_style_name = self.ui.comboboxtext_style.get_active_text()
+            #print chosen_style_name
+            self.chosen_style = self.mapnik_map.find_style(chosen_style_name)
+            self.mapnik_rules = []
+            #loop through all rules of the chosen style
+            if self.chosen_style.rules.__len__() == 0:
+                self.ui.comboboxtext_rules.append_text('Style contains no rule!')
+            else:  
+                for rule in self.chosen_style.rules.__iter__():
+                    rule_content = str(rule.filter) +' '+ str(rule.min_scale) +' '+ str(rule.max_scale) 
+                    mapnik_symbols = []
+                    for symbol in rule.symbols.__iter__():
+                        symbol_type = symbol.type()
+                        sym_params = {}
+                        #print dir(symbol)
+                        if symbol_type == 'polygon':
+                            polygon_symbolizer = symbol.polygon()
                             
-                            self.symbol_type = symbol_type  
-                                
-                                
-                            mapnik_symbols.append((symbol, sym_params))
-                           #print symbol
-                        self.mapnik_rules.append((rule,rule_content,rule.filter, mapnik_symbols, (rule.min_scale, rule.max_scale)))
-                        self.ui.comboboxtext_rules.append_text(rule_content)
+                            sym_params['Fill'] = str(polygon_symbolizer.fill)
+                            sym_params['Fill-opacity'] = str(polygon_symbolizer.fill_opacity)
+                            sym_params['Gamma'] = str(polygon_symbolizer.gamma)
+                            #print symbol.fill, symbol.fill_opacity, symbol.gamma
+                            
+                        elif symbol_type == 'line':
+                            line_symbolizer = symbol.line()
+                            stroke = line_symbolizer.stroke
+                            sym_params['Color'] = str(stroke.color) 
+                            sym_params['Dash-offset'] = str(stroke.dash_offset) 
+                            sym_params['Gamma'] = str(stroke.gamma) 
+                            sym_params['Line-cap'] = str(stroke.line_cap) 
+                            sym_params['Line-join'] = str(stroke.line_join) 
+                            sym_params['Opacity'] = str(stroke.opacity) 
+                            sym_params['Width'] = str(stroke.width) 
+                            
+                            #for test in sym_params.keys():
+                               #print test, sym_params[test]
+                            
+                            #print stroke.color, stroke.dash_offset, stroke.gamma, stroke.line_cap, stroke.line_join, stroke.opacity, stroke.width
+                        elif symbol_type == 'text':
+                            text_symbolizer = symbol.text()
+                            print dir(text_symbolizer)
+                            sym_params['allow overlap'] = str(text_symbolizer.allow_overlap)
+                            sym_params['avoid edges'] = str(text_symbolizer.avoid_edges)
+                            sym_params['displacement'] = str(text_symbolizer.displacement)
+                            sym_params['force_odd_labels'] = str(text_symbolizer.force_odd_labels)
+                            sym_params['format'] = str(text_symbolizer.format)
+                            sym_params['minimum_distance'] = str(text_symbolizer.minimum_distance)
+                            sym_params['minimum_path_length'] = str(text_symbolizer.minimum_path_length)
+                            sym_params['orientation'] = str(text_symbolizer.orientation)
+                            print text_symbolizer.name
+                            """
+                             	allow_overlap
+                            avoid_edges
+                            displacement
+                            force_odd_labels
+                            format
+                            format_treehas to be implemented to preview!!!
+                            horizontal_alignment
+                            justify_alignment
+                            label_placement
+                            label_position_tolerance
+                            label_spacing
+                            largest_bbox_only
+                            maximum_angle_char_delta
+                            minimum_distance
+                            minimum_padding
+                            minimum_path_length
+                            orientation
+                            text_ratio
+                            vertical_alignment
+                            wrap_width"""
+                        else:
+                            print 'Please implement the missing types!!!!!'
+                            
                         
-                #print 'Number of rules: ', len(self.mapnik_rules)
-                #print self.mapnik_rules[0]
-                self.ui.comboboxtext_rules.set_active(0)
+                        self.symbol_type = symbol_type  
+                            
+                            
+                        mapnik_symbols.append((symbol, sym_params))
+                       #print symbol
+                    self.mapnik_rules.append((rule,rule_content,rule.filter, mapnik_symbols, (rule.min_scale, rule.max_scale)))
+                    self.ui.comboboxtext_rules.append_text(rule_content)
+                    
+            #print 'Number of rules: ', len(self.mapnik_rules)
+            #print self.mapnik_rules[0]
+            self.ui.comboboxtext_rules.set_active(0)
             
         
     def on_comboboxtext_rules_changed(self, widget, data=None):

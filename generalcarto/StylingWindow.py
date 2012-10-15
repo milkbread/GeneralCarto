@@ -19,10 +19,13 @@ class StylingWindow(Gtk.Window):
         
         self.initializeContents()
         
-        #This is very necessary for an additional windwo...it handles the click on the close button of the window
+        #This is very necessary for an additional window...it handles the click on the close button of the window
         self.window.connect("delete-event", self.closedThisWindow)
         self.closed = True
- 
+        
+        self.rule_chosen = False
+        self.previewLayer_name = 'preview'
+        
 ###Initializations 
     def initializeContents(self):
         self.comboboxtext_layer = self.builder.get_object('comboboxtext_layer')
@@ -34,10 +37,14 @@ class StylingWindow(Gtk.Window):
         self.label_status = self.builder.get_object('label_status')
         self.textview_symbols = self.builder.get_object('textview_symbols')
         self.switch_preview = self.builder.get_object('switch_preview')
+        self.switch_preview.connect("button-press-event", self.on_switch_preview_activate)
+        self.entry_color = self.builder.get_object('entry_color')
+        self.entry_color.set_text('rgb(100%,0%,100%)')
+       
         
-        
-    def initializeTilesWindow(self, mapnik_map, tiles_window):
+    def initializeStylingWindow(self, mapnik_map, tiles_window, info_window):
         self.tiles_window = tiles_window
+        self.info_window = info_window
         self.mapnik_map = mapnik_map
         #initial information request of the used style-file to be able to choose a geometry for generalization
         #loop through all layers
@@ -62,8 +69,20 @@ class StylingWindow(Gtk.Window):
         self.hideWindow()
         return True #this prevents the window from getting destroyed
         
+    def on_switch_preview_activate(self, widget, event):
+        if self.rule_chosen == True:
+            #****this is a bugfix --> not able to connect signal 'acitvate'
+            #solution = use button-press-event
+            #disadvantage = .get_active() is changed after this function...and returns wrong value when applied here
+            if self.switch_preview.get_active() == True:
+                switch_preview_active = False
+            elif self.switch_preview.get_active() == False:
+                switch_preview_active = True
+            #*****
+            self.previewVisialisation(switch_preview_active)
+        
     def on_comboboxtext_rules_changed(self, widget, data=None):
-        self.mapnik_map.remove_style('preview')
+        self.previewVisialisation(False)
         rule_index = self.comboboxtext_rules.get_active()
         self.textview_symbols.get_buffer().set_text('') 
 
@@ -80,19 +99,13 @@ class StylingWindow(Gtk.Window):
                     self.textview_symbols.get_buffer().insert(end_iter,symbol_type + "Symbolizer") 
                     for key in symbol[1].keys():
                         self.textview_symbols.get_buffer().insert(end_iter,"\n"+ key +":" + symbol[1][key]) 
+                    self.rule_chosen = True
                     
                 #only show preview if user wants to
                 if self.switch_preview.get_active() == True:
                     #set the preview of chosen geometries
-                    self.tiles_window.addPreviewToMap('preview', self.scaleDenoms, self.filter, self.symbol_type, self.datasource, self.layerSRS)
-                    self.tiles_window.reloadMapView()
-                    #new_object.addPreviewToMap('preview')
+                    self.previewVisialisation(self.switch_preview.get_active())
                     
-                    #reload map display
-                 #   zoom = start_zoom + zoomFactor
-                 #   tile_uri = tile_dir + str(zoom)
-                  #  rendered_tiles = new_object.render_on_demand(tile_uri, zoom, zentral_tile)
-                   # new_object.show_tiles(rendered_tiles)
             else:
                     self.label_status.set_text('No processing without any rule!!!')
         else:
@@ -213,3 +226,11 @@ class StylingWindow(Gtk.Window):
 
     def getStatus(self):
         return self.closed
+        
+    def previewVisialisation(self, actived):
+          if actived == True:
+            self.tiles_window.addPreviewToMap(self.previewLayer_name, self.scaleDenoms, self.filter, self.symbol_type, self.datasource, self.layerSRS, self.entry_color.get_text())
+            self.tiles_window.reloadMapView()
+          elif actived == False:
+            self.mapnik_map.remove_style(self.previewLayer_name)
+            self.tiles_window.reloadMapView()

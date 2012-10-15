@@ -5,6 +5,9 @@ class PreviewWindow(Gtk.Window):
     def __init__(self, preview_image, main_window):
         self.previewImage = preview_image
         self.main_window = main_window
+        
+        #this window is not loaded from a pre-defined *.glade file
+        #it is generated on-the-fly
         Gtk.Window.__init__(self, title="Preview for extent")
         self.box = Gtk.VBox(spacing=2)
         self.add(self.box)
@@ -13,7 +16,7 @@ class PreviewWindow(Gtk.Window):
         self.initImage()
         self.box.pack_start(self.image, True, True, 0)
         
-        #This is very necessary for an additional windwo...it handles the click on the close button of the window
+        #This is very necessary for an additional window...it handles the click on the close button of the window
         self.connect("delete-event", self.closedThisWindow)
         self.closed = True
         

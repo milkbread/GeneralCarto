@@ -19,7 +19,7 @@ class TilesWindow(Gtk.Window):
         
         self.initializeContents()
         
-        #This is very necessary for an additional windwo...it handles the click on the close button of the window
+        #This is very necessary for an additional window...it handles the click on the close button of the window
         self.window.connect("delete-event", self.closedThisWindow)
         self.closed = True
         self.initialized = False
@@ -38,6 +38,10 @@ class TilesWindow(Gtk.Window):
         self.label_scale = self.builder.get_object('label_scale')
         self.label_zoom = self.builder.get_object('label_zoom')
         
+    def initializeTilesWindow(self, styling_window, info_window):
+        self.styling_window = styling_window
+        self.info_window = info_window
+        
     def initializeParameters(self, extent, mapnik_map, tile_dir, minZoom, maxZoom, buffer_size, generalHome, log_files):
         self.logs = log_files
         self.tile_dir = tile_dir
@@ -49,6 +53,7 @@ class TilesWindow(Gtk.Window):
         self.mapnik_map = mapnik_map
         #get the projection of the mapfile
         prj = mapnik.Projection(self.mapnik_map.srs)
+        self.prj = prj
         #calculate the necessary tiles, depending on the given extent
         bbox = self.getGeoCodedBbox(extent, prj)
         self.all_tiles = rendering.calcNecTiles(bbox, tile_dir, minZoom, maxZoom)
@@ -111,10 +116,36 @@ class TilesWindow(Gtk.Window):
         self.image8.set_from_file(rendered_tiles[7]) 
         self.image9.set_from_file(rendered_tiles[8])
         
+        if self.styling_window.rule_chosen == True:
+            self.info_window.initializeInfoWindow(self.mapnik_map, self, self.styling_window)
+            self.info_window.showWindow()
+        
 ###Functions
+    #Functions for InfoWindow
+    def getParameterForInfoRetrieval(self):
+        return self.getTileBunch(self.central_tile_global), self.maxZoom
+        
+    def getExtents(self, tile, tileproj):
+            z = self.start_zoom + self.zoomFactor
+           #print tile
+            p0 = (tile[0] * 256, (tile[1] + 1) * 256)
+            p1 = ((tile[0] + 1) * 256, tile[1] * 256)
+            # Convert to LatLong (EPSG:4326)
+            l0 = tileproj.fromPixelToLL(p0, z)
+            l1 = tileproj.fromPixelToLL(p1, z)
+            # Convert to map projection (e.g. mercator co-ords EPSG:900913)
+            c0 = self.prj.forward(mapnik.Coord(l0[0],l0[1]))
+            c1 = self.prj.forward(mapnik.Coord(l1[0],l1[1]))
+        
+            tile_extent = (c0.x,c0.y, c1.x,c1.y)
+            return tile_extent, z
+        
+    #**********
+
     def getMapnikMap(self):
         return self.mapnik_map
-
+        
+    
     #that function is only a help to be able to switch between 'render_on_demand_as_loop' and 'render_on_demand_as_multiprocessing'
     def render_on_demand(self, tile_uri, zoom, central_tile):
         start_time = time.time()
@@ -166,7 +197,9 @@ class TilesWindow(Gtk.Window):
         c1 = prj.inverse(mapnik.Coord(float(extent[1]),float(extent[3])))
         return (c0.x, c0.y, c1.x, c1.y)
         
-        #right
+    def getGlobalCentralTile(self):
+        return self.central_tile_global
+        
     def navigate(self, direction):
         start_time = time.time()        
         #zoom is relative to start and zoomfactor
@@ -225,11 +258,9 @@ class TilesWindow(Gtk.Window):
         #show the new tiles
         self.show_tiles(rendered_tiles)
         
-    def addPreviewToMap(self, name, scaleDenoms, filter, symbol_type, datasource, layerSRS):
-
+    def addPreviewToMap(self, name, scaleDenoms, filter, symbol_type, datasource, layerSRS, prevColor):
         s = mapnik.Style()
         r = mapnik.Rule()
-        prevColor = 'rgb(100%,0%,0%)'
         if symbol_type == 'polygon':
             polygon_symbolizer = mapnik.PolygonSymbolizer(mapnik.Color(prevColor))
             r.symbols.append(polygon_symbolizer)
@@ -252,11 +283,9 @@ class TilesWindow(Gtk.Window):
         s.rules.append(r)
         
         proof = self.mapnik_map.append_style(name,s)
-       #print 'Style appending worked!?: ',proof
-        #ds = mapnik.Shapefile(file='/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/lines-vgtl-27-01-12.shp')
         layer = mapnik.Layer('world')
-        layer.datasource = datasource[1]#ds
-        layer.srs = layerSRS#self.mapnik_map.srs
+        layer.datasource = datasource[1]
+        layer.srs = layerSRS
         layer.styles.append(name)
         self.mapnik_map.layers.append(layer)
         

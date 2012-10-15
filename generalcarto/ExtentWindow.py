@@ -17,7 +17,7 @@ class ExtentWindow(Gtk.Window):
         
         self.initializeContents()
         
-        #This is very necessary for an additional windwo...it handles the click on the close button of the window
+        #This is very necessary for an additional window...it handles the click on the close button of the window
         self.window.connect("delete-event", self.closedThisWindow)
         self.closed = True
         self.isMapfileInitialized = False

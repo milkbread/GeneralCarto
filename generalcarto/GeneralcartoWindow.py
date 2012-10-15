@@ -34,6 +34,7 @@ from generalcarto.TilesWindow import TilesWindow
 from generalcarto.ToolsWindow import ToolsWindow
 from generalcarto.PreviewWindow import PreviewWindow 
 from generalcarto.StylingWindow import StylingWindow 
+from generalcarto.InfoWindow import InfoWindow 
 
    
         
@@ -87,6 +88,7 @@ class GeneralcartoWindow(Window):
         self.menuItemIndicator = "<  "
         
         self.loadWindows()
+        self.ui.spinner1.set_visible(False)
         
         
 ###Listeners
@@ -146,19 +148,18 @@ class GeneralcartoWindow(Window):
         except:
             mapnik_map = mapnik.Map(256, 256)
             self.mapnik_map = mapnik_map
-            mapnik.load_map(mapnik_map,'/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')        
+            mapnik.load_map(mapnik_map,'/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')  
+            self.windowClassTiles.initializeTilesWindow(self.windowClassStyling, self.windowClassInfo)
             self.windowClassTiles.initializeParameters((1323598.4969301731, 1399812.8074293039, 6476253.225965643, 6563857.1150525035), mapnik_map,  '/home/klammer/GeneralCarto/tiles/', 0, 18, self.ui.entry_buffer.get_text(), '/home/klammer/GeneralCarto/',  '/home/klammer/GeneralCarto/log-files/')
             
         
         self.windowClassPreview.hideWindow()
         self.windowClassTools.initializeTilesWindow(self.windowClassTiles)
         self.windowClassTools.showWindow()
-        self.windowClassStyling.initializeTilesWindow(self.mapnik_map, self.windowClassTiles)
+        self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
         self.windowClassStyling.showWindow()
+      
         
-     
-    
-
 
                 
 ###Listeners and functions for communicating the external windows            
@@ -169,13 +170,21 @@ class GeneralcartoWindow(Window):
         self.openTileWindow()
         self.openToolsWindow()
         self.openStylingWindow()
+        self.openInfoWindow()
+        
+    def on_mnu_info_activate(self, widget, data=None):
+        if self.windowClassInfo.getStatus() == True:
+            self.windowClassInfo.showWindow()
+        elif self.windowClassInfo.getStatus() == False:
+            self.windowClassInfo.hideWindow()        
+    def openInfoWindow(self):
+        self.windowClassInfo = InfoWindow(self.logs, self)
         
     def on_mnu_extent_activate(self, widget, data=None):
         if self.windowClassExtent.getStatus() == True:
             self.windowClassExtent.showWindow()
         elif self.windowClassExtent.getStatus() == False:
-            self.windowClassExtent.hideWindow()        
-        
+            self.windowClassExtent.hideWindow() 
     def openExtentWindow(self):
         self.windowClassExtent = ExtentWindow(self.logs, self.previewImage, self)
         
@@ -184,7 +193,6 @@ class GeneralcartoWindow(Window):
             self.windowClassPreview.showWindow()
         elif self.windowClassPreview.getStatus() == False:
             self.windowClassPreview.hideWindow()
-         
     def openPreviewWindow(self):
         self.windowClassPreview = PreviewWindow(self.previewImage, self)
         
@@ -193,7 +201,6 @@ class GeneralcartoWindow(Window):
             self.windowClassTiles.showWindow()
         elif self.windowClassTiles.getStatus() == False:
             self.windowClassTiles.hideWindow() 
-        
     def openTileWindow(self):
         self.windowClassTiles = TilesWindow(self.logs, self)
         
@@ -202,7 +209,6 @@ class GeneralcartoWindow(Window):
             self.windowClassTools.showWindow()
         elif self.windowClassTools.getStatus() == False:
             self.windowClassTools.hideWindow() 
-        
     def openToolsWindow(self):
         self.windowClassTools = ToolsWindow(self.logs, self)
         
@@ -211,12 +217,19 @@ class GeneralcartoWindow(Window):
             self.windowClassStyling.showWindow()
         elif self.windowClassStyling.getStatus() == False:
             self.windowClassStyling.hideWindow() 
-        
     def openStylingWindow(self):
         self.windowClassStyling = StylingWindow(self.logs, self)
     
     def on_button_window_clicked(self, widget, data=None):
         print self.windowClassExtent.getStatus()  
+        
+    def on_mnu_export_mapfile_activate(self, widget, data=None):
+        name = 'GeneralCarto-last-mapfile.xml'
+        wobj = open(self.logs+name, 'w')
+        wobj.write(mapnik.save_map_to_string(self.mapnik_map))
+        wobj.close
+        self.ui.label_status.set_text("Mapfile '%s' was exported to: \n\t%s" %(name, self.logs))
+        
                 
                 
 ###Additional Functions

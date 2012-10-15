@@ -225,3 +225,44 @@ class TilesWindow(Gtk.Window):
         #show the new tiles
         self.show_tiles(rendered_tiles)
         
+    def addPreviewToMap(self, name, scaleDenoms, filter, symbol_type, datasource, layerSRS):
+
+        s = mapnik.Style()
+        r = mapnik.Rule()
+        prevColor = 'rgb(100%,0%,0%)'
+        if symbol_type == 'polygon':
+            polygon_symbolizer = mapnik.PolygonSymbolizer(mapnik.Color(prevColor))
+            r.symbols.append(polygon_symbolizer)
+        elif symbol_type == 'line':
+            line_symbolizer = mapnik.LineSymbolizer(mapnik.Color(prevColor),3)
+            r.symbols.append(line_symbolizer)
+#        elif symbol_type == 'text':
+ #           t = mapnik.TextSymbolizer('FIELD_NAME', 'DejaVu Sans Book', 10, Color('black'))
+  #          t.halo_fill = Color('white')
+   #         t.halo_radius = 1
+    #        t.label_placement = label_placement.LINE_PLACEMENT
+     #       r.symbols.append(line_symbolizer)
+        else:
+            print symbol_type, 'has to be implemented to preview!!!'
+        if filter != None:
+            #f = mapnik.Expression("[waterway] != ''") #'Expression' stands for 'Filter' as this will be replaced in Mapnik3
+            r.filter = filter#f
+            r.min_scale = scaleDenoms[0]
+            r.max_scale = scaleDenoms[1]
+        s.rules.append(r)
+        
+        proof = self.mapnik_map.append_style(name,s)
+       #print 'Style appending worked!?: ',proof
+        #ds = mapnik.Shapefile(file='/home/klammer/Software/Quickly/generalcarto/data/media/testdaten/mercator_polygon/lines-vgtl-27-01-12.shp')
+        layer = mapnik.Layer('world')
+        layer.datasource = datasource[1]#ds
+        layer.srs = layerSRS#self.mapnik_map.srs
+        layer.styles.append(name)
+        self.mapnik_map.layers.append(layer)
+        
+    def reloadMapView(self):
+        
+        zoom = self.start_zoom + self.zoomFactor
+        self.finalVisuals(zoom)
+        
+        

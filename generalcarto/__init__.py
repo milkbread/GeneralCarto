@@ -32,4 +32,5 @@ def main():
     # Run the application.    
     window = GeneralcartoWindow.GeneralcartoWindow()
     window.show()
+        
     Gtk.main()

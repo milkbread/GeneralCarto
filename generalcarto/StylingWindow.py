@@ -37,6 +37,7 @@ class StylingWindow(Gtk.Window):
         self.label_status = self.builder.get_object('label_status')
         self.textview_symbols = self.builder.get_object('textview_symbols')
         self.switch_preview = self.builder.get_object('switch_preview')
+        self.switch_preview.set_active(False)
         self.switch_preview.connect("button-press-event", self.on_switch_preview_activate)
         self.entry_color = self.builder.get_object('entry_color')
         self.entry_color.set_text('rgb(100%,0%,100%)')
@@ -82,7 +83,6 @@ class StylingWindow(Gtk.Window):
             self.previewVisialisation(switch_preview_active)
         
     def on_comboboxtext_rules_changed(self, widget, data=None):
-        self.previewVisialisation(False)
         rule_index = self.comboboxtext_rules.get_active()
         self.textview_symbols.get_buffer().set_text('') 
 
@@ -102,9 +102,12 @@ class StylingWindow(Gtk.Window):
                     self.rule_chosen = True
                     
                 #only show preview if user wants to
-                if self.switch_preview.get_active() == True:
-                    #set the preview of chosen geometries
-                    self.previewVisialisation(self.switch_preview.get_active())
+                if self.tiles_window.getInitializationStatus == True:
+                    self.previewVisialisation(False)
+    
+                    if self.switch_preview.get_active() == True:
+                        #set the preview of chosen geometries
+                        self.previewVisialisation(self.switch_preview.get_active())
                     
             else:
                     self.label_status.set_text('No processing without any rule!!!')

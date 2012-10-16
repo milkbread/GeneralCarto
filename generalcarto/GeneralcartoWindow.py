@@ -56,7 +56,7 @@ class GeneralcartoWindow(Window):
         
         # Get a reference to the builder and set up the signals.
         self.builder = builder
-        self.ui = builder.get_ui(self)                
+        self.ui = builder.get_ui(self)    
         
         #initialize the entry for the zoomlevels for the tile rendering
         self.ui.entry1.set_text('0')
@@ -134,16 +134,17 @@ class GeneralcartoWindow(Window):
             os.system('gedit --new-window ' + self.mapfile)
         
         self.windowClassExtent.initializeMapfile(self.mapnik_map, self.mapfile, self.windowClassPreview)
+        self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
+        self.windowClassStyling.showWindow()
         
     def on_button_show_tiles_clicked(self, widget, data=None):
-        #This is a debugging boolean...set it to True and you can access it quickly
-        quick = False
         
         try:
             extent = self.windowClassExtent.getExtentFromBoxes()        
             maxZoom = int(self.ui.entry2.get_text())
             minZoom = int(self.ui.entry1.get_text())
             buffer = int (self.ui.entry_buffer.get_text())
+            self.windowClassTiles.initializeTilesWindow(self.windowClassStyling, self.windowClassInfo)
             self.windowClassTiles.initializeParameters(extent, self.mapnik_map, self.tile_dir, minZoom, maxZoom, buffer, self.generalHome, self.logs)
         except:
             mapnik_map = mapnik.Map(256, 256)

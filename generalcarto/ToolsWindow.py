@@ -52,6 +52,11 @@ class ToolsWindow(Gtk.Window):
             self.window.hide()
             self.closed = True
             
+    def destroyWindow(self):
+        self.window.destroy()
+        if self.closed == False:
+            self.main_window.ui.mnu_tools.set_label(self.main_window.ui.mnu_tools.get_label().split(self.main_window.menuItemIndicator)[1])
+            
 ###Listeners
     def closedThisWindow(self, window, event):
         self.hideWindow()

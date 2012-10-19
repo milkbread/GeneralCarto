@@ -86,9 +86,12 @@ class GeneralcartoWindow(Window):
         self.path = ""
         
         self.menuItemIndicator = "<  "
+        self.textEditor = 'gedit'
         
-        self.loadWindows()
-        self.ui.spinner1.set_visible(False)
+        #self.loadWindows()
+        self.ui.button_show_tiles.set_child_visible(False)
+        self.initializedMapfile = False
+        self.initialLoad = True
         
         
 ###Listeners
@@ -117,9 +120,12 @@ class GeneralcartoWindow(Window):
            keylist.sort() 
         
         #fill the combotextbox with the xml-files of the initially user-chosen directory
-        for key in keylist: 
-                #print key, value
-               self.ui.comboboxtext_file.append_text(dicts[key])    
+        try:
+            for key in keylist: 
+                    #print key, value
+                   self.ui.comboboxtext_file.append_text(dicts[key])   
+        except:
+            print "No directory chosen"
 
     #set style and shape when combobox has changed
     def on_comboboxtext_file_changed(self, widget, data=None):
@@ -131,35 +137,49 @@ class GeneralcartoWindow(Window):
         
         #open style file if user wants to
         if self.checkbutton_open == True:
-            os.system('gedit --new-window ' + self.mapfile)
+            os.system(self.textEditor + ' --new-window ' + self.mapfile)
+    
+        if self.initialLoad == False:            
+            self.destroyWindows()
+        else:
+            self.initialLoad = False
+        self.loadWindows()
+        
+        self.mapfileInitialized()
+        
+        
+    
+    def mapfileInitialized(self):
         
         self.windowClassExtent.initializeMapfile(self.mapnik_map, self.mapfile, self.windowClassPreview)
-        self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
-        self.windowClassStyling.showWindow()
+        self.windowClassExtent.showWindow()
+        self.initializedMapfile = True
+        if self.windowClassStyling.getStatus() == False:
+            print "Style window reloaded"
+            self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
+        
         
     def on_button_show_tiles_clicked(self, widget, data=None):
         
-        try:
-            extent = self.windowClassExtent.getExtentFromBoxes()        
-            maxZoom = int(self.ui.entry2.get_text())
-            minZoom = int(self.ui.entry1.get_text())
-            buffer = int (self.ui.entry_buffer.get_text())
-            self.windowClassTiles.initializeTilesWindow(self.windowClassStyling, self.windowClassInfo)
-            self.windowClassTiles.initializeParameters(extent, self.mapnik_map, self.tile_dir, minZoom, maxZoom, buffer, self.generalHome, self.logs)
-        except:
-            mapnik_map = mapnik.Map(256, 256)
-            self.mapnik_map = mapnik_map
-            mapnik.load_map(mapnik_map,'/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')  
-            self.windowClassTiles.initializeTilesWindow(self.windowClassStyling, self.windowClassInfo)
-            self.windowClassTiles.initializeParameters((1323598.4969301731, 1399812.8074293039, 6476253.225965643, 6563857.1150525035), mapnik_map,  '/home/klammer/GeneralCarto/tiles/', 0, 18, self.ui.entry_buffer.get_text(), '/home/klammer/GeneralCarto/',  '/home/klammer/GeneralCarto/log-files/')
+      #  try:
+        extent = self.windowClassExtent.getExtentFromBoxes()        
+        maxZoom = int(self.ui.entry2.get_text())
+        minZoom = int(self.ui.entry1.get_text())
+        buffer = int(self.ui.entry_buffer.get_text())
+        self.windowClassTiles.initializeTilesWindow(self.windowClassStyling, self.windowClassInfo)
+        self.windowClassTiles.initializeParameters(extent, self.mapnik_map, self.tile_dir, minZoom, maxZoom, buffer, self.generalHome, self.logs)
+#        except:
+ #           mapnik_map = mapnik.Map(256, 256)
+  #          self.mapnik_map = mapnik_map
+   #         mapnik.load_map(mapnik_map,'/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml')  
+    #        self.windowClassTiles.initializeTilesWindow(self.windowClassStyling, self.windowClassInfo)
+     #       self.windowClassTiles.initializeParameters((1323598.4969301731, 1399812.8074293039, 6476253.225965643, 6563857.1150525035), mapnik_map,  '/home/klammer/GeneralCarto/tiles/', 0, 18, self.ui.entry_buffer.get_text(), '/home/klammer/GeneralCarto/',  '/home/klammer/GeneralCarto/log-files/')
             
         
         self.windowClassPreview.hideWindow()
         self.windowClassTools.initializeTilesWindow(self.windowClassTiles)
         self.windowClassTools.showWindow()
-        self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
-        self.windowClassStyling.showWindow()
-      
+        
         
 
                 
@@ -172,10 +192,18 @@ class GeneralcartoWindow(Window):
         self.openToolsWindow()
         self.openStylingWindow()
         self.openInfoWindow()
+    def destroyWindows(self):
+        self.windowClassExtent.destroyWindow()
+        self.windowClassInfo.destroyWindow()
+        self.windowClassPreview.destroyWindow()
+        self.windowClassTiles.destroyWindow()
+        self.windowClassTools.destroyWindow()
+        self.windowClassStyling.destroyWindow()
         
-    def on_mnu_info_activate(self, widget, data=None):
-        if self.windowClassInfo.getStatus() == True:
+    def on_mnu_geom_info_activate(self, widget, data=None):
+        if self.windowClassInfo.getStatus() == True and self.windowClassTiles.getInitializationStatus() == True:
             self.windowClassInfo.showWindow()
+            self.showStylingWindow()
         elif self.windowClassInfo.getStatus() == False:
             self.windowClassInfo.hideWindow()        
     def openInfoWindow(self):
@@ -215,11 +243,15 @@ class GeneralcartoWindow(Window):
         
     def on_mnu_styling_activate(self, widget, data=None):
         if self.windowClassStyling.getStatus() == True:
-            self.windowClassStyling.showWindow()
+            self.showStylingWindow()
         elif self.windowClassStyling.getStatus() == False:
             self.windowClassStyling.hideWindow() 
     def openStylingWindow(self):
         self.windowClassStyling = StylingWindow(self.logs, self)
+    def showStylingWindow(self):
+        if self.initializedMapfile == True:
+            self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
+            self.windowClassStyling.showWindow()
     
     def on_button_window_clicked(self, widget, data=None):
         print self.windowClassExtent.getStatus()  
@@ -229,8 +261,7 @@ class GeneralcartoWindow(Window):
         wobj = open(self.logs+name, 'w')
         wobj.write(mapnik.save_map_to_string(self.mapnik_map))
         wobj.close
-        self.ui.label_status.set_text("Mapfile '%s' was exported to: \n\t%s" %(name, self.logs))
-        
+        self.ui.label_status.set_text("Mapfile '%s' was exported to: \n\t%s" %(name, self.logs))       
                 
                 
 ###Additional Functions
@@ -253,48 +284,7 @@ class GeneralcartoWindow(Window):
     
 ###Test- & Old functions
 
-    #Display map tiles by an on-the fly rendering of the concrete 9 tiles that will be displayed
-    def on_button_tiles_clicked(self, widget, data=None):
-     if self.mapfile != '':
-      #if self.shapefile != '':
-        extent = []
-        
-        #get/set the bounding box/extent
-        try:            
-            #c0 = self.prj.forward(mapnik.Coord(float(self.ui.entry_lllo.get_text()),float(self.ui.entry_llla.get_text())))
-            #c1 = self.prj.forward(mapnik.Coord(float(self.ui.entry_urlo.get_text()),float(self.ui.entry_urla.get_text()))) 
-            #extent = (float(c0.x), float(c1.x), float(c0.y), float(c1.y))
-            #print extent
-            extent = self.windowClassExtent.getExtentFromBoxes()
-        except:
-            #self.ui.label8.set_text('Emtpty entry or not as float!')
-            self.ui.image1.clear()
-        #Go on if extent was setted, respectively no error occured
-        if extent != '':    
-        #    try:  
-#                print 'bbox:'+str(bbox)
-                #initialize the information that will be send to the ui
-                mapfile = self.mapfile
-                maxZoom = self.ui.entry2.get_text()
-                minZoom = self.ui.entry1.get_text()
-                #collect all in one string, as this seems to be the only way
-                title = 'Tool for tile-based on-the-fly-generalisation   \n+'
-                sending = title + str(extent) + ':' + self.mapfile + ':' + self.tile_dir + ':' + minZoom + ':' + maxZoom + ':' + self.generalHome + ':' + self.logs
-                #print sending
-                tiler =  TilesDialog(sending)
-                result = tiler.run() 
-                #close the dialog, and check whether to proceed        
-                tiler.destroy()
-                if result != Gtk.ResponseType.OK:
-                    return                   
-         #   except:
-          #      self.ui.label8.set_text('Extent has only emtpty entries or is not given as float!')
-           #     self.ui.image1.clear()
-      #else:
-       # self.ui.label8.set_text('Please choose a shape file!')
-    #else:
-        #self.ui.label8.set_text('Please choose a style file!')
-
+    
     def on_button_short_clicked(self, widget, data=None):
         sending = 'Tool for tile-based on-the-fly-generalisation   \n+(1324637.159999081, 1405011.9800014955, 6477402.360002069, 6546380.469994396):/home/klammer/Software/Quickly/generalcarto/data/media/XML-files/slippy_vogtland_with_shapes.xml:/home/klammer/GeneralCarto/tiles/:0:18:'+self.generalHome+':'+self.logs
         tiler =  TilesDialog(sending)

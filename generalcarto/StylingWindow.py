@@ -25,6 +25,7 @@ class StylingWindow(Gtk.Window):
         
         self.rule_chosen = False
         self.previewLayer_name = 'preview'
+        self.style_problem = False
         
 ###Initializations 
     def initializeContents(self):
@@ -37,11 +38,13 @@ class StylingWindow(Gtk.Window):
         self.label_status = self.builder.get_object('label_status')
         self.textview_symbols = self.builder.get_object('textview_symbols')
         self.switch_preview = self.builder.get_object('switch_preview')
+        self.preview_box = self.builder.get_object('preview_box')
+        self.preview_box.set_child_visible(False)
         self.switch_preview.set_active(False)
         self.switch_preview.connect("button-press-event", self.on_switch_preview_activate)
         self.entry_color = self.builder.get_object('entry_color')
         self.entry_color.set_text('rgb(100%,0%,100%)')
-       
+        
         
     def initializeStylingWindow(self, mapnik_map, tiles_window, info_window):
         self.tiles_window = tiles_window
@@ -49,6 +52,7 @@ class StylingWindow(Gtk.Window):
         self.mapnik_map = mapnik_map
         #initial information request of the used style-file to be able to choose a geometry for generalization
         #loop through all layers
+        self.comboboxtext_layer.remove_all()
         for layer in self.mapnik_map.layers.__iter__():
             self.comboboxtext_layer.append_text(layer.name) 
         
@@ -65,13 +69,20 @@ class StylingWindow(Gtk.Window):
             self.window.hide()
             self.closed = True
             
+    def destroyWindow(self):
+        self.window.destroy()
+        if self.closed == False:
+            self.main_window.ui.mnu_styling.set_label(self.main_window.ui.mnu_styling.get_label().split(self.main_window.menuItemIndicator)[1])
+
+            
 ###Listeners
     def closedThisWindow(self, window, event):
         self.hideWindow()
         return True #this prevents the window from getting destroyed
         
     def on_switch_preview_activate(self, widget, event):
-        if self.rule_chosen == True:
+        print self.rule_chosen, self.tiles_window.getInitializationStatus
+        if self.rule_chosen == True and self.tiles_window.getInitializationStatus == True:
             #****this is a bugfix --> not able to connect signal 'acitvate'
             #solution = use button-press-event
             #disadvantage = .get_active() is changed after this function...and returns wrong value when applied here
@@ -85,7 +96,7 @@ class StylingWindow(Gtk.Window):
     def on_comboboxtext_rules_changed(self, widget, data=None):
         rule_index = self.comboboxtext_rules.get_active()
         self.textview_symbols.get_buffer().set_text('') 
-
+        
         if rule_index != -1:
             if self.comboboxtext_rules.get_active_text() != 'Style contains no rule!':
                 self.textview_symbols.get_buffer().set_text('') 
@@ -100,6 +111,9 @@ class StylingWindow(Gtk.Window):
                     for key in symbol[1].keys():
                         self.textview_symbols.get_buffer().insert(end_iter,"\n"+ key +":" + symbol[1][key]) 
                     self.rule_chosen = True
+                
+                if self.info_window.getStatus() == False:
+                    self.info_window.initializeInfoWindow(self.mapnik_map, self.tiles_window, self)
                     
                 #only show preview if user wants to
                 if self.tiles_window.getInitializationStatus == True:
@@ -112,7 +126,11 @@ class StylingWindow(Gtk.Window):
             else:
                     self.label_status.set_text('No processing without any rule!!!')
         else:
+            if self.style_problem == False:
                 self.label_status.set_text('No rule chosen!')
+            else:
+                self.label_status.set_text("Style - '%s' - does not exist" %self.chosen_style_name)
+                
         
     def on_comboboxtext_layer_changed(self, widget, data=None):
         self.comboboxtext_style.remove_all()
@@ -139,87 +157,90 @@ class StylingWindow(Gtk.Window):
         self.comboboxtext_rules.remove_all()
 #        self.textview_symbols.get_buffer().set_text('') 
         if self.comboboxtext_style.get_active() != -1 :
-            chosen_style_name = self.comboboxtext_style.get_active_text()
-            #print chosen_style_name
-            self.chosen_style = self.mapnik_map.find_style(chosen_style_name)
-            self.mapnik_rules = []
-            #loop through all rules of the chosen style
-            if self.chosen_style.rules.__len__() == 0:
-                self.comboboxtext_rules.append_text('Style contains no rule!')
-            else:  
-                for rule in self.chosen_style.rules.__iter__():
-                    rule_content = str(rule.filter) +' '+ str(rule.min_scale) +' '+ str(rule.max_scale) 
-                    mapnik_symbols = []
-                    for symbol in rule.symbols.__iter__():
-                        symbol_type = symbol.type()
-                        sym_params = {}
-                        #print dir(symbol)
-                        if symbol_type == 'polygon':
-                            polygon_symbolizer = symbol.polygon()
+            self.chosen_style_name = self.comboboxtext_style.get_active_text()
+            #print self.chosen_style_name
+            try:
+                self.chosen_style = self.mapnik_map.find_style(self.chosen_style_name)
+                self.mapnik_rules = []
+                #loop through all rules of the chosen style
+                if self.chosen_style.rules.__len__() == 0:
+                    self.comboboxtext_rules.append_text('Style contains no rule!')
+                else:  
+                    for rule in self.chosen_style.rules.__iter__():
+                        rule_content = str(rule.filter) +' '+ str(rule.min_scale) +' '+ str(rule.max_scale) 
+                        mapnik_symbols = []
+                        for symbol in rule.symbols.__iter__():
+                            symbol_type = symbol.type()
+                            sym_params = {}
+                            #print dir(symbol)
+                            if symbol_type == 'polygon':
+                                polygon_symbolizer = symbol.polygon()
+                                
+                                sym_params['Fill'] = str(polygon_symbolizer.fill)
+                                sym_params['Fill-opacity'] = str(polygon_symbolizer.fill_opacity)
+                                sym_params['Gamma'] = str(polygon_symbolizer.gamma)
+                                #print symbol.fill, symbol.fill_opacity, symbol.gamma
+                                
+                            elif symbol_type == 'line':
+                                line_symbolizer = symbol.line()
+                                stroke = line_symbolizer.stroke
+                                sym_params['Color'] = str(stroke.color) 
+                                sym_params['Dash-offset'] = str(stroke.dash_offset) 
+                                sym_params['Gamma'] = str(stroke.gamma) 
+                                sym_params['Line-cap'] = str(stroke.line_cap) 
+                                sym_params['Line-join'] = str(stroke.line_join) 
+                                sym_params['Opacity'] = str(stroke.opacity) 
+                                sym_params['Width'] = str(stroke.width) 
+                                
+                                #for test in sym_params.keys():
+                                   #print test, sym_params[test]
+                                
+                                #print stroke.color, stroke.dash_offset, stroke.gamma, stroke.line_cap, stroke.line_join, stroke.opacity, stroke.width
+                            elif symbol_type == 'text':
+                                text_symbolizer = symbol.text()
+                                print dir(text_symbolizer)
+                                sym_params['allow overlap'] = str(text_symbolizer.allow_overlap)
+                                sym_params['avoid edges'] = str(text_symbolizer.avoid_edges)
+                                sym_params['displacement'] = str(text_symbolizer.displacement)
+                                sym_params['force_odd_labels'] = str(text_symbolizer.force_odd_labels)
+                                sym_params['format'] = str(text_symbolizer.format)
+                                sym_params['minimum_distance'] = str(text_symbolizer.minimum_distance)
+                                sym_params['minimum_path_length'] = str(text_symbolizer.minimum_path_length)
+                                sym_params['orientation'] = str(text_symbolizer.orientation)
+                                """
+                                    allow_overlap
+                                avoid_edges
+                                displacement
+                                force_odd_labels
+                                format
+                                format_treehas to be implemented to preview!!!
+                                horizontal_alignment
+                                justify_alignment
+                                label_placement
+                                label_position_tolerance
+                                label_spacing
+                                largest_bbox_only
+                                maximum_angle_char_delta
+                                minimum_distance
+                                minimum_padding
+                                minimum_path_length
+                                orientation
+                                text_ratio
+                                vertical_alignment
+                                wrap_width"""
+                            else:
+                                print 'Please implement the missing types!!!!!'
                             
-                            sym_params['Fill'] = str(polygon_symbolizer.fill)
-                            sym_params['Fill-opacity'] = str(polygon_symbolizer.fill_opacity)
-                            sym_params['Gamma'] = str(polygon_symbolizer.gamma)
-                            #print symbol.fill, symbol.fill_opacity, symbol.gamma
-                            
-                        elif symbol_type == 'line':
-                            line_symbolizer = symbol.line()
-                            stroke = line_symbolizer.stroke
-                            sym_params['Color'] = str(stroke.color) 
-                            sym_params['Dash-offset'] = str(stroke.dash_offset) 
-                            sym_params['Gamma'] = str(stroke.gamma) 
-                            sym_params['Line-cap'] = str(stroke.line_cap) 
-                            sym_params['Line-join'] = str(stroke.line_join) 
-                            sym_params['Opacity'] = str(stroke.opacity) 
-                            sym_params['Width'] = str(stroke.width) 
-                            
-                            #for test in sym_params.keys():
-                               #print test, sym_params[test]
-                            
-                            #print stroke.color, stroke.dash_offset, stroke.gamma, stroke.line_cap, stroke.line_join, stroke.opacity, stroke.width
-                        elif symbol_type == 'text':
-                            text_symbolizer = symbol.text()
-                            print dir(text_symbolizer)
-                            sym_params['allow overlap'] = str(text_symbolizer.allow_overlap)
-                            sym_params['avoid edges'] = str(text_symbolizer.avoid_edges)
-                            sym_params['displacement'] = str(text_symbolizer.displacement)
-                            sym_params['force_odd_labels'] = str(text_symbolizer.force_odd_labels)
-                            sym_params['format'] = str(text_symbolizer.format)
-                            sym_params['minimum_distance'] = str(text_symbolizer.minimum_distance)
-                            sym_params['minimum_path_length'] = str(text_symbolizer.minimum_path_length)
-                            sym_params['orientation'] = str(text_symbolizer.orientation)
-                            print text_symbolizer.name
-                            """
-                             	allow_overlap
-                            avoid_edges
-                            displacement
-                            force_odd_labels
-                            format
-                            format_treehas to be implemented to preview!!!
-                            horizontal_alignment
-                            justify_alignment
-                            label_placement
-                            label_position_tolerance
-                            label_spacing
-                            largest_bbox_only
-                            maximum_angle_char_delta
-                            minimum_distance
-                            minimum_padding
-                            minimum_path_length
-                            orientation
-                            text_ratio
-                            vertical_alignment
-                            wrap_width"""
-                        else:
-                            print 'Please implement the missing types!!!!!'
+                            self.symbol_type = symbol_type  
+                                
+                            mapnik_symbols.append((symbol, sym_params))
+                           #print symbol
+                        self.mapnik_rules.append((rule,rule_content,rule.filter, mapnik_symbols, (rule.min_scale, rule.max_scale)))
+                        self.comboboxtext_rules.append_text(rule_content)
+            
+            except:
+                self.style_problem = True
                         
-                        self.symbol_type = symbol_type  
-                            
-                        mapnik_symbols.append((symbol, sym_params))
-                       #print symbol
-                    self.mapnik_rules.append((rule,rule_content,rule.filter, mapnik_symbols, (rule.min_scale, rule.max_scale)))
-                    self.comboboxtext_rules.append_text(rule_content)
-                    
             #print 'Number of rules: ', len(self.mapnik_rules)
             #print self.mapnik_rules[0]
             self.comboboxtext_rules.set_active(0)

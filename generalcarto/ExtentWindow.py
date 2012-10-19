@@ -49,7 +49,7 @@ class ExtentWindow(Gtk.Window):
         
         
         self.fillComboboxes()
-        self.showWindow()
+        #self.showWindow()
         
         self.isMapfileInitialized = True
         
@@ -72,8 +72,13 @@ class ExtentWindow(Gtk.Window):
     def getWindow(self):
         return self.window
         
-    def closeWindow(self):
-        self.destroy()
+    def destroyWindow(self):
+        self.window.destroy()
+        if self.closed == True:
+            self.main_window.ui.mnu_extent.set_label(self.main_window.menuItemIndicator + self.main_window.ui.mnu_extent.get_label())
+        elif self.closed == False:
+            self.main_window.ui.mnu_extent.set_label(self.main_window.ui.mnu_extent.get_label().split(self.main_window.menuItemIndicator)[1])
+        
     
     def getExtentFromBoxes(self):
         return self.calculateExtent()
@@ -163,11 +168,16 @@ class ExtentWindow(Gtk.Window):
             self.entry_urlo.set_text(str(c1.x))
             self.entry_llla.set_text(str(c0.y))
             self.entry_urla.set_text(str(c1.y)) 
-
+            
             functions.writeToLog('Extent successfully determined!', self.logfiles) 
-            self.ui.entry_chosen.set_text(self.shapeName)
+            self.showTilesButton('True')
+            
         except:
             functions.writeToLog('Unable to get extent of shapefile!', self.logfiles) 
+            self.showTilesButton('False')
+            
+    def showTilesButton(self, status):
+        self.main_window.ui.button_show_tiles.set_child_visible(status)
             
     
         

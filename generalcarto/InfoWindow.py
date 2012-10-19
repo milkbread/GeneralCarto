@@ -39,6 +39,9 @@ class InfoWindow(Gtk.Window):
         self.textview8 = self.builder.get_object('textview8')
         self.textview9 = self.builder.get_object('textview9')
         
+    def initializeTextviewsSeperately(self):
+        self.setTextviews('') 
+        
     def initializeInfoWindow(self, mapnik_map, tile_window, styling_window):
         self.mapnik_map = mapnik_map
         self.tile_window = tile_window
@@ -50,7 +53,7 @@ class InfoWindow(Gtk.Window):
         self.setTextviews('') 
            
         tileBunch, maxZoom = self.tile_window.getParameterForInfoRetrieval()
-        texte = []
+        text_array = []
             
         for tile in tileBunch:
             infos = []
@@ -74,22 +77,29 @@ class InfoWindow(Gtk.Window):
             text = text +'Minimum Distance: \n'
             text = text +'Contacted: \n'
             text = text +'...\n'
-            texte.append(text)
+            text_array.append(text)
            
-        self.setTextviews(texte)  
+        self.setTextviews(text_array)  
        
         
     def showWindow(self):
         if self.closed == True:
-            self.main_window.ui.mnu_info.set_label(self.main_window.menuItemIndicator + self.main_window.ui.mnu_info.get_label())
+            self.main_window.ui.mnu_geom_info.set_label(self.main_window.menuItemIndicator + self.main_window.ui.mnu_geom_info.get_label())
             self.window.show_all()
             self.closed = False
             
     def hideWindow(self):
         if self.closed == False:
-            self.main_window.ui.mnu_info.set_label(self.main_window.ui.mnu_info.get_label().split(self.main_window.menuItemIndicator)[1])
+            self.main_window.ui.mnu_geom_info.set_label(self.main_window.ui.mnu_geom_info.get_label().split(self.main_window.menuItemIndicator)[1])
             self.window.hide()
             self.closed = True
+            
+    def destroyWindow(self):
+        self.window.destroy()
+        print self.closed
+        if self.closed == False:
+            self.main_window.ui.mnu_geom_info.set_label(self.main_window.ui.mnu_geom_info.get_label().split(self.main_window.menuItemIndicator)[1])
+    
             
 ###Listeners
     def closedThisWindow(self, window, event):

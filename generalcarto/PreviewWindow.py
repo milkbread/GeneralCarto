@@ -51,3 +51,10 @@ class PreviewWindow(Gtk.Window):
             self.hide()
             self.closed = True
     
+    def destroyWindow(self):
+        self.destroy()
+        if self.closed == False:
+            self.main_window.ui.mnu_preview.set_label(self.main_window.ui.mnu_preview.get_label().split(self.main_window.menuItemIndicator)[1])
+
+
+    

@@ -243,6 +243,56 @@
               </object>
             </child>
             <child>
+              <object class="GtkMenuItem" id="mnu_generalisation">
+                <property name="use_action_appearance">False</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Generalisation</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu5">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="mnu_geom_info">
+                        <property name="label">Geometric Information</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="image">image9</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="mnu_ugc_info">
+                        <property name="label">User generated contents</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="image">image10</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem6">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="mnu_geom_trans">
+                        <property name="label">Spatial Transformation</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="image">image11</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="GtkMenuItem" id="mnu_view">
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
@@ -308,16 +358,6 @@
                         <property name="use_stock">False</property>
                       </object>
                     </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="mnu_info">
-                        <property name="label">Information Retrieval</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="image">image8</property>
-                        <property name="use_stock">False</property>
-                      </object>
-                    </child>
                   </object>
                 </child>
               </object>
@@ -375,15 +415,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkSpinner" id="spinner1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label15">
@@ -618,21 +650,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="button_tiles">
-                        <property name="label" translatable="yes">Render</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="use_action_appearance">False</property>
-                        <property name="xalign">0.49000000953674316</property>
-                        <property name="yalign">0.47999998927116394</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">3</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                     <child>
                       <object class="GtkButton" id="button_show_tiles">
@@ -788,10 +806,19 @@
       </object>
     </child>
   </object>
-  <object class="GtkImage" id="image8">
+  <object class="GtkImage" id="image10">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="yalign">0.4699999988079071</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
+  <object class="GtkImage" id="image11">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-missing-image</property>
+  </object>
+  <object class="GtkImage" id="image9">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
     <property name="stock">gtk-missing-image</property>
   </object>
 </interface>

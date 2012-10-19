@@ -91,6 +91,11 @@ class TilesWindow(Gtk.Window):
         self.main_window.ui.mnu_tiles.set_label(self.main_window.ui.mnu_tiles.get_label().split(self.main_window.menuItemIndicator)[1])
         self.window.hide()
         self.closed = True
+
+    def destroyWindow(self):
+        self.window.destroy()
+        if self.closed == False:
+            self.main_window.ui.mnu_tiles.set_label(self.main_window.ui.mnu_tiles.get_label().split(self.main_window.menuItemIndicator)[1])
         
     def getStatus(self):
         return self.closed
@@ -116,9 +121,8 @@ class TilesWindow(Gtk.Window):
         self.image8.set_from_file(rendered_tiles[7]) 
         self.image9.set_from_file(rendered_tiles[8])
         
-        if self.styling_window.rule_chosen == True:
+        if self.styling_window.rule_chosen == True and self.info_window.getStatus() == False:
             self.info_window.initializeInfoWindow(self.mapnik_map, self, self.styling_window)
-            self.info_window.showWindow()
         
 ###Functions
     #Functions for InfoWindow

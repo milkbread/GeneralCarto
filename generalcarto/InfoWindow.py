@@ -4,8 +4,6 @@ import time
 import os
 
 from generalcarto import rendering
-#from generalcarto import functions as func
-#from generalcarto import xmlFunctions as xmlFunc
 from generalcarto import gdal_functions as gdal
 from generalcarto import postgreFunctions as postgre
 
@@ -52,7 +50,7 @@ class InfoWindow(Gtk.Window):
         
         self.setTextviews('') 
            
-        tileBunch, maxZoom = self.tile_window.getParameterForInfoRetrieval()
+        tileBunch, maxZoom = self.tile_window.getParameterForGeneralisation()
         text_array = []
             
         for tile in tileBunch:
@@ -96,7 +94,6 @@ class InfoWindow(Gtk.Window):
             
     def destroyWindow(self):
         self.window.destroy()
-        print self.closed
         if self.closed == False:
             self.main_window.ui.mnu_geom_info.set_label(self.main_window.ui.mnu_geom_info.get_label().split(self.main_window.menuItemIndicator)[1])
     

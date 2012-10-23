@@ -177,7 +177,7 @@ class ExtentWindow(Gtk.Window):
             self.showTilesButton('False')
             
     def showTilesButton(self, status):
-        self.main_window.ui.button_show_tiles.set_child_visible(status)
+        self.main_window.tileButtonVisibility(status)
             
     
         

@@ -39,23 +39,27 @@ class StylingWindow(Gtk.Window):
         self.textview_symbols = self.builder.get_object('textview_symbols')
         self.switch_preview = self.builder.get_object('switch_preview')
         self.preview_box = self.builder.get_object('preview_box')
-        self.preview_box.set_child_visible(False)
+        self.showPreviewBox(False)
         self.switch_preview.set_active(False)
         self.switch_preview.connect("button-press-event", self.on_switch_preview_activate)
         self.entry_color = self.builder.get_object('entry_color')
         self.entry_color.set_text('rgb(100%,0%,100%)')
         
         
-    def initializeStylingWindow(self, mapnik_map, tiles_window, info_window):
-        self.tiles_window = tiles_window
+    def initializeStylingWindow(self, mapnik_map, tiles_window, info_window, wps_window, initialAim):
         self.info_window = info_window
+        self.wps_window = wps_window
+        self.initialAim = initialAim
+        self.commonInitializations(mapnik_map, tiles_window)
+        
+    def commonInitializations(self, mapnik_map, tiles_window):
+        self.tiles_window = tiles_window
         self.mapnik_map = mapnik_map
         #initial information request of the used style-file to be able to choose a geometry for generalization
         #loop through all layers
         self.comboboxtext_layer.remove_all()
         for layer in self.mapnik_map.layers.__iter__():
-            self.comboboxtext_layer.append_text(layer.name) 
-        
+            self.comboboxtext_layer.append_text(layer.name)         
         
     def showWindow(self):
         if self.closed == True:
@@ -81,8 +85,7 @@ class StylingWindow(Gtk.Window):
         return True #this prevents the window from getting destroyed
         
     def on_switch_preview_activate(self, widget, event):
-        print self.rule_chosen, self.tiles_window.getInitializationStatus
-        if self.rule_chosen == True and self.tiles_window.getInitializationStatus == True:
+        if self.rule_chosen == True and self.tiles_window.getInitializationStatus() == True:
             #****this is a bugfix --> not able to connect signal 'acitvate'
             #solution = use button-press-event
             #disadvantage = .get_active() is changed after this function...and returns wrong value when applied here
@@ -112,8 +115,12 @@ class StylingWindow(Gtk.Window):
                         self.textview_symbols.get_buffer().insert(end_iter,"\n"+ key +":" + symbol[1][key]) 
                     self.rule_chosen = True
                 
-                if self.info_window.getStatus() == False:
+                if self.initialAim == 1:# and self.info_window.getStatus() == False:
                     self.info_window.initializeInfoWindow(self.mapnik_map, self.tiles_window, self)
+                    self.info_window.showWindow()
+                elif self.initialAim == 2:# and self.wps_window.getStatus() == False:
+                    self.wps_window.initializeWPSWindow(self.mapnik_map, self.tiles_window, self)
+                    self.wps_window.showWindow()
                     
                 #only show preview if user wants to
                 if self.tiles_window.getInitializationStatus == True:
@@ -258,3 +265,7 @@ class StylingWindow(Gtk.Window):
           elif actived == False:
             self.mapnik_map.remove_style(self.previewLayer_name)
             self.tiles_window.reloadMapView()
+            
+    def showPreviewBox(self, visiblity):
+        self.preview_box.set_child_visible(visiblity)
+        

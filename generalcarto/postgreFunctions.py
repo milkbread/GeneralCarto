@@ -32,69 +32,28 @@ def getDataInfos(source_params, extent, filter):
     
     return featCount
 
-def makePostgresTable(table_name = 'generalized_line_cache'):    
+def makePostgresTable(table_name, database_ud='meingis', user_ud='klammer'):    
         
     con = None
 
-    con = psycopg2.connect(database='meingis', user='klammer') 
+    con = psycopg2.connect(database = database_ud , user = user_ud) 
     cur = con.cursor()
     
-    #Test if geometry_columns has already an entry for that table
+    #Test if table 'geometry_columns' has already an entry for that table
     cur.execute("Select count(*) from geometry_columns where f_table_name = '"+ table_name +"'")
     ex = cur.fetchone()
     if ex[0] == 0:
-        cur.execute("INSERT INTO geometry_columns VALUES('','public','generalized_line_cache','geom',2,900913,'GEOMETRY')")
+        cur.execute("INSERT INTO geometry_columns VALUES('','public','%s','geom',2,900913,'GEOMETRY')"%table_name)
 
-    cur.execute("DROP TABLE IF EXISTS generalized_line_cache")
-    #cur.execute("CREATE TABLE "+ table_name +"(id INT PRIMARY KEY, geom GEOMETRY) WITH (OIDS=TRUE)")
-    cur.execute("CREATE TABLE "+ table_name +"(id integer NOT NULL, x integer NOT NULL, y integer NOT NULL, z integer NOT NULL, geom geometry, CONSTRAINT generalized_line_cache_pkey PRIMARY KEY (id, x, y, z)) WITH ( OIDS=FALSE); ALTER TABLE generalized_line_cache OWNER TO klammer;")
-    #cur.execute("CREATE TABLE "+ table_name +"(id integer NOT NULL, x integer NOT NULL, y integer NOT NULL, z integer NOT NULL, geom geometry) WITH ( OIDS=FALSE); ALTER TABLE generalized_line_cache OWNER TO klammer;")
-    con.commit()
-    
-def makePostgresTableBbox(table_name = 'bbox'):    
-        
-    con = None
-
-    con = psycopg2.connect(database='meingis', user='klammer') 
-    cur = con.cursor()
-    
-    #Test if geometry_columns has already an entry for that table
-    cur.execute("Select count(*) from geometry_columns where f_table_name = '"+ table_name +"'")
-    ex = cur.fetchone()
-    if ex[0] == 0:
-        cur.execute("INSERT INTO geometry_columns VALUES('','public','bbox','geom',2,900913,'GEOMETRY')")
-
-    cur.execute("DROP TABLE IF EXISTS bbox")
-    #cur.execute("CREATE TABLE "+ table_name +"(id INT PRIMARY KEY, geom GEOMETRY) WITH (OIDS=TRUE)")
-    cur.execute("CREATE TABLE "+ table_name +"(id integer, geom geometry) WITH ( OIDS=FALSE); ALTER TABLE bbox OWNER TO klammer;")
-    #cur.execute("CREATE TABLE "+ table_name +"(id integer NOT NULL, x integer NOT NULL, y integer NOT NULL, z integer NOT NULL, geom geometry) WITH ( OIDS=FALSE); ALTER TABLE bbox OWNER TO klammer;")
+    cur.execute("DROP TABLE IF EXISTS %s"%table_name)
+    cur.execute("CREATE TABLE "+ table_name +"(id integer NOT NULL, x integer NOT NULL, y integer NOT NULL, z integer NOT NULL, geom geometry, CONSTRAINT "+ table_name +"_pkey PRIMARY KEY (id, x, y, z)) WITH ( OIDS=FALSE); ALTER TABLE "+ table_name +" OWNER TO "+ user_ud +";")
     con.commit()
 
-        
-def writeBBoxToPostgres(val, extent, table_name = 'bbox'):  
-    #print extent 
-    x1 = str(extent[0])
-    y1 = str(extent[1])
-    x2 = str(extent[2])
-    y2 = str(extent[3])
-    polygon = 'LINESTRING ('+x1+' '+ y1+','+ x1+' '+ y2+','+ x2+' '+ y2+','+ x2+' '+ y1+', '+x1+' '+ y1+' )'
-    #print polygon
-    
-    con = None
-
-    con = psycopg2.connect(database='meingis', user='klammer') 
-    cur = con.cursor()
-    
-
-    cur.execute("INSERT INTO bbox VALUES("+str(val)+", GeometryFromText ( '"+polygon+"', 900913 ))")
-    con.commit()
-    
-
-def writeToPostgres(file, table_name = 'generalized_line_cache'):   
+def writeToPostgres(file, table_name, database_ud='meingis', user_ud='klammer'):   
 
     con = None
 
-    con = psycopg2.connect(database='meingis', user='klammer') 
+    con = psycopg2.connect(database = database_ud , user = user_ud) 
     cur = con.cursor()
 
     tile = file.split('_')
@@ -149,6 +108,44 @@ def writeToPostgres(file, table_name = 'generalized_line_cache'):
         #elif...
         
     #print counter
+
+def makePostgresTableBbox(table_name = 'bbox'):    
+        
+    con = None
+
+    con = psycopg2.connect(database='meingis', user='klammer') 
+    cur = con.cursor()
+    
+    #Test if geometry_columns has already an entry for that table
+    cur.execute("Select count(*) from geometry_columns where f_table_name = '"+ table_name +"'")
+    ex = cur.fetchone()
+    if ex[0] == 0:
+        cur.execute("INSERT INTO geometry_columns VALUES('','public','bbox','geom',2,900913,'GEOMETRY')")
+
+    cur.execute("DROP TABLE IF EXISTS bbox")
+    #cur.execute("CREATE TABLE "+ table_name +"(id INT PRIMARY KEY, geom GEOMETRY) WITH (OIDS=TRUE)")
+    cur.execute("CREATE TABLE "+ table_name +"(id integer, geom geometry) WITH ( OIDS=FALSE); ALTER TABLE bbox OWNER TO klammer;")
+    #cur.execute("CREATE TABLE "+ table_name +"(id integer NOT NULL, x integer NOT NULL, y integer NOT NULL, z integer NOT NULL, geom geometry) WITH ( OIDS=FALSE); ALTER TABLE bbox OWNER TO klammer;")
+    con.commit()
+
+        
+def writeBBoxToPostgres(val, extent, table_name = 'bbox'):  
+    #print extent 
+    x1 = str(extent[0])
+    y1 = str(extent[1])
+    x2 = str(extent[2])
+    y2 = str(extent[3])
+    polygon = 'LINESTRING ('+x1+' '+ y1+','+ x1+' '+ y2+','+ x2+' '+ y2+','+ x2+' '+ y1+', '+x1+' '+ y1+' )'
+    #print polygon
+    
+    con = None
+
+    con = psycopg2.connect(database='meingis', user='klammer') 
+    cur = con.cursor()
+    
+
+    cur.execute("INSERT INTO bbox VALUES("+str(val)+", GeometryFromText ( '"+polygon+"', 900913 ))")
+    con.commit()
 
 
 ###old Testing function

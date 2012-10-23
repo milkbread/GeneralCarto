@@ -35,8 +35,12 @@ from generalcarto.ToolsWindow import ToolsWindow
 from generalcarto.PreviewWindow import PreviewWindow 
 from generalcarto.StylingWindow import StylingWindow 
 from generalcarto.InfoWindow import InfoWindow 
+from generalcarto.WPSWindow import WPSWindow 
 
-   
+
+from generalcarto import WPScommunication as WPScom
+from multiprocessing import Pool
+from generalcarto import postgreFunctions    
         
 # See generalcarto_lib.Window.py for more details about how this class works
 class GeneralcartoWindow(Window):
@@ -84,12 +88,15 @@ class GeneralcartoWindow(Window):
             os.mkdir(self.tile_dir)
         self.previewImage = self.generalHome + "user_image.png"
         self.path = ""
+        self.xml_files_folder = self.generalHome + 'xmlfiles/'
+        if not os.path.isdir(self.xml_files_folder):
+            os.mkdir(self.xml_files_folder)
         
         self.menuItemIndicator = "<  "
         self.textEditor = 'gedit'
         
         #self.loadWindows()
-        self.ui.button_show_tiles.set_child_visible(False)
+        self.tileButtonVisibility(False)
         self.initializedMapfile = False
         self.initialLoad = True
         
@@ -146,6 +153,8 @@ class GeneralcartoWindow(Window):
         self.loadWindows()
         
         self.mapfileInitialized()
+        self.tileButtonVisibility(False)
+        
         
         
     
@@ -192,23 +201,49 @@ class GeneralcartoWindow(Window):
         self.openToolsWindow()
         self.openStylingWindow()
         self.openInfoWindow()
+        self.openWPSWindow()
+        
     def destroyWindows(self):
         self.windowClassExtent.destroyWindow()
         self.windowClassInfo.destroyWindow()
+        self.windowClassWPS.destroyWindow()
         self.windowClassPreview.destroyWindow()
         self.windowClassTiles.destroyWindow()
         self.windowClassTools.destroyWindow()
         self.windowClassStyling.destroyWindow()
         
+    def on_mnu_geom_trans_activate(self, widget, data=None):
+        if self.windowClassWPS.getStatus() == True and self.windowClassTiles.getInitializationStatus() == True:
+            self.on_openingGeneralisationWindows(2)
+        elif self.windowClassWPS.getStatus() == False:
+            self.windowClassWPS.hideWindow()        
+    def openWPSWindow(self):
+        self.windowClassWPS = WPSWindow(self.logs, self.xml_files_folder, self)
+        
     def on_mnu_geom_info_activate(self, widget, data=None):
         if self.windowClassInfo.getStatus() == True and self.windowClassTiles.getInitializationStatus() == True:
-            self.windowClassInfo.showWindow()
-            self.showStylingWindow()
+            self.on_openingGeneralisationWindows(1)
         elif self.windowClassInfo.getStatus() == False:
             self.windowClassInfo.hideWindow()        
     def openInfoWindow(self):
         self.windowClassInfo = InfoWindow(self.logs, self)
         
+    def on_openingGeneralisationWindows(self, aim): #aim: 1 InfoRetrieveal, 2 WPS
+        self.showStylingWindow(aim)
+        self.windowClassExtent.hideWindow()
+        
+    def on_mnu_styling_activate(self, widget, data=None):
+        if self.windowClassStyling.getStatus() == True:
+            self.windowClassStyling.showWindow()
+        elif self.windowClassStyling.getStatus() == False:
+            self.windowClassStyling.hideWindow() 
+    def openStylingWindow(self):
+        self.windowClassStyling = StylingWindow(self.logs, self)
+    def showStylingWindow(self, aim): #aim: 1 InfoRetrieveal, 2 WPS
+        if self.initializedMapfile == True:
+            self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo, self.windowClassWPS, aim)
+            self.windowClassStyling.showWindow()
+                
     def on_mnu_extent_activate(self, widget, data=None):
         if self.windowClassExtent.getStatus() == True:
             self.windowClassExtent.showWindow()
@@ -241,27 +276,32 @@ class GeneralcartoWindow(Window):
     def openToolsWindow(self):
         self.windowClassTools = ToolsWindow(self.logs, self)
         
-    def on_mnu_styling_activate(self, widget, data=None):
-        if self.windowClassStyling.getStatus() == True:
-            self.showStylingWindow()
-        elif self.windowClassStyling.getStatus() == False:
-            self.windowClassStyling.hideWindow() 
-    def openStylingWindow(self):
-        self.windowClassStyling = StylingWindow(self.logs, self)
-    def showStylingWindow(self):
-        if self.initializedMapfile == True:
-            self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
-            self.windowClassStyling.showWindow()
-    
-    def on_button_window_clicked(self, widget, data=None):
-        print self.windowClassExtent.getStatus()  
-        
     def on_mnu_export_mapfile_activate(self, widget, data=None):
         name = 'GeneralCarto-last-mapfile.xml'
         wobj = open(self.logs+name, 'w')
         wobj.write(mapnik.save_map_to_string(self.mapnik_map))
         wobj.close
-        self.ui.label_status.set_text("Mapfile '%s' was exported to: \n\t%s" %(name, self.logs))       
+        self.ui.label_status.set_text("Mapfile '%s' was exported to: \n\t%s" %(name, self.logs))  
+   
+    def tileButtonVisibility(self, visibility):
+        self.ui.button_show_tiles.set_child_visible(visibility)
+        
+        
+        
+    def on_button_window_clicked(self, widget, data=None):
+        
+        server = 'http://localhost:8080/wps-dev/wps'
+        #server = 'http://kartographie.geo.tu-dresden.de/webgen_wps/wps'
+        result = WPScom.doWPSProcess([(1369751.5468703583, 6457400.14953169, 1408887.3053523686, 6496535.908013698), u'/home/klammer/Software/Quickly/generalcarto/data/media/shapefiles/vgtl_polygons.shp', 'ch.unizh.geo.webgen.service.BuildingSimplification', server, 'WebGen_WPS_547_346_10.xml', '/home/klammer/GeneralCarto/xmlfiles/', "([building]='yes')", [('minlength', 'minimum length', '10.0')], [547, 346], '/home/klammer/GeneralCarto/log-files/'])
+        print result
+        
+        #postgreFunctions.makePostgresTable()
+
+       
+        
+        
+        
+        
                 
                 
 ###Additional Functions

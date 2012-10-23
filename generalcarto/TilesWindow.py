@@ -80,6 +80,7 @@ class TilesWindow(Gtk.Window):
             self.showWindow()
             
         self.initialized = True
+        self.styling_window.showPreviewBox(True)
         
 ###Listeners
     def showWindow(self):
@@ -126,7 +127,7 @@ class TilesWindow(Gtk.Window):
         
 ###Functions
     #Functions for InfoWindow
-    def getParameterForInfoRetrieval(self):
+    def getParameterForGeneralisation(self):
         return self.getTileBunch(self.central_tile_global), self.maxZoom
         
     def getExtents(self, tile, tileproj):
@@ -239,6 +240,7 @@ class TilesWindow(Gtk.Window):
             self.zoomFactor = self.zoomFactor - 1
             self.central_tile_global = ((self.central_tile_global[0]/2),(self.central_tile_global[1]/2))
         zoom = self.start_zoom + self.zoomFactor
+        self.label_zoom.set_text(str(zoom))
         #clear all x
         for i in xrange(len(self.x)):
             self.x.pop()
@@ -292,6 +294,27 @@ class TilesWindow(Gtk.Window):
         layer.srs = layerSRS
         layer.styles.append(name)
         self.mapnik_map.layers.append(layer)
+        
+    def addPreviewOfGeneralizedGeometriesToMap(self, table_name, symbol_type, layerSRS, name):
+        genColor = 'rgb(0%,0%,100%)'
+        s = mapnik.Style()
+        r = mapnik.Rule()
+        if symbol_type == 'polygon':
+            polygon_symbolizer = mapnik.PolygonSymbolizer(mapnik.Color(genColor))
+            r.symbols.append(polygon_symbolizer)
+        elif symbol_type == 'line':
+            line_symbolizer = mapnik.LineSymbolizer(mapnik.Color(genColor),2)
+            r.symbols.append(line_symbolizer)
+        else:
+            print symbol_type, 'has to be implemented to preview!!!'
+        s.rules.append(r)
+        self.mapnik_map.append_style(name,s)
+        
+        lyr = mapnik.Layer('Generalized geometry from PostGIS')
+        lyr.datasource = mapnik.PostGIS(host='localhost',user='gisadmin',password='tinitus',dbname='meingis',table='(select geom from '+ table_name +' ) as geometries')
+        lyr.srs = layerSRS
+        lyr.styles.append(name)
+        self.mapnik_map.layers.append(lyr)
         
     def reloadMapView(self):
         

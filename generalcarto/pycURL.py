@@ -10,6 +10,7 @@ import os
 import cStringIO
 import time
 from generalcarto import functions as func
+import sys
 
 
 #Constants
@@ -88,13 +89,12 @@ def main(filenameI, locationI, nameI, serverI):
     global server
     server = serverI
     
-    print 'Request the WPS-Servers via pycURL'
+    print 'Request the WPS-Server via pycURL'
 
     #send the execute command
     response = wps(server)
     #print response
-    #print 'kommt hier vorbei'
-
+    
     #find the url of status-xml 
     found = find(response,'statusLocation="','" xmlns:wps')
     status_xml = found
@@ -132,9 +132,14 @@ def main(filenameI, locationI, nameI, serverI):
                     wobj.close()
                     
         except:
-            finished = False
-            print 'An error occured for that process: '+status_xml
-            print '...I am going on!'
+            found = find(response, '<ows:Exception exceptionCode="','" locator="geom">')
+            if found == 'InvalidParameterValue':
+                print found
+                break
+            else:
+                finished = False
+                print 'An error occured for that process: '+status_xml
+                print '...I am going on!'
             
         time.sleep(1)
         

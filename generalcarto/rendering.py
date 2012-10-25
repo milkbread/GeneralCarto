@@ -90,67 +90,59 @@ def pure_tile_rendering(args):
 #...and return these tiles as list
 #This function is originally taken from the mapnik source code and is no creative content of ralf klammer!
 #...function was called 'renderTiles' until version 0.8
-def calcNecTiles(bbox, tile_dir, minZoom,maxZoom):  
+def calcNecTiles(bbox, tile_dir, minZoom, maxZoom):  
     #print "render_tiles(",bbox, mapfile, tile_dir, minZoom,maxZoom, name,")"
     tms_scheme=False
-
-    if not os.path.isdir(tile_dir):
-         os.mkdir(tile_dir)
 
     gprj = GoogleProjection(maxZoom+1) 
     ll0 = (bbox[0],bbox[3])
     ll1 = (bbox[2],bbox[1])
-    #renderer = RenderThread(tile_dir, mapfile, maxZoom)
-
+    #print ll0
+    #print ll1
+    
     stop = False
-
     finalTiles = []
 
     for z in range(minZoom,maxZoom + 1):
-        all_tiles = []
-        px0 = gprj.fromLLtoPixel(ll0,z)    
-        px1 = gprj.fromLLtoPixel(ll1,z)
+        if stop == False:        
         
-        if stop == False:
+            all_tiles = []
+            px0 = gprj.fromLLtoPixel(ll0,z)    
+            px1 = gprj.fromLLtoPixel(ll1,z)
+            #print z
+            #print px0
+            #print px1
             
-            # check if we have directories in place
-            zoom = "%s" % z
-            if not os.path.isdir(tile_dir + zoom):
-                os.mkdir(tile_dir + zoom)
+            zoom = str(z)
             for x in range(int(px0[0]/256.0),int(px1[0]/256.0)+1):
                 
                 # Validate x co-ordinate
                 if (x < 0) or (x >= 2**z):
                     continue
-                # check if we have directories in place
-                str_x = "%s" % x
-                if not os.path.isdir(tile_dir + zoom + '/' + str_x):
-                    os.mkdir(tile_dir + zoom + '/' + str_x)
+                str_x = str(x)
                 for y in range(int(px0[1]/256.0),int(px1[1]/256.0)+1):
-                    each_tile = []
+                    one_tile = []
                     # Validate x co-ordinate
                     if (y < 0) or (y >= 2**z):
                         continue
                     # flip y to match OSGEO TMS spec
                     if tms_scheme:
-                        str_y = "%s" % ((2**z-1) - y)
+                        str_y = str((2**z-1) - y)
                     else:
-                        str_y = "%s" % y
+                        str_y = str(y)
                     tile_uri = tile_dir + zoom #+ '/' + str_x + '/' + str_y + '.png'    
-                    each_tile.append(x)
-                    each_tile.append(y)
-                    each_tile.append(z)
-                    each_tile.append(tile_uri)
+                    one_tile.append(x)
+                    one_tile.append(y)                    
+                    final_uri = tile_uri
+                    final_zoom = z                   
                 
-                    all_tiles.append(each_tile)
-                    # Submit tile to be rendered
-                    #renderer.render_tile(tile_uri, x, y, z)
+                    all_tiles.append(one_tile)
         
         if len(all_tiles) >= 9:
             stop = True
             finalTiles = all_tiles
 
-    return finalTiles
+    return finalTiles, final_uri, final_zoom
     
 #Object for the calculations between tile-coordinates (-names) and LonLat-coordinates
 from math import pi,cos,sin,log,exp,atan

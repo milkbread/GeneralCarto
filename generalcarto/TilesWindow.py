@@ -56,17 +56,12 @@ class TilesWindow(Gtk.Window):
         self.prj = prj
         #calculate the necessary tiles, depending on the given extent
         bbox = self.getGeoCodedBbox(extent, prj)
-        self.all_tiles = rendering.calcNecTiles(bbox, tile_dir, minZoom, maxZoom)
-        #save start zoom
-        self.start_zoom = self.all_tiles[0][2]
-        #find all x and y names of the necessary tiles and...               
-        self.x, self.y = self.findNames()
-        #get the central tile
+        all_tiles, first_zentral_uri, self.start_zoom= rendering.calcNecTiles(bbox, tile_dir, minZoom, maxZoom)
+        #get all x and y names of the necessary tiles for the next step... 
+        self.x, self.y = self.getNames(all_tiles)
+        #...finding the central tile
         central_tile = functions.getZentralTile(self.x,self.y)
         self.central_tile_global = central_tile
-        #render the the central and all 8 surrounding tiles
-        first_zentral_uri = self.all_tiles[0][3]
-        zoom = self.start_zoom        
         #initialize the zoomfactor, that is relative to the start zoom
         self.zoomFactor = 0  
         #render the first displayed tiles
@@ -184,17 +179,17 @@ class TilesWindow(Gtk.Window):
                 all_tiles.append(one_tile)
         return all_tiles
         
-    def findNames(self):
+    def getNames(self, all_tiles):
         x = []
-        x.append(self.all_tiles[0][0])
+        x.append(all_tiles[0][0])
         y = []
-        y.append(self.all_tiles[0][1])
-        for i in range(1, len(self.all_tiles)):
-            if (self.all_tiles[i])[0] > (self.all_tiles[i-1])[0]:
-                x.append(self.all_tiles[i][0])
+        y.append(all_tiles[0][1])
+        for i in range(1, len(all_tiles)):
+            if (all_tiles[i])[0] > (all_tiles[i-1])[0]:
+                x.append(all_tiles[i][0])
         for j in range(1,len(x)):
-            if (self.all_tiles[j])[1] > (self.all_tiles[j-1])[1]:
-                y.append(self.all_tiles[j][1])
+            if (all_tiles[j])[1] > (all_tiles[j-1])[1]:
+                y.append(all_tiles[j][1])
         return x, y
         
     def getGeoCodedBbox(self, extent, prj):

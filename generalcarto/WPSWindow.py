@@ -38,7 +38,8 @@ class WPSWindow(Gtk.Window):
     def initializeContents(self):
         self.entry_server = self.builder.get_object('entry_server')
         #initialize the wps-server adress
-        self.entry_server.set_text('http://kartographie.geo.tu-dresden.de/webgen_wps/wps')
+        #self.entry_server.set_text('http://kartographie.geo.tu-dresden.de/webgen_wps/wps')
+        self.entry_server.set_text('http://localhost:8080/wps-dev/wps')
         self.label_process = self.builder.get_object('label_process')
         self.label_params = self.builder.get_object('label_params')
         self.label_status = self.builder.get_object('label_status')
@@ -181,8 +182,7 @@ class WPSWindow(Gtk.Window):
                 
             pool = Pool(processes = 9)        
             self.results = pool.map(WPScom.doWPSProcess, extentBunch)
-           #print results
-            
+            #print self.results
             #new_object.setButtonLabel(True)
             
             print 'Done!'
@@ -192,7 +192,7 @@ class WPSWindow(Gtk.Window):
             
     def on_button_writeToDB_clicked(self, widget):
         self.table_name = 'generalized_line_cache'
-        self.writeResultToDB(self.table_name)
+        self.writeResultToDB(self.results, self.table_name)
         self.button_showGen.set_child_visible(True)
 
     def on_button_showGen_clicked(self, widget):
@@ -211,16 +211,22 @@ class WPSWindow(Gtk.Window):
     
             
 ###Functions
-    def writeResultToDB(self, table_name):
+    def writeResultToDB(self, results, table_name):
         
         postgreFunctions.makePostgresTable(table_name)
         real_results = []
         print 'Begin Writing'
-        for result in self.results:
-            if result != '':
+        for result in results:
+            if result[0] != '':
+                start_time = time.time()
                 #real_results.append(result)
-                postgreFunctions.writeToPostgres(result, table_name)
+                postgreFunctions.writeToPostgres(result[0], table_name)
+                final_time = round(time.time()-start_time, 3)
+                av = round(result[1]/final_time,3)
+                functions.writeToLog('Wrote %s with %s %s(s) to DB - it took:%s seconds! --> ca. %s /sec'%(result[0], str(result[1]), str(result[2]), str(final_time), str(av)), self.logfiles)
         print 'Done writing'
+        
+        
             
         #pool = Pool(processes = 9)        
         #pool.map(postgreFunctions.writeToPostgres, real_results)

@@ -290,12 +290,17 @@ class GeneralcartoWindow(Window):
         
     def on_button_window_clicked(self, widget, data=None):
         
-        server = 'http://localhost:8080/wps-dev/wps'
+   #     server = 'http://localhost:8080/wps-dev/wps'
         #server = 'http://kartographie.geo.tu-dresden.de/webgen_wps/wps'
-        result = WPScom.doWPSProcess([(1369751.5468703583, 6457400.14953169, 1408887.3053523686, 6496535.908013698), u'/home/klammer/Software/Quickly/generalcarto/data/media/shapefiles/vgtl_polygons.shp', 'ch.unizh.geo.webgen.service.BuildingSimplification', server, 'WebGen_WPS_547_346_10.xml', '/home/klammer/GeneralCarto/xmlfiles/', "([building]='yes')", [('minlength', 'minimum length', '10.0')], [547, 346], '/home/klammer/GeneralCarto/log-files/'])
-        print result
+    #    result = WPScom.doWPSProcess([(1369751.5468703583, 6457400.14953169, 1408887.3053523686, 6496535.908013698), u'/home/klammer/Software/Quickly/generalcarto/data/media/shapefiles/vgtl_polygons.shp', 'ch.unizh.geo.webgen.service.BuildingSimplification', server, 'WebGen_WPS_547_346_10.xml', '/home/klammer/GeneralCarto/xmlfiles/', "([building]='yes')", [('minlength', 'minimum length', '10.0')], [547, 346], '/home/klammer/GeneralCarto/log-files/'])
+     #   print result[0]
         
         #postgreFunctions.makePostgresTable()
+        
+        results = [('', 0, ''), ('', 0, ''), ('', 0, ''), ('', 0, ''), ('/home/klammer/GeneralCarto/xmlfiles/result_273_172_9.gml', 985, 'LineString'), ('/home/klammer/GeneralCarto/xmlfiles/result_273_173_9.gml', 23, 'LineString'), ('', 0, ''), ('', 0, ''), ('', 0, '')]
+        self.table_name = 'generalized_line_cache'
+        WPSWindow(self.logs, self.xml_files_folder, self).writeResultToDB(results, self.table_name)
+        
 
        
         

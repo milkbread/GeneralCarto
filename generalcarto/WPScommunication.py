@@ -37,6 +37,7 @@ def doWPSProcess(params):
     
     #make a xml-file, that is valid for the Execute-command of WebGen_WPS
     test, geometry_type = makeWPSfile(tile_extent, folder+dest_file, source, func_ident, filter, func_params, params[8], logs_folder)
+                
     result = ''
     if test > 0:  
         #try to send execute-file to the server until it was successfull
@@ -57,6 +58,6 @@ def doWPSProcess(params):
      #       except:
       #          print "Unexpected error:", sys.exc_info()[0]
        #         raise
+                
     
-    return result
-   
+    return (result, test, geometry_type)   

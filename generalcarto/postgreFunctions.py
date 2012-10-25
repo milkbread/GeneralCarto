@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as xml
 import psycopg2
 import sys
+import time
 
 def getDataInfos(source_params, extent, filter):
     x1 = str(extent[0])
@@ -74,8 +75,9 @@ def writeToPostgres(file, table_name, database_ud='meingis', user_ud='klammer'):
                         bbox.append(round(float(subpart.text),round_val))
                     elif subpart.tag  == '{http://www.opengis.net/gml}Y':
                         bbox.append(round(float(subpart.text),round_val))
-            
     for node in in_tree.iter(tag = '{www.icaci.org/genmr/wps}Value'):
+        start_time = time.time()
+    
         #do this for linestrings
         if node.attrib['wpstype'] == 'AttributeTypeGeometryLineString' or node.attrib['wpstype'] == 'AttributeTypeGeometryPolygon':
             x = []
@@ -91,7 +93,6 @@ def writeToPostgres(file, table_name, database_ud='meingis', user_ud='klammer'):
             elif node.attrib['wpstype'] == 'AttributeTypeGeometryPolygon':
                     strin = 'POLYGON ((' 
                     strend = '))'
-            
             for i in xrange(len(x)):
                 if i == 0:
                     strin = strin + str(round(float(x[i]),round_val)) + ' ' + str(round(float(y[i]),round_val))
@@ -100,14 +101,16 @@ def writeToPostgres(file, table_name, database_ud='meingis', user_ud='klammer'):
                 else:
                     strin = strin + ', ' + str(round(float(x[i]),round_val)) + ' ' + str(round(float(y[i]),round_val))
             #print strin
-            cur.execute("INSERT INTO generalized_line_cache VALUES("+str(counter)+","+str(tile[0])+","+str(tile[1])+","+str(tile[2])+",GeometryFromText ( '"+strin+"', 900913 ))")
+            cur.execute("INSERT INTO "+ table_name +" VALUES("+str(counter)+","+str(tile[0])+","+str(tile[1])+","+str(tile[2])+",GeometryFromText ( '"+strin+"', 900913 ))")
             con.commit()
             
             counter = counter + 1
+    
         #the rest hast to be implemented        
         #elif...
         
     #print counter
+    
 
 def makePostgresTableBbox(table_name = 'bbox'):    
         

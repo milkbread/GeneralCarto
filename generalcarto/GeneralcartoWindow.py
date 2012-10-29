@@ -19,6 +19,7 @@ from generalcarto.StyleditDialog import StyleditDialog
 from generalcarto import gdal_functions as gdal
 from generalcarto import rendering
 from generalcarto import postgreFunctions as postgres
+from generalcarto import rendering
 import mapnik
 from quickly import prompts
 from quickly.widgets.dictionary_grid import DictionaryGrid
@@ -297,10 +298,17 @@ class GeneralcartoWindow(Window):
         
         #postgreFunctions.makePostgresTable()
         
-        results = [('', 0, ''), ('', 0, ''), ('', 0, ''), ('', 0, ''), ('/home/klammer/GeneralCarto/xmlfiles/result_273_172_9.gml', 985, 'LineString'), ('/home/klammer/GeneralCarto/xmlfiles/result_273_173_9.gml', 23, 'LineString'), ('', 0, ''), ('', 0, ''), ('', 0, '')]
-        self.table_name = 'generalized_line_cache'
-        WPSWindow(self.logs, self.xml_files_folder, self).writeResultToDB(results, self.table_name)
+  #      results = [('', 0, ''), ('', 0, ''), ('', 0, ''), ('', 0, ''), ('/home/klammer/GeneralCarto/xmlfiles/result_273_172_9.gml', 985, 'LineString'), ('/home/klammer/GeneralCarto/xmlfiles/result_273_173_9.gml', 23, 'LineString'), ('', 0, ''), ('', 0, ''), ('', 0, '')]
+   #     self.table_name = 'generalized_line_cache'
+    #    WPSWindow(self.logs, self.xml_files_folder, self).writeResultToDB(results, self.table_name)
         
+        #test =  rendering.calcTileRanges ((-180, -88, 180, 88),0,18, self.generalHome)
+        test =  rendering.calcTileRanges ((11.8722539115, 50.1713213772, 12.584850326, 50.678205265399974),0,18)
+        for i in test[2][0]:
+            if i[4][0] == 1 and i[4][1] == 1:
+                print i[4]
+                print i[0]
+        rendering.printTileRangeParameters(test, self.generalHome)
 
        
         

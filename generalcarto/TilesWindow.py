@@ -56,7 +56,7 @@ class TilesWindow(Gtk.Window):
         self.prj = prj
         #calculate the necessary tiles, depending on the given extent
         bbox = self.getGeoCodedBbox(extent, prj)
-        all_tiles, first_zentral_uri, self.start_zoom= rendering.calcNecTiles(bbox, tile_dir, minZoom, maxZoom)
+        all_tiles, first_zentral_uri, self.start_zoom = rendering.calcNecTiles(bbox, tile_dir, minZoom, maxZoom)
         #get all x and y names of the necessary tiles for the next step... 
         self.x, self.y = self.getNames(all_tiles)
         #...finding the central tile

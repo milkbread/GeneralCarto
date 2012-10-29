@@ -83,6 +83,76 @@ def pure_tile_rendering(args):
         mapnik.render(m, im)
         im.save(tile_uri, 'png256') 
         return m.scale()/0.00028
+        
+def calcTileRanges(bbox, minZoom, maxZoom):
+    params = [bbox, (minZoom, maxZoom)]
+    
+    gprj = GoogleProjection(maxZoom+1) 
+    ll0 = (bbox[0],bbox[3])
+    ll1 = (bbox[2],bbox[1])
+    all_zoom_params = []
+    for z in range(minZoom,maxZoom + 1):
+        zoom_param = []
+        zoom_param.append(z)
+        px0r = gprj.fromLLtoPixel(ll0,z, True)    
+        px1r = gprj.fromLLtoPixel(ll1,z, True) 
+        zoom_param.append((px0r[0],px1r[1],px1r[0],px0r[1]))
+        px0 = gprj.fromLLtoPixel(ll0,z, False)    
+        px1 = gprj.fromLLtoPixel(ll1,z, False)        
+        zoom_param.append((px0[0],px1[1],px1[0],px0[1]))
+        xCount = round((px1[0]-px0[0]),3)
+        yCount = round((px1[1]-px0[1]),3)
+        zoom_param.append((xCount, yCount))
+        xTiles = xCount/256
+        yTiles = yCount/256
+        if xTiles < 1:
+            xTiles = round(xTiles,3)
+        else:
+            xTiles = int(xTiles)
+        if yTiles < 1:
+            yTiles = round(yTiles,3)
+        else:
+            yTiles = int(yTiles)
+        zoom_param.append((xTiles, yTiles))
+        
+        tile_area = xTiles*yTiles
+        zoom_param.append(tile_area)
+        
+        all_zoom_params.append(zoom_param)
+        
+    #add parametes array and descriptions
+    params.append((all_zoom_params, ("Description: \n[0] - Zoomlevel \n[1] - BBox in Pixelcoordinates (px): (rounded)\n[2] - BBox in Pixelcoordinates (px): (unrounded)\n\t--> unrounded pixelcoordinates are used for further calculations\n[3] - Coverage in px\n[4] - Coverage in Number of Tiles\n[5] - Total number of Tiles")))
+    params.append("Description: \n[0] - base extent\n[1] - Tuple of Zoomrange\n[2] - all zoomlevel related parameters ([0]-params, [1]-description)\n[3] - Description")
+    
+    return params
+    
+def printTileRangeParameters(params, folder):
+    file = open(folder + 'Extent-Tile-Params.txt',"w")
+    
+    file.write("**************************")
+    file.write("\nExtent (lonlat): \n%s"%str(params[0]))
+    file.write("\nMinZoom: %s - MaxZoom: %s"%(params[1][0], params[1][1]))
+    file.write("\n**************************")
+    
+    for param in params[2][0]:
+        file.write("\nZoomlevel: %s"%param[0])
+        file.write("\nBBox in Pixelcoordinates (px): (rounded) \n"+str(param[1]))
+        file.write("\nBBox in Pixelcoordinates (px): (unrounded) \n"+str(param[2]))
+        file.write("\n\t--> unrounded pixelcoordinates are used for further calculations")
+        file.write("\nThis extent covers (at zoomlevel %s) an area of: \n%s px (horizontal)\n%s px (vertical)"%(str(param[0]),str(param[3][0]),str(param[3][1])))
+        file.write("\nTherefore the extent is (at zoomlevel %s) covered by: \n%s Tile(s) (horizontal)\n%s Tile(s) (vertical)"%(str(param[0]),str(param[4][0]),str(param[4][1])))
+        file.write("\nThat makes a total number of %s Tile(s)!"%param[5])
+        file.write("\n+++++++++++++++++++++++++++++++")
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
 
 #This function does only...
 #...find the minimal zoomlevel of a given extent - meaning when min. 9 tiles are created for that extent
@@ -169,11 +239,14 @@ class GoogleProjection:
             self.Ac.append(c)
             c *= 2
                 
-    def fromLLtoPixel(self,ll,zoom):
+    def fromLLtoPixel(self,ll,zoom,doRound = True):
          d = self.zc[zoom]
-         e = round(d[0] + ll[0] * self.Bc[zoom])
+         e = d[0] + ll[0] * self.Bc[zoom]
          f = minmax(sin(DEG_TO_RAD * ll[1]),-0.9999,0.9999)
-         g = round(d[1] + 0.5*log((1+f)/(1-f))*-self.Cc[zoom])
+         g = d[1] + 0.5*log((1+f)/(1-f))*-self.Cc[zoom]
+         if doRound == True:
+             e = round(e)
+             g = round(g)
          return (e,g)
      
     def fromPixelToLL(self,px,zoom):
@@ -183,7 +256,6 @@ class GoogleProjection:
          h = RAD_TO_DEG * ( 2 * atan(exp(g)) - 0.5 * pi)
          return (f,h)
 
-    
 ###These are functions to tryNerror within the huge univers of mapnikfunctionalities
 
 def qickTest():

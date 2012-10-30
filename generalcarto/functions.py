@@ -71,6 +71,10 @@ def getShapefile(filename):
             #print shape
     robj.close()
     return shape
+    
+    
+    
+###Old Function
 
 #Function for getting the zentral value of a list of values
 #In this case it is related to find the zentral tile of a set of tiles

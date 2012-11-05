@@ -5,9 +5,8 @@ from generalcarto import rendering
 
 class ExtentWindow(Gtk.Window):
     
-    def __init__(self, logfiles, preview_image, main_window, name = "extent_window", file = "./data/ui/Toolbars.glade"):
-        self.logfiles = logfiles
-        self.previewImage = preview_image
+    def __init__(self, folders, preview_image, main_window, name = "extent_window", file = "./data/ui/Toolbars.glade"):
+        self.folders = folders
         self.main_window = main_window
                 
         #basics for loading a *.glade file
@@ -34,12 +33,11 @@ class ExtentWindow(Gtk.Window):
         self.entry_urlo = self.builder.get_object('entry_urlo')
         self.entry_llla = self.builder.get_object('entry_llla')
         self.entry_urla = self.builder.get_object('entry_urla')
-
+        
     def initializeMapfile(self, mapnik_map, mapfile, preview_window_class):
         self.isMapfileInitialized = False
         self.mapnik_map = mapnik_map
         self.mapfile = mapfile
-        
         
         self.comboboxtext_shape.remove_all()
         self.comboboxtext_postgis.remove_all()
@@ -86,7 +84,7 @@ class ExtentWindow(Gtk.Window):
     #Perform a simple rendering of a single *.png self.image file
     def showPreview(self, mapfile):
         if self.isMapfileInitialized != False:
-            rendering.simpleRendering(self.previewImage, mapfile, self.calculateExtent())
+            rendering.simpleRendering(self.folders.getPreviewImage(), mapfile, self.calculateExtent())
             self.preview_window_class.reloadImage()
             self.preview_window_class.showWindow()
             
@@ -142,7 +140,7 @@ class ExtentWindow(Gtk.Window):
                 self.comboboxtext_postgis.append_text(content)
                 self.label_srs.set_text(layer.srs)
             else:
-                functions.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!', self.logfiles)
+                self.folders.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!')
                 self.label_srs.set_text('')               
         
                 
@@ -169,11 +167,11 @@ class ExtentWindow(Gtk.Window):
             self.entry_llla.set_text(str(c0.y))
             self.entry_urla.set_text(str(c1.y)) 
             
-            functions.writeToLog('Extent successfully determined!', self.logfiles) 
+            self.folders.writeToLog('Extent successfully determined!') 
             self.showTilesButton('True')
             
         except:
-            functions.writeToLog('Unable to get extent of shapefile!', self.logfiles) 
+            self.folders.writeToLog('Unable to get extent of shapefile!') 
             self.showTilesButton('False')
             
     def showTilesButton(self, status):

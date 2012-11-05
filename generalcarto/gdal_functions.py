@@ -33,7 +33,7 @@ def getDataInfos(source, tile_extent, filter):
             datasource = ogr.Open(source)
     if datasource is None:
         print "Unable to open the shapefile!!!\n"
-        func.writeToLog("Unable to open the file %s" %source)
+        #func.writeToLog("Unable to open the file %s" %source)
         #sys.exit( 1 )
     else:
         counter = 0
@@ -84,7 +84,6 @@ def openOGR(source, func_ident, func_parameters, tile_extent, att_filter, dest_f
     geometry_type = ''
     if ds is None:
         print "Unable to open the shapefile!!!\n"
-        func.writeToLog("Unable to open the file %s" %source)
         #sys.exit( 1 )
     else:
 
@@ -129,7 +128,7 @@ def openOGR(source, func_ident, func_parameters, tile_extent, att_filter, dest_f
 
 
                 if geometry.GetGeometryType() == ogr.wkbMultiPolygon:
-                    func.writeToLog("MultiPolygon found but not implemented to gdal_functions.py - openOGR!") 
+                    #func.writeToLog("MultiPolygon found but not implemented to gdal_functions.py - openOGR!") 
                     for x in xrange(geometry.GetGeometryCount()):
                         #print "loop - geometries"
                         ring = geometry.GetGeometryRef(x)
@@ -160,11 +159,11 @@ def openOGR(source, func_ident, func_parameters, tile_extent, att_filter, dest_f
                     xmlMaker.addFeature('Polygon', all_points)
                     
                 elif geometry.GetGeometryType() == ogr.wkbPoint:
-                    func.writeToLog("Point found but not implemented to gdal_functions.py - openOGR!") 
+                    #func.writeToLog("Point found but not implemented to gdal_functions.py - openOGR!") 
                     lon, lat, z = geometry.GetPoint()
                 
                 elif geometry.GetGeometryType() == ogr.wkbMultiPoint:
-                    func.writeToLog("Multipoint found but not implemented to gdal_functions.py - openOGR!") 
+                    #func.writeToLog("Multipoint found but not implemented to gdal_functions.py - openOGR!") 
                     #points = geometry.GetGeometryCount()
                     points = secondBadPointExtruder(str(geometry))                    
                     for p in xrange(len(points[0])):
@@ -200,7 +199,7 @@ def openOGR(source, func_ident, func_parameters, tile_extent, att_filter, dest_f
                         
                         
                 elif geometry.GetGeometryType() == ogr.wkbMultiLineString:
-                    func.writeToLog("MultiLineString found but not implemented to gdal_functions.py - openOGR!") 
+                    #func.writeToLog("MultiLineString found but not implemented to gdal_functions.py - openOGR!") 
                     for y in xrange(geometry.GetGeometryCount()):
                         ring = geometry.GetGeometryRef(y)
                         points = ring.GetPointCount()

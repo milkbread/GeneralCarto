@@ -43,27 +43,19 @@ class TilesWindow(Gtk.Window):
         self.styling_window = styling_window
         self.info_window = info_window
         
-    def initializeParameters(self, extent, mapnik_map, tile_dir, minZoom, maxZoom, buffer_size, generalHome, log_files):
-        self.logs = log_files
-        self.tile_dir = tile_dir
-        self.minZoom = minZoom
-        self.maxZoom = maxZoom
-        functions.writeToLog('TilesWindow was initialized', self.logs, True)
+    def initializeParameters(self, tileParams, folders):
+        self.tileParams = tileParams
+        self.folders = folders
         
-        #initialize the map
-        self.mapnik_map = mapnik_map
-        #get the projection of the mapfile
-        prj = mapnik.Projection(self.mapnik_map.srs)
-        self.prj = prj
-        #calculate the necessary tiles, depending on the given extent
-        bbox = self.getGeoCodedBbox(extent, prj)
+        self.folders.writeToLog('TilesWindow was initialized')
+        
         #initialize a tiling.TileCalculations Object
-        self.TileCalcs = tiling.TileCalculations(bbox, minZoom, maxZoom)
+        self.TileCalcs = tiling.TileCalculations(self.tileParams.getGeoCodedBbox(), self.tileParams.getMinZoom(),  self.tileParams.getMaxZoom())
         #get the first zoomlevel, where the chosen datasource fits on 9 Tiles
         self.start_zoom = self.TileCalcs.findStartZoomlevel(3,3)
         allX, allY = self.TileCalcs.getAllTilesOfOneZoomlevel(self.start_zoom)
         #...defining the first central tile
-        self.TileNav = tiling.TileNavigator(allX, allY, self.start_zoom, tile_dir)
+        self.TileNav = tiling.TileNavigator(allX, allY, self.start_zoom, self.folders.getTilesHome())
         #render the first displayed tiles
         self.finalVisuals()
         #show the initially zoomfactor
@@ -116,12 +108,12 @@ class TilesWindow(Gtk.Window):
         self.image9.set_from_file(rendered_tiles[8])
         
         if self.styling_window.rule_chosen == True and self.info_window.getStatus() == False:
-            self.info_window.initializeInfoWindow(self.mapnik_map, self, self.styling_window)
+            self.info_window.initializeInfoWindow(self.tileParams.getMapnikMap(), self, self.styling_window)
         
 ###Functions
     #Functions for InfoWindow
     def getParameterForGeneralisation(self):
-        return self.TileCalcs.getTileBunch(self.TileNav.getCentralTile()), self.maxZoom
+        return self.TileCalcs.getTileBunch(self.TileNav.getCentralTile()), self.tileParams.getMaxZoom()
         
     def getExtents(self, tile, tileproj):
             z = self.TileNav.getZoom()
@@ -132,17 +124,24 @@ class TilesWindow(Gtk.Window):
             l0 = tileproj.fromPixelToLL(p0, z)
             l1 = tileproj.fromPixelToLL(p1, z)
             # Convert to map projection (e.g. mercator co-ords EPSG:900913)
-            c0 = self.prj.forward(mapnik.Coord(l0[0],l0[1]))
-            c1 = self.prj.forward(mapnik.Coord(l1[0],l1[1]))
+            c0 = self.tileParams.getProjection().forward(mapnik.Coord(l0[0],l0[1]))
+            c1 = self.tileParams.getProjection().forward(mapnik.Coord(l1[0],l1[1]))
         
             tile_extent = (c0.x,c0.y, c1.x,c1.y)
             return tile_extent, z
         
-    #**********
-
-    def getMapnikMap(self):
-        return self.mapnik_map
+    #**********    
+    def navigate(self, direction):
+        start_time = time.time()        
+        self.TileNav.shift(direction)
+        self.finalVisuals()
         
+    def scaling(self, direction):
+        start_time = time.time()        
+        self.TileNav.scaling(direction, self.tileParams.getMaxZoom())
+        self.defineZoomLabel()
+        self.finalVisuals()
+
     def finalVisuals(self):
         #render the new tiles
         rendered_tiles = self.render_on_demand(self.TileNav.getURI(), self.TileNav.getZoom(), self.TileNav.getCentralTile())
@@ -155,10 +154,9 @@ class TilesWindow(Gtk.Window):
         result, scale = self.render_on_demand_as_loop(tile_uri, zoom, central_tile)
         self.label_scale.set_text("1 : " + str(int(round(scale,0))))
         #set log-output
-        functions.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!',self.logs)
-        functions.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(central_tile), str(zoom)),self.logs)
-        return result
-    
+        self.folders.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!')
+        self.folders.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(central_tile), str(zoom)))
+        return result    
         
     def render_on_demand_as_loop(self, tile_uri, zoom, central_tile):
         rendered_tiles = []
@@ -167,7 +165,7 @@ class TilesWindow(Gtk.Window):
             if not os.path.isdir(tile_uri + '/' + str(tile[0])):
                 os.mkdir(tile_uri + '/' + str(tile[0]))
             uri = tile_uri + '/' + str(tile[0]) + '/' + str(tile[1]) + '.png'
-            arg = (self.tile_dir, mapnik.save_map_to_string(self.mapnik_map), self.maxZoom, uri,tile[0], tile[1], zoom)
+            arg = (self.folders.getTilesHome(), mapnik.save_map_to_string(self.tileParams.getMapnikMap()), self.tileParams.getMaxZoom(), uri,tile[0], tile[1], zoom)
             scale = rendering.pure_tile_rendering(arg)
             rendered_tiles.append(uri)
         return rendered_tiles, scale
@@ -181,35 +179,6 @@ class TilesWindow(Gtk.Window):
                 one_tile.append(central_tile[1]+l)
                 all_tiles.append(one_tile)
         return all_tiles
-        
-    def getNames(self, all_tiles):
-        x = []
-        x.append(all_tiles[0][0])
-        y = []
-        y.append(all_tiles[0][1])
-        for i in range(1, len(all_tiles)):
-            if (all_tiles[i])[0] > (all_tiles[i-1])[0]:
-                x.append(all_tiles[i][0])
-        for j in range(1,len(x)):
-            if (all_tiles[j])[1] > (all_tiles[j-1])[1]:
-                y.append(all_tiles[j][1])
-        return x, y
-        
-    def getGeoCodedBbox(self, extent, prj):
-        c0 = prj.inverse(mapnik.Coord(float(extent[0]),float(extent[2])))
-        c1 = prj.inverse(mapnik.Coord(float(extent[1]),float(extent[3])))
-        return (c0.x, c0.y, c1.x, c1.y)
-        
-    def navigate(self, direction):
-        start_time = time.time()        
-        self.TileNav.shift(direction)
-        self.finalVisuals()
-        
-    def scaling(self, direction):
-        start_time = time.time()        
-        self.TileNav.scaling(direction, self.maxZoom)
-        self.defineZoomLabel()
-        self.finalVisuals()
         
     def defineZoomLabel(self):
         self.label_zoom.set_text(str(self.TileNav.getZoom()))
@@ -238,12 +207,12 @@ class TilesWindow(Gtk.Window):
             r.max_scale = scaleDenoms[1]
         s.rules.append(r)
         
-        proof = self.mapnik_map.append_style(name,s)
+        proof = self.tileParams.getMapnikMap().append_style(name,s)
         layer = mapnik.Layer('world')
         layer.datasource = datasource[1]
         layer.srs = layerSRS
         layer.styles.append(name)
-        self.mapnik_map.layers.append(layer)
+        self.tileParams.getMapnikMap().layers.append(layer)
         
     def addPreviewOfGeneralizedGeometriesToMap(self, table_name, symbol_type, layerSRS, name):
         genColor = 'rgb(0%,0%,100%)'
@@ -258,13 +227,13 @@ class TilesWindow(Gtk.Window):
         else:
             print symbol_type, 'has to be implemented to preview!!!'
         s.rules.append(r)
-        self.mapnik_map.append_style(name,s)
+        self.tileParams.getMapnikMap().append_style(name,s)
         
         lyr = mapnik.Layer('Generalized geometry from PostGIS')
         lyr.datasource = mapnik.PostGIS(host='localhost',user='gisadmin',password='tinitus',dbname='meingis',table='(select geom from '+ table_name +' ) as geometries')
         lyr.srs = layerSRS
         lyr.styles.append(name)
-        self.mapnik_map.layers.append(lyr)
+        self.tileParams.getMapnikMap().layers.append(lyr)
         
     def reloadMapView(self):
         self.finalVisuals()

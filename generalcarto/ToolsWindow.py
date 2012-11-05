@@ -35,6 +35,8 @@ class ToolsWindow(Gtk.Window):
         self.button_right.connect("clicked", self.on_button_right_clicked)
         self.button_left = self.builder.get_object('button_left')
         self.button_left.connect("clicked", self.on_button_left_clicked)
+        self.button_reload = self.builder.get_object('button_reload')
+        self.button_reload.connect("clicked", self.on_button_reload_clicked)
         
         
     def initializeTilesWindow(self, tiles_window):
@@ -79,6 +81,9 @@ class ToolsWindow(Gtk.Window):
     
     def on_button_left_clicked(self, widget):
         self.tiles_window.navigate('left')
+        
+    def on_button_reload_clicked(self, widget):
+        self.tiles_window.reloadMapView()
         
 ###Functions
 

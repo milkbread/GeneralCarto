@@ -14,8 +14,8 @@ from generalcarto import functions
 
 class WPSWindow(Gtk.Window):
 
-    def __init__(self, logfiles, xml_files_folder, main_window, name = "WPSWindow", file = "./data/ui/WPSWindow.glade"):
-        self.logfiles = logfiles
+    def __init__(self, folders, xml_files_folder, main_window, name = "WPSWindow", file = "./data/ui/WPSWindow.glade"):
+        self.folders = folders
         self.xml_files_folder = xml_files_folder
         self.main_window = main_window
                 
@@ -174,11 +174,11 @@ class WPSWindow(Gtk.Window):
                 infos.append(chosen_filter)
                 infos.append(params)
                 infos.append(tile)
-                infos.append(self.logfiles)
+                infos.append(self.folders)
                 #store all infos in an array, so it is possible to give that array to the multiprocessing-pool (that just takes one variable)
                 extentBunch.append(infos)
             
-            functions.writeToLog('Initiated WPS-Execute-Filecreation with...\n\t...server: %s \n\t...filter: %s \n\t...function: %s \n\t...parameters: %s' %(server, str(chosen_filter), str(func_ident), str(params)),self.logfiles)
+            self.folders.writeToLog('Initiated WPS-Execute-Filecreation with...\n\t...server: %s \n\t...filter: %s \n\t...function: %s \n\t...parameters: %s' %(server, str(chosen_filter), str(func_ident), str(params)))
                 
             pool = Pool(processes = 9)        
             self.results = pool.map(WPScom.doWPSProcess, extentBunch)
@@ -223,7 +223,7 @@ class WPSWindow(Gtk.Window):
                 postgreFunctions.writeToPostgres(result[0], table_name)
                 final_time = round(time.time()-start_time, 3)
                 av = round(result[1]/final_time,3)
-                functions.writeToLog('Wrote %s with %s %s(s) to DB - it took:%s seconds! --> ca. %s /sec'%(result[0], str(result[1]), str(result[2]), str(final_time), str(av)), self.logfiles)
+                self.folders.writeToLog('Wrote %s with %s %s(s) to DB - it took:%s seconds! --> ca. %s /sec'%(result[0], str(result[1]), str(result[2]), str(final_time), str(av)))
         print 'Done writing'
         
         

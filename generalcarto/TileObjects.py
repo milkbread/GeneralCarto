@@ -1,5 +1,36 @@
 from generalcarto import rendering
 import os
+import mapnik
+
+class TilingParams:
+    def __init__(self, extent, minZoom, maxZoom, mapnik_map):
+        self.extent = extent
+        self.minZoom = minZoom
+        self.maxZoom = maxZoom
+        self.mapnik_map = mapnik_map
+        
+    def getExtent(self):
+        return self.extent
+    def getMinZoom(self):
+        return self.minZoom
+    def getMaxZoom(self):
+        return self.maxZoom
+    def getProjection(self):
+        return mapnik.Projection(self.mapnik_map.srs)
+    def getMapnikMap(self):
+        return self.mapnik_map
+    def setBufferSize(self, size):
+        self.buffer_size = size
+        self.mapnik_map.buffer_size = self.buffer_size
+    def getBufferSize(self):
+        return self.mapnik_map.buffer_size
+        
+    def getGeoCodedBbox(self):
+        prj = self.getProjection()
+        c0 = prj.inverse(mapnik.Coord(float(self.extent[0]),float(self.extent[2])))
+        c1 = prj.inverse(mapnik.Coord(float(self.extent[1]),float(self.extent[3])))
+        return (c0.x, c0.y, c1.x, c1.y)
+    
 
 class TileNavigator:
     def __init__(self, x, y, start_zoom, tile_dir):

@@ -13,7 +13,7 @@ def writeToLog(content, logs, init = False):
         file.write('\n'+str(time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())))
     file.write("\n"+content)
     file.close()
-
+    
 
 #Function to get all informations of a mapnik stylefile
 #these are the main map defintion, all styles and all layers

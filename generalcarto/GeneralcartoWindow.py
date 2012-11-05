@@ -22,6 +22,7 @@ from generalcarto import postgreFunctions as postgres
 from generalcarto import rendering
 from generalcarto import TileObjects as tiling
 from generalcarto import PreferenceObjects as preferences
+from generalcarto import OpenSaveWindows as osWin
 import mapnik
 from quickly import prompts
 from quickly.widgets.dictionary_grid import DictionaryGrid
@@ -87,6 +88,8 @@ class GeneralcartoWindow(Window):
         self.initializedMapfile = False
         self.initialLoad = True
         
+        self.openW = osWin.showOSWindow()
+        
         
 ###Listeners
     ####let the user choose a directory that contains one or more mapnik style files
@@ -96,9 +99,10 @@ class GeneralcartoWindow(Window):
         
         #let the user choose a path with the directory chooser
         response, path = prompts.choose_directory()
-        self.folders.setUserPath(path)
         #make certain the user said ok before working
         if response == Gtk.ResponseType.OK:
+            self.folders.setUserPath(path)
+        
             #make a list of the supported xml files
             dicts = dict()
             counter = 0
@@ -149,6 +153,13 @@ class GeneralcartoWindow(Window):
         if self.windowClassStyling.getStatus() == False:
             print "Style window reloaded"
             self.windowClassStyling.initializeStylingWindow(self.mapnik_map, self.windowClassTiles, self.windowClassInfo)
+    
+    def on_destroy(self, widget, data=None):
+        """Called when the Window is closed."""
+        # Clean up code for saving application state should be added here.
+        print "Closing2"
+        Gtk.main_quit()
+
         
     def on_button_show_tiles_clicked(self, widget, data=None):
         
@@ -184,6 +195,11 @@ class GeneralcartoWindow(Window):
         self.windowClassTiles.destroyWindow()
         self.windowClassTools.destroyWindow()
         self.windowClassStyling.destroyWindow()
+        
+    #def on_mnu_save_activate(self, widget, data=None):
+        
+        
+    #def saveWindow
     
     #WPS Window
     def openWPSWindow(self):

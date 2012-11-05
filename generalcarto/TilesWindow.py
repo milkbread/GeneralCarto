@@ -82,7 +82,7 @@ class TilesWindow(Gtk.Window):
         self.window.destroy()
         if self.closed == False:
             self.main_window.ui.mnu_tiles.set_label(self.main_window.ui.mnu_tiles.get_label().split(self.main_window.menuItemIndicator)[1])
-        
+            
     def getStatus(self):
         return self.closed
         

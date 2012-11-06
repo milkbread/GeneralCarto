@@ -43,11 +43,11 @@ class TilesWindow(Gtk.Window):
         self.styling_window = styling_window
         self.info_window = info_window
         
-    def initializeParameters(self, tileParams, folders):
+    def initializeParameters(self, tileParams, params):
         self.tileParams = tileParams
-        self.folders = folders
+        self.params = params
         
-        self.folders.writeToLog('TilesWindow was initialized')
+        self.params.writeToLog('TilesWindow was initialized')
         
         #initialize a tiling.TileCalculations Object
         self.TileCalcs = tiling.TileCalculations(self.tileParams.getGeoCodedBbox(), self.tileParams.getMinZoom(),  self.tileParams.getMaxZoom())
@@ -55,7 +55,7 @@ class TilesWindow(Gtk.Window):
         self.start_zoom = self.TileCalcs.findStartZoomlevel(3,3)
         allX, allY = self.TileCalcs.getAllTilesOfOneZoomlevel(self.start_zoom)
         #...defining the first central tile
-        self.TileNav = tiling.TileNavigator(allX, allY, self.start_zoom, self.folders.getTilesHome())
+        self.TileNav = tiling.TileNavigator(allX, allY, self.start_zoom, self.params.getTilesHome())
         #render the first displayed tiles
         self.finalVisuals()
         #show the initially zoomfactor
@@ -154,8 +154,8 @@ class TilesWindow(Gtk.Window):
         result, scale = self.render_on_demand_as_loop(tile_uri, zoom, central_tile)
         self.label_scale.set_text("1 : " + str(int(round(scale,0))))
         #set log-output
-        self.folders.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!')
-        self.folders.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(central_tile), str(zoom)))
+        self.params.writeToLog('Render on demand was used - it took:'+str(round(time.time()-start_time, 3)) + ' seconds!')
+        self.params.writeToLog('   --> zentral tile:%s & zoomfactor: %s' %(str(central_tile), str(zoom)))
         return result    
         
     def render_on_demand_as_loop(self, tile_uri, zoom, central_tile):
@@ -165,7 +165,7 @@ class TilesWindow(Gtk.Window):
             if not os.path.isdir(tile_uri + '/' + str(tile[0])):
                 os.mkdir(tile_uri + '/' + str(tile[0]))
             uri = tile_uri + '/' + str(tile[0]) + '/' + str(tile[1]) + '.png'
-            arg = (self.folders.getTilesHome(), mapnik.save_map_to_string(self.tileParams.getMapnikMap()), self.tileParams.getMaxZoom(), uri,tile[0], tile[1], zoom)
+            arg = (self.params.getTilesHome(), mapnik.save_map_to_string(self.tileParams.getMapnikMap()), self.tileParams.getMaxZoom(), uri,tile[0], tile[1], zoom)
             scale = rendering.pure_tile_rendering(arg)
             rendered_tiles.append(uri)
         return rendered_tiles, scale

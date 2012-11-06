@@ -5,8 +5,8 @@ from generalcarto import rendering
 
 class ExtentWindow(Gtk.Window):
     
-    def __init__(self, folders, preview_image, main_window, name = "extent_window", file = "./data/ui/Toolbars.glade"):
-        self.folders = folders
+    def __init__(self, params, preview_image, main_window, name = "extent_window", file = "./data/ui/Toolbars.glade"):
+        self.main_params = params
         self.main_window = main_window
                 
         #basics for loading a *.glade file
@@ -84,7 +84,7 @@ class ExtentWindow(Gtk.Window):
     #Perform a simple rendering of a single *.png self.image file
     def showPreview(self, mapfile):
         if self.isMapfileInitialized != False:
-            rendering.simpleRendering(self.folders.getPreviewImage(), mapfile, self.calculateExtent())
+            rendering.simpleRendering(self.main_params.getPreviewImage(), mapfile, self.calculateExtent())
             self.preview_window_class.reloadImage()
             self.preview_window_class.showWindow()
             
@@ -95,14 +95,13 @@ class ExtentWindow(Gtk.Window):
 
     #lets user choose a shapefile, which will be taken to automatically get an extent of the data
     def on_comboboxtext_shape_changed(self, widget):
-        self.shapeName = self.comboboxtext_shape.get_active_text()         
+        self.shapeName = self.comboboxtext_shape.get_active_text()  
         for layer in self.mapnik_map.layers.__iter__():
             params = layer.datasource.params()
             if params.get('type') == 'shape' and self.extractFileName(params.get('file')) == self.shapeName:
+                self.defineMainParams('shape', self.shapeName)
                 self.setExtent(layer)
                 self.label_chosen_extent.set_text('Extent of %s datasource: \n%s\n(modifiable)'%(params.get('type'), self.shapeName))
-                
-        # TODO(Ralf) Please implement the quick preview as extra window.
         self.showPreview(self.mapfile)
     
     #lets user choose a table, which will be taken to automatically get an extent of the data
@@ -113,11 +112,24 @@ class ExtentWindow(Gtk.Window):
             if params.get('type') == 'postgis':
                 content = 'DB: %s\nTable: %s '%(params.get('dbname'), params.get('table'))
                 if content == table:
+                    self.defineMainParams('postgis', table)
                     self.setExtent(layer)
                     self.label_chosen_extent.set_text('Extent of %s datasource: \n%s\n(modifiable)'%(params.get('type'), content))
         self.showPreview(self.mapfile)
+    def defineMainParams(self, type, name):
+        self.main_params.setExtentSource(type, name)
 
 ###Additional functions
+    def setupOnLoadingProject(self, send_params):
+        if send_params[0] == 'shape':
+            for j in xrange(len(self.all_shapes)):
+                if self.all_shapes[j] == send_params[1]:
+                    self.comboboxtext_shape.set_active(j)
+        elif send_params[0] == 'postgis':
+            for j in xrange(len(self.all_tables)):
+                if self.all_tables[j] == send_params[1]:
+                    self.comboboxtext_postgis.set_active(j)
+
     def calculateExtent(self):
         c0 = self.prj.forward(mapnik.Coord(float(self.entry_lllo.get_text()),float(self.entry_llla.get_text())))
         c1 = self.prj.forward(mapnik.Coord(float(self.entry_urlo.get_text()),float(self.entry_urla.get_text()))) 
@@ -128,6 +140,8 @@ class ExtentWindow(Gtk.Window):
         #self.m = mapnik.Map(256,256)
         #mapnik.load_map(self.m,mapfile)
         self.prj = mapnik.Projection(self.mapnik_map.srs)
+        self.all_shapes = []
+        self.all_tables = []
         for layer in self.mapnik_map.layers.__iter__():
             self.params = layer.datasource.params()
             type = self.params.get('type')
@@ -135,13 +149,18 @@ class ExtentWindow(Gtk.Window):
                 name = self.extractFileName(self.params.get('file'))
                 self.comboboxtext_shape.append_text(name)
                 self.label_srs.set_text(layer.srs)
+                self.all_shapes.append(name)
             elif type == 'postgis':
                 content = 'DB: %s\nTable: %s '%(self.params.get('dbname'), self.params.get('table'))
                 self.comboboxtext_postgis.append_text(content)
                 self.label_srs.set_text(layer.srs)
+                self.all_tables.append(content)
             else:
-                self.folders.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!')
-                self.label_srs.set_text('')               
+                self.main_params.writeToLog('Please implement the datasourcetype: ('+ type +') to "GeneralcartoWindow.on_comboboxtext_file_changed", it is not done yet!')
+                self.label_srs.set_text('')  
+   
+    def getAllShapesNTables(self):
+        return self.all_shapes, self.all_tables
         
                 
     def extractFileName(self, fileString):
@@ -167,11 +186,11 @@ class ExtentWindow(Gtk.Window):
             self.entry_llla.set_text(str(c0.y))
             self.entry_urla.set_text(str(c1.y)) 
             
-            self.folders.writeToLog('Extent successfully determined!') 
+            self.main_params.writeToLog('Extent successfully determined!') 
             self.showTilesButton('True')
             
         except:
-            self.folders.writeToLog('Unable to get extent of shapefile!') 
+            self.main_params.writeToLog('Unable to get extent of shapefile!') 
             self.showTilesButton('False')
             
     def showTilesButton(self, status):

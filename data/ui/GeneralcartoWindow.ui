@@ -537,7 +537,7 @@
                       <object class="GtkLabel" id="label14">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Tile rendering</property>
+                        <property name="label" translatable="yes">Tile rendering parameters</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -643,8 +643,8 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="button_buffer">
-                            <property name="label" translatable="yes">OK</property>
+                          <object class="GtkButton" id="button_set_parameters">
+                            <property name="label" translatable="yes">Set</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>

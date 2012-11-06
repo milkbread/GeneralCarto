@@ -1,5 +1,81 @@
 import os
 import time
+import pickle   #http://docs.python.org/2/library/pickle.html
+from gi.repository import Gtk
+
+class ProjectFile:
+    def __init__(self):
+        self.projectFilename = ''
+    
+    def setProjectFile(self, filename):
+        self.projectFilename = ''
+        pure_extension = 'tgn'
+        extension = '.'+pure_extension
+        cache = filename.split('.')
+        if len(cache) == 1:
+            self.projectFilename = filename + extension
+        elif len(cache) == 2:
+            if cache[1] == 'tgn':
+                self.projectFilename = filename
+            else:
+                self.projectFilename = cache[0] + extension
+        else:
+            print "You've got a problem for the file extension on that file: %s"%filename
+    
+    def getProjectFile(self):
+        return self.projectFilename
+        
+    #saving this object as binary file
+    def saveAsBinary(self, main_params):
+        if self.projectFilename != '':
+            output = open(self.projectFilename, 'wb')            
+            # Pickle this class using the highest protocol available.
+            pickle.dump(main_params, output, -1)
+            output.close()
+            return True
+        else:
+            return False
+            
+    def loadProject(self):
+        tgn_file = open(self.getProjectFile(), 'rb')
+        loaded_project = pickle.load(tgn_file)
+        tgn_file.close()
+        return loaded_project
+            
+    def saveProjectWindow(self, main_window, params):
+        dialog = Gtk.FileChooserDialog("Please choose a file", main_window, 
+            Gtk.FileChooserAction.SAVE,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        dialog.set_current_name('untitled.tgn')
+        dialog.set_filename(params.getGeneralHome()+'projectfiles/*')
+        #set a filter
+        #add_filters(dialog)
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            output = (dialog.get_filename(), True)
+        elif response == Gtk.ResponseType.CANCEL:
+            output = ("", False)
+        dialog.destroy()
+        self.setProjectFile(output[0])
+        return output[1]
+        
+    def openProjectWindow(self, main_window, params):
+        dialog = Gtk.FileChooserDialog("Please choose a file", main_window,
+            Gtk.FileChooserAction.OPEN,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        dialog.set_filename(params.getGeneralHome()+'projectfiles/*')
+        
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            output = (dialog.get_filename(), True)
+        elif response == Gtk.ResponseType.CANCEL:
+            output = ("", False)
+        dialog.destroy()
+        self.setProjectFile(output[0])
+        return output[1]
 
 class FilesNLogs:
     global working_folder
@@ -30,11 +106,20 @@ class FilesNLogs:
         self.checkFolderExistence(self.tile_dir)
         self.checkFolderExistence(self.xml_files_folder)
         
-        self.user_path = ''
-        self.chosen_mapfile_name = ''
-        
+        self.initializeUserInputs()
         #initialize a logfile
         self.logfile = Logfile(self.logfile_name)
+        
+        self.minZoom = '0'
+        self.maxZoom = '18'
+        self.buffer = '128'
+        
+    def initializeUserInputs(self):
+        self.user_path = ''
+        self.chosen_mapfile_name = ''
+        self.mapfileHome = ''
+        self.projectFilename = ''
+        self.extentSourceDefined = False
             
     def getHome(self):
         return self.home
@@ -62,7 +147,16 @@ class FilesNLogs:
     def setMapfile(self, mapfile):
         self.chosen_mapfile_name = mapfile
         self.mapfileHome = self.user_path + mapfile
-        
+    def setZoomRange(self, minZoom, maxZoom):
+        self.minZoom = minZoom
+        self.maxZoom = maxZoom 
+    def setBuffer(self, buffer):
+        self.buffer = buffer
+    def setExtentSource(self, type, name):
+        self.extentSourceType = type
+        self.extentSourceName = name
+        self.extentSourceDefined = True
+
     #user input dependend outputs
     def getUserPath(self):
         return self.user_path
@@ -70,15 +164,24 @@ class FilesNLogs:
         return self.chosen_mapfile_name
     def getMapfileHome(self):
         return self.mapfileHome
-        
+    def getZoomRange(self):
+        return self.minZoom, self.maxZoom
+    def getBuffer(self):
+        return self.buffer
+    def getExtentSource(self):
+        if self.extentSourceDefined == True:
+            return self.extentSourceType, self.extentSourceName
+        else:
+            return False
+    def getExtentStatus(self):
+        return self.extentSourceDefined
+    
 class Definitions:
     def __init__(self):
         self.menuItemIndicator = "<  "
         self.textEditor = 'gedit'      
         self.minimal_mapnik_version = 200100
         self.mapnik_version_warning = "You're having a too old version of mapnik...install minimum version 2.1.0!!!"
-        self.minZoom = '0'
-        self.maxZoom = '18'
         
     def getIndicator(self):
         return self.menuItemIndicator
@@ -86,8 +189,7 @@ class Definitions:
         return self.textEditor
     def getMinMapnikVersion(self):
         return self.minimal_mapnik_version, self.mapnik_version_warning
-    def getZoomRange(self):
-        return self.minZoom, self.maxZoom
+    
         
 class Logfile:
     def __init__(self, logs):

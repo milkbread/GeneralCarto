@@ -124,11 +124,12 @@ class TilesWindow(Gtk.Window):
             l0 = tileproj.fromPixelToLL(p0, z)
             l1 = tileproj.fromPixelToLL(p1, z)
             # Convert to map projection (e.g. mercator co-ords EPSG:900913)
+            extent_geo = (l0[0],l0[1],l1[0],l1[1])
             c0 = self.tileParams.getProjection().forward(mapnik.Coord(l0[0],l0[1]))
             c1 = self.tileParams.getProjection().forward(mapnik.Coord(l1[0],l1[1]))
         
             tile_extent = (c0.x,c0.y, c1.x,c1.y)
-            return tile_extent, z
+            return tile_extent, z, extent_geo
         
     #**********    
     def navigate(self, direction):

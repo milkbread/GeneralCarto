@@ -39,7 +39,7 @@ class WPSWindow(Gtk.Window):
         self.entry_server = self.builder.get_object('entry_server')
         #initialize the wps-server adress
         #self.entry_server.set_text('http://kartographie.geo.tu-dresden.de/webgen_wps/wps')
-        self.entry_server.set_text('http://localhost:8080/wps-dev/wps')
+        self.entry_server.set_text('http://kartographie.geo.tu-dresden.de/webgen_wps/wps')
         self.label_process = self.builder.get_object('label_process')
         self.label_params = self.builder.get_object('label_params')
         self.label_status = self.builder.get_object('label_status')
@@ -153,7 +153,7 @@ class WPSWindow(Gtk.Window):
             for tile in tileBunch:
                 infos = []
                 #infos of the tile that should be processed
-                extent, z = self.tile_window.getExtents(tile, self.tileproj)
+                extent, z, extent_geo = self.tile_window.getExtents(tile, self.tileproj)
                 infos.append(extent)
                 
                 #infos for the creation of the valid xml-wps file
@@ -180,7 +180,7 @@ class WPSWindow(Gtk.Window):
             
             self.params.writeToLog('Initiated WPS-Execute-Filecreation with...\n\t...server: %s \n\t...filter: %s \n\t...function: %s \n\t...parameters: %s' %(server, str(chosen_filter), str(func_ident), str(params)))
                 
-            pool = Pool(processes = 9)        
+            pool = Pool(processes = 9)
             self.results = pool.map(WPScom.doWPSProcess, extentBunch)
             #print self.results
             #new_object.setButtonLabel(True)

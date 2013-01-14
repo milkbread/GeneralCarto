@@ -72,9 +72,7 @@ class ExtentWindow(Gtk.Window):
         
     def destroyWindow(self):
         self.window.destroy()
-        if self.closed == True:
-            self.main_window.ui.mnu_extent.set_label(self.main_window.menuItemIndicator + self.main_window.ui.mnu_extent.get_label())
-        elif self.closed == False:
+        if self.closed == False:
             self.main_window.ui.mnu_extent.set_label(self.main_window.ui.mnu_extent.get_label().split(self.main_window.menuItemIndicator)[1])
         
     

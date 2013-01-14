@@ -58,7 +58,7 @@ class InfoWindow(Gtk.Window):
             text = 'Tile= x:' + str(tile[0]) + ' | y:'+ str(tile[1]) +'\n'
             #infos of the tile that should be processed
             self.tileproj = rendering.GoogleProjection(maxZoom+1)
-            extent, z = self.tile_window.getExtents(tile, self.tileproj)
+            extent, z, extent_geo = self.tile_window.getExtents(tile, self.tileproj)
             
             featCount = 0
             #print self.datasource[0]
@@ -69,6 +69,8 @@ class InfoWindow(Gtk.Window):
             text = text + 'Extent: \n'
             text = text + str(extent[0]) + ', ' + str(extent[1])+'\n'
             text = text + str(extent[2]) + ', ' + str(extent[3])+'\n'
+            text = text + str(extent_geo[0]) + ', ' + str(extent_geo[1])+'\n'
+            text = text + str(extent_geo[2]) + ', ' + str(extent_geo[3])+'\n'
            
             text = text +'Features:'+ str(featCount)+' \n'
             

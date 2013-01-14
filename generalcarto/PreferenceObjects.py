@@ -5,17 +5,17 @@ from gi.repository import Gtk
 
 class ProjectFile:
     def __init__(self):
-        self.projectFilename = ''
+        self.pure_extension = 'tgn'
+        self.blank_title = 'untitled'
+        self.projectFilename = self.blank_title
     
     def setProjectFile(self, filename):
-        self.projectFilename = ''
-        pure_extension = 'tgn'
-        extension = '.'+pure_extension
+        extension = '.'+self.pure_extension
         cache = filename.split('.')
         if len(cache) == 1:
             self.projectFilename = filename + extension
         elif len(cache) == 2:
-            if cache[1] == 'tgn':
+            if cache[1] == self.pure_extension:
                 self.projectFilename = filename
             else:
                 self.projectFilename = cache[0] + extension
@@ -23,6 +23,15 @@ class ProjectFile:
             print "You've got a problem for the file extension on that file: %s"%filename
     
     def getProjectFile(self):
+        return self.projectFilename
+        
+    def getPureFileName(self):
+        if self.isBlank():
+            return self.projectFilename
+        parts = self.projectFilename.split("/")
+        for part in parts:
+            if part.find(self.pure_extension) != -1:
+                return part
         return self.projectFilename
         
     #saving this object as binary file
@@ -47,35 +56,30 @@ class ProjectFile:
             Gtk.FileChooserAction.SAVE,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
-        dialog.set_current_name('untitled.tgn')
-        dialog.set_filename(params.getGeneralHome()+'projectfiles/*')
-        #set a filter
-        #add_filters(dialog)
-
-        response = dialog.run()
-        if response == Gtk.ResponseType.OK:
-            output = (dialog.get_filename(), True)
-        elif response == Gtk.ResponseType.CANCEL:
-            output = ("", False)
-        dialog.destroy()
-        self.setProjectFile(output[0])
-        return output[1]
+        dialog.set_current_name('%s.%s'%(self.blank_title, self.pure_extension))
+        return self.finishWindowProcessing(dialog, params)
         
     def openProjectWindow(self, main_window, params):
         dialog = Gtk.FileChooserDialog("Please choose a file", main_window,
             Gtk.FileChooserAction.OPEN,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        return self.finishWindowProcessing(dialog, params)
+    
+    def finishWindowProcessing(self, dialog, params):
         dialog.set_filename(params.getGeneralHome()+'projectfiles/*')
         
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             output = (dialog.get_filename(), True)
         elif response == Gtk.ResponseType.CANCEL:
-            output = ("", False)
+            output = (self.blank_title, False)
         dialog.destroy()
         self.setProjectFile(output[0])
         return output[1]
+        
+    def isBlank(self):
+        return self.projectFilename == self.blank_title
 
 class FilesNLogs:
     global working_folder
@@ -182,6 +186,7 @@ class Definitions:
         self.textEditor = 'gedit'      
         self.minimal_mapnik_version = 200100
         self.mapnik_version_warning = "You're having a too old version of mapnik...install minimum version 2.1.0!!!"
+        self.initial_project_title = 'untitled'
         
     def getIndicator(self):
         return self.menuItemIndicator
@@ -189,6 +194,8 @@ class Definitions:
         return self.textEditor
     def getMinMapnikVersion(self):
         return self.minimal_mapnik_version, self.mapnik_version_warning
+    def getInitialTitle(self):
+        return self.initial_project_title
     
         
 class Logfile:

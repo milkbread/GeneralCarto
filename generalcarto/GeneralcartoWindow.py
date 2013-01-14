@@ -84,9 +84,13 @@ class GeneralcartoWindow(Window):
             self.params.writeToLog(self.definitions.getMinMapnikVersion()[1])
             sys.exit()
         
+        self.setProjectTitle()
+        self.ui.label_title.set_alignment(0,0)
         self.tileButtonVisibility(False)
         self.initializedMapfile = False
         self.initialLoad = True
+        self.reloaded = False
+        
         
         
 ###Listeners
@@ -125,13 +129,12 @@ class GeneralcartoWindow(Window):
                self.ui.comboboxtext_file.append_text(dicts[key])   
                list.append(dicts[key])
             
-        self.ui.label_status.set_text("Chosen path: %s"%self.params.getUserPath())
+        self.ui.label_status.set_text("Path of style: %s"%self.params.getUserPath())
         return list
         
     #set style and shape when combobox has changed
     def on_comboboxtext_file_changed(self, widget, data=None):
         if self.ui.comboboxtext_file.get_active_text() != None:
-            print "so vielleicht?!?"
             #get the chosen stylefile
             self.params.setMapfile(self.ui.comboboxtext_file.get_active_text())
             self.mapnik_map = mapnik.Map(256,256)
@@ -150,7 +153,10 @@ class GeneralcartoWindow(Window):
             self.mapfileInitialized()
             self.tileButtonVisibility(False)
         else:
-            self.destroyWindows()
+            if self.reloaded == True:            
+                self.destroyWindows()
+                self.loadWindows()
+                self.reloaded = False
             
     def mapfileInitialized(self):
         
@@ -185,6 +191,7 @@ class GeneralcartoWindow(Window):
         self.windowClassTools.showWindow()
         #close the Preview Window
         self.windowClassPreview.hideWindow()
+
         
 ###Listeners and functions for the communicating with the external windows            
     #initialize the external windows
@@ -208,34 +215,35 @@ class GeneralcartoWindow(Window):
         self.windowClassStyling.destroyWindow()
         
     def on_mnu_new_activate(self, widget, data=None):
+        self.reloaded = True
         #clean up the combobox
         self.ui.comboboxtext_file.remove_all()
         #re-initialize the main objects
         self.params = preferences.FilesNLogs()
         self.project = preferences.ProjectFile()
-        
+        self.setProjectTitle()
         
     def on_mnu_save_as_activate(self, widget, data=None):
         self.saveProject(True)
         
     def on_mnu_save_activate(self, widget, data=None):
-        if self.project.getProjectFile() == '':
-            self.saveProject(True)
-        else:
-            self.saveProject(False)
+        self.saveProject(self.project.isBlank())
             
     def saveProject(self, open):
         self.storeTilingParams()
         if open == True:
             self.project.saveProjectWindow(self, self.params)
         self.project.saveAsBinary(self.params)
-        self.ui.label_status.set_text("Project was saved!")
+        self.ui.label_status.set_text("Project '%s' was saved!"%self.project.getPureFileName())
         self.params.writeToLog("Project was saved to: %s"%self.project.getProjectFile())
+        self.setProjectTitle()
     
     def on_mnu_open_activate(self, widget, data=None):
         result = self.project.openProjectWindow(self, self.params)
         if result == True:
+            self.ui.comboboxtext_file.remove_all()
             self.loadAfterOpening()
+            self.setProjectTitle()
             
     def loadAfterOpening(self):
             self.params = self.project.loadProject()
@@ -250,8 +258,7 @@ class GeneralcartoWindow(Window):
                         self.ui.comboboxtext_file.set_active(i)
                         if self.params.getExtentStatus() == True:
                             self.windowClassExtent.setupOnLoadingProject(self.params.getExtentSource())
-        
-        
+       
     #WPS Window
     def openWPSWindow(self):
         self.windowClassWPS = WPSWindow(self.params, self.params.getXMLFilesHome(), self)
@@ -336,6 +343,9 @@ class GeneralcartoWindow(Window):
         self.ui.button_show_tiles.set_child_visible(visibility)
                 
 ###Additional Functions
+    def setProjectTitle(self):
+        self.ui.label_title.set_text(self.project.getPureFileName())
+        
     def storeTilingParams(self):
         self.params.setZoomRange(self.ui.entry1.get_text(), self.ui.entry2.get_text())
         self.params.setBuffer(self.ui.entry_buffer.get_text())
@@ -354,28 +364,13 @@ class GeneralcartoWindow(Window):
         elif self.checkbutton_open == False:
             self.checkbutton_open = True
 
-    
-       
-    
 ###Test- & Old functions
     def on_button_short_clicked(self, widget, data=None):
-        self.project.setProjectFile('/home/klammer/GeneralCarto/projectfiles/neuesProjekt.tgn')
+        self.project.setProjectFile('/home/klammer/GeneralCarto/projectfiles/neuesProjekt2.tgn')
         self.loadAfterOpening()
+        self.setProjectTitle()
         
     def on_button_window_clicked(self, widget, data=None):
-        
-   #     server = 'http://localhost:8080/wps-dev/wps'
-        #server = 'http://kartographie.geo.tu-dresden.de/webgen_wps/wps'
-    #    result = WPScom.doWPSProcess([(1369751.5468703583, 6457400.14953169, 1408887.3053523686, 6496535.908013698), u'/home/klammer/Software/Quickly/generalcarto/data/media/shapefiles/vgtl_polygons.shp', 'ch.unizh.geo.webgen.service.BuildingSimplification', server, 'WebGen_WPS_547_346_10.xml', '/home/klammer/GeneralCarto/xmlfiles/', "([building]='yes')", [('minlength', 'minimum length', '10.0')], [547, 346], '/home/klammer/GeneralCarto/log-files/'])
-     #   print result[0]
-        
-        #postgreFunctions.makePostgresTable()
-        
-  #      results = [('', 0, ''), ('', 0, ''), ('', 0, ''), ('', 0, ''), ('/home/klammer/GeneralCarto/xmlfiles/result_273_172_9.gml', 985, 'LineString'), ('/home/klammer/GeneralCarto/xmlfiles/result_273_173_9.gml', 23, 'LineString'), ('', 0, ''), ('', 0, ''), ('', 0, '')]
-   #     self.table_name = 'generalized_line_cache'
-    #    WPSWindow(self.params.getLogfilesHome(), self.params.getXMLFilesHome(), self).writeResultToDB(results, self.table_name)
-
-
         TileCalcs = tiling.TileCalculations((11.8722539115, 50.1713213772, 12.584850326, 50.678205265399974),0,18)
         #TileCalcs.printTileRangeParameters(self.params.getGeneralHome(), 'Extent-Tile-Params.txt')
         #print TileCalcs.getAllTilesOfOneZoomlevel(9)
@@ -390,22 +385,11 @@ class GeneralcartoWindow(Window):
             if result != Gtk.ResponseType.OK:
                 return 
     
-    def on_button_postgis_clicked(self, widget, data=None):
-        #postgres.makePostgresTable()
+    def on_button_test_clicked(self, widget, data=None):
+        print self.project.getProjectFile()
+        print self.project.isBlank()
+        print self.project.getPureFileName()
         
-        #postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_2190_1382_12.gml')
-   #     postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_4376_2766_13.gml')
-    #    postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_4375_2768_13.gml')
-     #   postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_4375_2767_13.gml')
-      #  postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_4375_2766_13.gml')
-       # postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_4374_2767_13.gml')
-        #postgres.writeToPostgres('/home/klammer/Software/Quickly/generalcarto/data/media/cache/xmlfiles/result_4374_2766_13.gml')
-        #postgres.postgresTest()
-        
-        params = {'port': u'5432', 'host': u'localhost', 'user': u'gisadmin', 'table': u'vgtl_lines', 'password': u'tinitus', 'type': u'postgis', 'dbname': u'meingis'}
-        extent = (1369751.5468703583, 6457400.14953169, 1408887.3053523686, 6496535.908013698)
-        filter = 'true'
-        postgres.getDataInfos(params, extent, filter)
 
     def on_button_mapnik_clicked(self, widget, data=None):
         #rendering.testMapnik()

@@ -23,7 +23,7 @@ def getDataInfos(source_params, extent, filter):
     #print srid
     
     command = "Select count(*) from "+ source_params['table']+" WHERE st_within(" + column + ", ST_GeometryFromtext('" + polygon + "'," + srid + "))"
-    #print command
+    print command
     cur.execute(command)
     rows = cur.fetchall()
     #print rows[0]

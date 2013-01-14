@@ -33,7 +33,7 @@ def doWPSProcess(params):
     folder = params[5]
     filter = params[6]
     func_params = params[7]
-    params = main_params[9]
+    main_params = params[9]
     
     #make a xml-file, that is valid for the Execute-command of WebGen_WPS
     test, geometry_type = makeWPSfile(tile_extent, folder+dest_file, source, func_ident, filter, func_params, params[8], main_params)

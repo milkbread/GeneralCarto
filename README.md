@@ -1,3 +1,9 @@
+#!!!This project was renamed to **TileGen**!!!
+
+## GoTo the new repo: [TileGen](https://github.com/milkbread/TileGen)
+
+Accordingly, this *repo* will not be developed anymore but is available until the end of 2013!
+
 GeneralCarto
 ============
 
